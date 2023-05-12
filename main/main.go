@@ -17,6 +17,8 @@ type User struct {
 	Password string
 }
 
+var user User
+
 
 func main() {
 	
@@ -34,10 +36,6 @@ func Home(w http.ResponseWriter, r *http.Request) {
 }
 
 func Sql() User{
-
-
-	user := User{Id :0,Pseudo:"",Password:""}
-
 
 	db, err := sql.Open("sqlite3", "bark.db")
 	
@@ -57,8 +55,6 @@ func Sql() User{
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(user)
-
 	}
 
 	defer rows.Close()
