@@ -2,26 +2,19 @@ package main
 
 import (
 	"fmt"
-	"html/template"
-	"database/sql"
-	_"github.com/mattn/go-sqlite3"
+	"html/template"	
 	"net/http"
-	"log"
+	"bark"
+
 )
 
 var port = ":8080"
 
-type User struct {
-	Id	int
-	Pseudo string
-	Password string
-}
 
-var user User
 
 
 func main() {
-	
+	bark.Register()
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/home", Home)
 
@@ -30,34 +23,8 @@ func main() {
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
-	user := Sql()
+
 	t := template.Must(template.ParseFiles("template/home.html"))
-	t.Execute(w,user)
+	t.Execute(w,"")
 }
 
-func Sql() User{
-
-	db, err := sql.Open("sqlite3", "public/barkData.db")
-	
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-
-	rows, err := db.Query("select * from user")
-	
-	if err != nil {
-		log.Fatal(err)
-	}
-	
-	for rows.Next() {
-		err := rows.Scan(&user.Id,&user.Pseudo,&user.Password)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-
-	defer rows.Close()
-
-	return user
-}
