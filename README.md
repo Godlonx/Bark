@@ -36,3 +36,4 @@ The whole project is coded in Golang + HTML + CSS. The project is saved and avai
 
 # Development time ⌛
 12 May – 21 June • 40 days
+12 May – 21 June • 40 days
