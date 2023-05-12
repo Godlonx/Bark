@@ -37,7 +37,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 
 func Sql() User{
 
-	db, err := sql.Open("sqlite3", "bark.db")
+	db, err := sql.Open("sqlite3", "public/barkData.db")
 	
 	if err != nil {
 		log.Fatalln(err)
