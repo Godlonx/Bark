@@ -1,0 +1,1 @@
+guide pour communication entre server et client : https://devopssec.fr/article/tp-creer-application-de-chat-golang
