@@ -12,14 +12,14 @@ import (
 var port = ":8080"
 
 type User struct {
-	id	int
-	pseudo string
-	password string
+	Id	int
+	Pseudo string
+	Password string
 }
 
 
 func main() {
-	Sql()
+	
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/home", Home)
 
@@ -28,12 +28,15 @@ func main() {
 }
 
 func Home(w http.ResponseWriter, r *http.Request) {
-	
+	user := Sql()
 	t := template.Must(template.ParseFiles("template/home.html"))
-	t.Execute(w,"")
+	t.Execute(w,user)
 }
 
-func Sql() {
+func Sql() User{
+
+
+	user := User{Id :0,Pseudo:"",Password:""}
 
 
 	db, err := sql.Open("sqlite3", "bark.db")
@@ -50,14 +53,15 @@ func Sql() {
 	}
 	
 	for rows.Next() {
-		err := rows.Scan(&User)
+		err := rows.Scan(&user.Id,&user.Pseudo,&user.Password)
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(User)
+		fmt.Println(user)
+
 	}
 
 	defer rows.Close()
 
-	
+	return user
 }
