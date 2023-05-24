@@ -5,22 +5,19 @@
     <meta http-equiv='X-UA-Compatible' content='IE=edge'>
     <title>Bark</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../assets/css/login.css'>
+    <link rel='stylesheet' type='text/css' media='screen' href='../static/css/login.css'>
     <script src='main.js'></script>
 </head>
 <body>
     <div class="container">
         <div class="login">
-            <img src="../assets/img/logo.png" alt="logo" class="logo">
+            <img src="../static/img/logo.png" alt="logo" class="logo">
             <h1>Login to Bark</h1>
-            <form action="/login" method="POST" class="form-login">
+            <form action="" method="POST" class="form-login">
                 <label for="E-Mail">E-Mail</label>
-                <div class="label-mail">
-                    <input type="text" name="E-Mail" placeholder="e-mail">
-                </div>
-                
+                <input type="text" name="email" placeholder="e-mail" id="email"required>
                 <label for="password">Password</label>
-                <input type="password" name="password" placeholder="password">
+                <input type="password" name="password" id="password"placeholder="password" required>
                 <label for="remember">Remember me</label>
                 <button type="submit" class="btn-login">Login</button>
                 <label for="forgot">need an account </label>

@@ -18,12 +18,16 @@ type User struct {
 	Password string
 }
 
+type FormData struct {
+	Email    string
+	Password string
+}
+
 var user User
 
 func main() {
 
-	fs := http.FileServer(http.Dir("../assets/"))
-	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/home", Home)
 
 	fmt.Println("(http://localhost"+port+"/home"+") - Server started on port", port)
@@ -33,6 +37,14 @@ func main() {
 func Home(w http.ResponseWriter, r *http.Request) {
 	user := Sql()
 	t := template.Must(template.ParseFiles("template/login.html"))
+
+	email := r.FormValue("email")
+	password := r.FormValue("password")
+	data := FormData{}
+	data.Email = email
+	data.Password = password
+	println(data.Email)
+	println(data.Password)
 	t.Execute(w, user)
 }
 
