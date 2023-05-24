@@ -14,9 +14,74 @@
     <meta name="theme-color" content="#ffffff">
 
     <!----- CSS ----->
+    <link href="../static/css/home.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/side-left.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/selector.css" rel="stylesheet" type="text/css">
     <link href="../static/font/fonts.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/overview.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    
+    <div class="side-left">
+        <div class="my-profile">
+            <img src="" class="avatar" alt="my-avatar">
+            <h2>Harcadakad<!--PSEDO--></h2>
+        </div>
+        <div class="consumer-profile">
+            <table>
+                <tr><td>NIV <!--NUMBER--></td><td>2 <!--XPs--></td></tr>
+            </table>
+            <div class="progress-bar"></div>
+            <table>
+                <tr><td>Barks</td><td>791<!--NUMBER--></td></tr>
+                <tr><td>Likes</td><td>1463<!--NUMBER--></td></tr>
+                <tr><td>Dislikes</td><td>294<!--NUMBER--></td></tr>
+            </table>
+        </div><br>
+        <div class="settings-button">
+            <button>Settings</button>
+        </div><br>
+        <div class="barking-button">
+            <button>Barking</button>
+        </div>
+    </div>
+    <div class="center">
+        <div class="topic-link">
+            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
+            <div class="sub-info">
+                <i><!-----ICON NUMBER OF MESSAGES-----></i>
+                <h3>8 <!--NUMBER OF MESSAGES-->• 11 mai 2023<!--DATE--></h3>
+                <div class="tag">Hardware</div>
+            </div>
+        </div>
+        <button>|<</button>
+        <button><</button>
+        <button>></button>
+        <button>>|</button>
+    </div>
+    <div class="selector">
+        <li>
+            <input class="search" type="text" placeholder="Search" name="search"/>
+        </li>
+        <li class="button">
+            <i class="icon"><!--ICON_SORT--></i>
+            <select name="select-items" id="sort-mod">
+              <option disabled selected>Sort</option>
+              <option value="Latest">Latest</option>
+              <option value="Earliest">Earliest</option>
+            </select>
+            <i class="icon"><!--ICON_ARROW_DOWN--></i>
+        </li>
+        <li class="button">
+            <i class="icon"><!--ICON_FILTER--></i>
+            <select name="select-items" id="sort-mod">
+              <option disabled selected>Filter</option>
+              <option value="Hardware">Hardware</option>
+              <option value="Gaming">Gaming</option>
+              <option value="Hardware">Music</option>
+              <option value="Gaming">Cinema</option>
+            </select>
+            <i class="icon"><!--ICON_ARROW_DOWN--></i>
+        </li>
+    </div>
 </body>
 </html>
