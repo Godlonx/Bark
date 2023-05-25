@@ -1,11 +1,65 @@
 .center .topic-link {
+
+    display: flex;
+    justify-content: start;
+    width: ;
+    flex-direction: column;
+
+    width: 600px;
     background-color: #313338;
     color: white;
+    border: 0px;
     border-radius: 8px;
     padding: 19px;
     margin-bottom: 12px;
 }
 
+.center .topic-link:hover {
+    background-color: #3a3d43;
+    cursor: pointer;
+}
+
+
+
+
+
 .center .topic-link h1 {
     padding-bottom: 12px;
+}
+
+.center .topic-link .sub-info {
+    display: flex;
+    align-items: center;
+}
+
+.center .topic-link .sub-info img {
+    height: 12px;
+    margin-right: 6px;
+}
+
+.center .topic-link h3 {
+    color: #b5bac1;
+    font-size: 14px;
+}
+
+.center .topic-link .tag {
+    background-color: #232428;
+
+    font-weight: 700;
+    font-size: 14px;
+
+    margin-left: 16px;
+    margin-right: -9px;
+
+    padding-top: 5px;
+    padding-bottom: 3px;
+    padding-left: 11px;
+    padding-right: 11.5px;
+
+    border-radius: 25px;
+}
+
+.center .topic-link .tag:hover {
+    background-color: #5865f2;
+    cursor: pointer;
 }

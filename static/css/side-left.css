@@ -32,14 +32,14 @@
     color: #c4cad3;
 }
 
-button {
+.side-left button {
     width: 240px;
     height: 48px;
     border-radius: 8px;
     display: none;
 }
 
-.button {
+.side-left .button {
     border-radius: 8px;
     height: 38px;
     max-height: 48px;
