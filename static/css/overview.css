@@ -1,3 +1,11 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'gg sans', sans-serif;
+}
+
 body {
     background-color: #1e1f22;
 }

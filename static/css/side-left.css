@@ -1,3 +1,9 @@
+.side-left {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+}
+
 .side-left .my-profile h2 {
     background-color: #313338;
     color: white;
@@ -6,6 +12,38 @@
 .side-left .consumer-profile {
     background-color: #313338;
     color: white;
+    border-radius: 8px;
+    margin-top: 22px;
+    margin-bottom: 22px;
+    padding: 10.5px;
+}
+
+.side-left .consumer-profile table tr {
+    width: 215.5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.side-left .consumer-profile tr :nth-child(2n+1) {
+    font-weight: 500;
+}
+
+.side-left .consumer-profile tr :nth-child(2n) {
+    color: #c4cad3;
+}
+
+button {
+    width: 240px;
+    height: 48px;
+    border-radius: 8px;
+    display: none;
+}
+
+.button {
+    border-radius: 8px;
+    height: 38px;
+    max-height: 48px;
+    margin-bottom: 22px;
 }
 
 .side-left .settings-button {
@@ -16,4 +54,13 @@
 .side-left .barking-button {
     background-color: #5865f2;
     color: white;
+}
+
+.side-left a {
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-weight: 700;
 }
