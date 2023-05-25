@@ -1,4 +1,11 @@
 .center .topic-link {
     background-color: #313338;
     color: white;
+    border-radius: 8px;
+    padding: 19px;
+    margin-bottom: 12px;
+}
+
+.center .topic-link h1 {
+    padding-bottom: 12px;
 }
