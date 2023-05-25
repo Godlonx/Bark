@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<<<<<<<<< Temporary merge branch 1
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +10,6 @@
     <h1>{{.Id}}</h1>
     <h1>{{.Pseudo}}</h1>
     <h1>{{.Password}}</h1>
-=========
     <!----- FORMATTING ----->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,7 +26,18 @@
     <link href="../static/font/fonts.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-    
->>>>>>>>> Temporary merge branch 2
+    <div class="container">
+        <div class="home">
+            <img src="../static/img/logo.png" alt="logo" class="logo">
+            <h1>Home</h1>
+            <form action="" method="POST" class="form-home">
+                <label for="search">Search</label>
+                <input type="text" name="search" placeholder="search" id="search" required>
+                <button type="submit" class="btn-home">Search</button>
+            </form>
+            <a href="/login">Login</a>
+            <a href="/register">Register</a>
+        </div>
+    </div>
 </body>
 </html>
