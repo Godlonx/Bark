@@ -1,3 +1,3 @@
 go.mod
 go.sum
-./public/barkData.db
+public/barkData.db
