@@ -1,10 +1,9 @@
 package main
 
 import (
-	"database/sql"
+	"bark"
 	"fmt"
 	"html/template"
-	"log"
 	"net/http"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -12,11 +11,12 @@ import (
 
 var port = ":8080"
 
-type User struct {
-	Id       int
-	Pseudo   string
-	Password string
-}
+// type User struct {
+// 	Id       int
+// 	Pseudo   string
+// 	Password string
+
+// }
 
 type LoginData struct {
 	Email    string
@@ -30,20 +30,29 @@ type RegisterData struct {
 	Passwordverif string
 }
 
-var user User
+// var user User
 
 func main() {
 
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	http.HandleFunc("/", Login)
+	http.HandleFunc("/home", Home)
 	http.HandleFunc("/login", Login)
 	http.HandleFunc("/register", Register)
 
-	fmt.Println("(http://localhost"+port+"/login"+") - Server started on port", port)
+	fmt.Println("http://localhost" + port + "/")
+	fmt.Println("Server started on port", port)
 	http.ListenAndServe(port, nil)
 }
 
+func Home(w http.ResponseWriter, r *http.Request) {
+
+	t := template.Must(template.ParseFiles("template/home.html"))
+	t.Execute(w, "")
+}
+
 func Login(w http.ResponseWriter, r *http.Request) {
-	user := Sql()
+	user := bark.Sql()
 	t := template.Must(template.ParseFiles("template/login.html"))
 
 	email := r.FormValue("email")
@@ -72,30 +81,4 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	println(data.Password)
 	println(data.Passwordverif)
 	t.Execute(w, nil)
-}
-
-func Sql() User {
-
-	db, err := sql.Open("sqlite3", "public/barkData.db")
-
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	rows, err := db.Query("select * from user")
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	for rows.Next() {
-		err := rows.Scan(&user.Id, &user.Pseudo, &user.Password)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-
-	defer rows.Close()
-
-	return user
 }
