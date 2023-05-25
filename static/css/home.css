@@ -2,10 +2,9 @@
 
     display: flex;
     justify-content: start;
-    width: ;
     flex-direction: column;
 
-    width: 600px;
+    width: 800px;
     background-color: #313338;
     color: white;
     border: 0px;
@@ -60,6 +59,6 @@
 }
 
 .center .topic-link .tag:hover {
-    background-color: #5865f2;
+    background-color: #9800fe;
     cursor: pointer;
 }

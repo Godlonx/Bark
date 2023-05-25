@@ -2,18 +2,39 @@
     width: 240px;
     display: flex;
     flex-direction: column;
+    margin-right: 22px;
+}
+
+.side-left img {
+    width: 240px;
+    height: 240px;
+    display: flex;
+    background-color: gray;
+
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
 }
 
 .side-left .my-profile h2 {
     background-color: #313338;
+    height: 48px;
+
     color: white;
+    font-size: 18px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 22px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
 }
 
 .side-left .consumer-profile {
     background-color: #313338;
     color: white;
     border-radius: 8px;
-    margin-top: 22px;
     margin-bottom: 22px;
     padding: 10.5px;
 }
@@ -32,35 +53,25 @@
     color: #c4cad3;
 }
 
-.side-left button {
-    width: 240px;
-    height: 48px;
+.side-left li {
     border-radius: 8px;
-    display: none;
-}
-
-.side-left .button {
-    border-radius: 8px;
-    height: 38px;
-    max-height: 48px;
     margin-bottom: 22px;
 }
 
-.side-left .settings-button {
-    background-color: #313338;
-    color: white;
-}
-
-.side-left .barking-button {
-    background-color: #5865f2;
-    color: white;
+.side-left li a:hover {
+    background-color: #6a00b0;
 }
 
 .side-left a {
     color: white;
+    font-weight: 700;
+
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100%;
-    font-weight: 700;
+
+    width: 240px;
+    height: 48px;
+
+    border-radius: 8px;
 }

@@ -7,8 +7,9 @@
 }
 
 body {
+    width: 100wh;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     background-color: #1e1f22;
     padding-top: 22px;
 }
