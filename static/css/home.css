@@ -82,9 +82,21 @@
     border: 0px;
     border-radius: 500px;
     margin: 10px 11px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .center .nav-button .nav-element:hover {
     background-color: #454950;
     cursor: pointer;
+}
+
+.center .nav-button .nav-element img {
+    height: 18px;
+}
+
+.center .nav-button .nav-element:nth-last-child(-n+2) img {
+    transform: scaleX(-1);
 }
