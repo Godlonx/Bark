@@ -72,6 +72,7 @@
 .center .nav-button {
     display: flex;
     justify-content: center;
+    margin-bottom: 100px;
 }
 
 .center .nav-button .nav-element {

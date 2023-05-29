@@ -8,11 +8,10 @@
     position: relative;
     top: -55px;
     left: 16px;
-
     height: 20px;
 }
 
-.navigation input {
+.navigation div input {
     background-color: #313338;
     color: white;
     caret-color: white;
@@ -68,6 +67,8 @@ input::placeholder {
     font-weight: 500;
 
     text-align: center;
+
+    appearance: none;
 }
 
 .navigation .selector select:hover {
@@ -91,4 +92,15 @@ input::placeholder {
 
 .navigation div:last-child img {
     height: 13px;
+}
+
+.navigation .selector img:last-child {
+    height: 7px;
+}
+
+.selector img:last-child {
+    float: right;
+    position: relative;
+    left: -16px;
+    top: -75px;
 }
