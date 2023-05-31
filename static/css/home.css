@@ -64,11 +64,6 @@
     border-radius: 25px;
 }
 
-.topic-link .tag:hover {
-    background-color: #9800fe;
-    cursor: pointer;
-}
-
 .nav-button {
     display: flex;
     justify-content: center;
