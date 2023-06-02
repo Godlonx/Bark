@@ -11,26 +11,7 @@ import (
 
 var port = ":8080"
 
-// type User struct {
-// 	Id       int
-// 	Pseudo   string
-// 	Password string
-
-// }
-
-type LoginData struct {
-	Email    string
-	Password string
-}
-
-type RegisterData struct {
-	Email         string
-	Password      string
-	Username      string
-	Passwordverif string
-}
-
-// var user User
+var userConnected bark.UserConnected
 
 func main() {
 
@@ -48,21 +29,27 @@ func main() {
 func Home(w http.ResponseWriter, r *http.Request) {
 
 	t := template.Must(template.ParseFiles("template/home.html"))
-	t.Execute(w, "")
+	println(userConnected.Username)
+	t.Execute(w, userConnected)
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	user := bark.Sql()
+	//user := bark.Sql()
 	t := template.Must(template.ParseFiles("template/login.html"))
 
-	email := r.FormValue("email")
+	username := r.FormValue("username")
 	password := r.FormValue("password")
-	data := LoginData{}
-	data.Email = email
+	data := bark.LoginData{}
+	data.Username = username
 	data.Password = password
-	println(data.Email)
-	println(data.Password)
-	t.Execute(w, user)
+	authorize,idUser := bark.Login(data)
+	println(authorize)
+	println(idUser)
+	if (authorize) {
+		userConnected=bark.SelectUser(idUser)
+		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
+	}
+	t.Execute(w, "")
 }
 
 func Register(w http.ResponseWriter, r *http.Request) {
@@ -71,7 +58,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	password := r.FormValue("password")
 	email := r.FormValue("email")
 	passwordverif := r.FormValue("passwordverif")
-	data := RegisterData{}
+	data := bark.RegisterData{}
 	data.Email = email
 	data.Password = password
 	data.Username = username
@@ -80,5 +67,6 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	println(data.Email)
 	println(data.Password)
 	println(data.Passwordverif)
+	bark.Check(data)
 	t.Execute(w, nil)
 }

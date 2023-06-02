@@ -10,24 +10,35 @@
     <meta name="theme-color" content="#ffffff">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='../static/css/login.css'>
-    <script src='main.js'></script>
+    <link rel='stylesheet' type='text/css' media='screen' href='../static/css/overview.css'>
+    
 </head>
 <body>
+    <!-- <canvas id="c"></canvas> -->
     <div class="container">
         <div class="login">
-            <img src="../static/img/logo.png" alt="logo" class="logo">
-            <h1>Login to Bark</h1>
+            <img src="../static/img/logo.png" onclick="bark()" alt="logo" class="logo" id="bark-logo">
+            <h1>Login</h1>
             <form action="" method="POST" class="form-login">
-                <label for="E-Mail">E-Mail</label>
-                <input type="text" name="email" placeholder="e-mail" id="email"required>
+                <label for="username">Username</label>
+                <input type="text" name="username" placeholder="Username" id="username"required >
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password"placeholder="password" required>
-                <label for="remember">Remember me</label>
-                <button type="submit" class="btn-login">Login</button>
-                <label for="forgot">need an account </label>
+                <input type="password" name="password" id="password"placeholder="⁎⁎⁎⁎⁎⁎" required>
+                <div class="remember-box">
+                    <input onclick="pulse()" type="checkbox" id="remember">
+                    <label for="remember">Remember me</label>
+                </div>
+                <button type="submit" class="btn-login" id="btn-login">
+                    Login
+                </button>
+                <label for="forgot"> </label>
             </form>
             <a href="/register">Register</a>
         </div>
     </div>
 </body>
+
+<!-- <script type="module" src="../static/js/background.js"></script> -->
+<script src='../static/js/script.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </html>
