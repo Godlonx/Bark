@@ -2,52 +2,87 @@ package bark
 
 import (
 	"fmt"
-	"net"
+	"html/template"
+	"net/http"
+
+	_ "github.com/mattn/go-sqlite3"
 )
 
-const (
-	IP   = "127.0.0.1"
-	PORT = "8080"
-)
+var port = ":8080"
+
+// type User struct {
+// 	Id       int
+// 	Pseudo   string
+// 	Password string
+
+// }
+
+type LoginData struct {
+	Email    string
+	Password string
+}
+
+type RegisterData struct {
+	Email         string
+	Password      string
+	Username      string
+	Passwordverif string
+}
+
+// var user User
 
 func Server() {
-	println("Lancement du serveur...")
+	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
+	http.HandleFunc("/", ServLogin)
+	http.HandleFunc("/home", ServHome)
+	http.HandleFunc("/login", ServLogin)
+	http.HandleFunc("/register", ServRegister)
+	http.HandleFunc("/settings", ServSettings)
 
-	// on écoute sur le port 8080
-	ln, err := net.Listen("tcp", fmt.Sprintf(IP+":"+PORT))
-	if err != nil {
-		panic(err)
-	}
+	fmt.Println("http://localhost" + port + "/")
+	fmt.Println("Server started on port", port)
+	http.ListenAndServe(port, nil)
+}
 
-	// On accepte les connexions entrantes sur le port 8080
-	conn, err := ln.Accept()
-	if err != nil {
-		panic(err)
-	}
+func ServHome(w http.ResponseWriter, r *http.Request) {
 
-	// Information sur les clients qui se connectent
-	fmt.Println("Un client est connecté depuis le port", conn.RemoteAddr())
+	t := template.Must(template.ParseFiles("template/home.html"))
+	t.Execute(w, "")
+}
 
-	for {
-		// On écoute les messages émis par les clients
-		buffer := make([]byte, 4096)       // taille maximum du message qui sera envoyé par le client
-		length, err := conn.Read(buffer)   // lire le message envoyé par client
-		message := string(buffer[:length]) // supprimer les bits qui servent à rien et convertir les bytes en string
+func ServLogin(w http.ResponseWriter, r *http.Request) {
+	user := Sql()
+	t := template.Must(template.ParseFiles("template/login.html"))
 
-		if err != nil {
-			fmt.Println("Le client s'est déconnecté")
-			break
-		}
+	email := r.FormValue("email")
+	password := r.FormValue("password")
+	data := LoginData{}
+	data.Email = email
+	data.Password = password
+	println(data.Email)
+	println(data.Password)
+	t.Execute(w, user)
+}
 
-		if message == "exit" {
-			break
-		}
+func ServRegister(w http.ResponseWriter, r *http.Request) {
+	t := template.Must(template.ParseFiles("template/register.html"))
+	username := r.FormValue("username")
+	password := r.FormValue("password")
+	email := r.FormValue("email")
+	passwordverif := r.FormValue("passwordverif")
+	data := RegisterData{}
+	data.Email = email
+	data.Password = password
+	data.Username = username
+	data.Passwordverif = passwordverif
+	println(data.Username)
+	println(data.Email)
+	println(data.Password)
+	println(data.Passwordverif)
+	t.Execute(w, nil)
+}
 
-		// on affiche le message du client en le convertissant de byte à string
-
-		fmt.Print("Client:", message)
-
-		// On envoie le message au client pour qu'il l'affiche
-		conn.Write([]byte(message + "\n"))
-	}
+func ServSettings(w http.ResponseWriter, r *http.Request) {
+	t := template.Must(template.ParseFiles("template/settings.html"))
+	t.Execute(w, nil)
 }
