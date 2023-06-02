@@ -33,3 +33,7 @@ body {
 *::-ms-scrollbar-thumb {
     background-color: #888;
 }
+
+#c{
+    overflow: hidden;
+}

@@ -16,6 +16,7 @@
     <!----- CSS ----->
     <link href="../static/font/fonts.css" rel="stylesheet" type="text/css">
     <link href="../static/css/register.css" rel="stylesheet" type="text/css">
+    <link rel='stylesheet' type='text/css' media='screen' href='../static/css/overview.css'>
 </head>
 <body>
     <div class="container">
@@ -24,17 +25,17 @@
             <h1>Create an account</h1>
             <form action="" method="POST" class="form-register">
                 <label for="username">Username</label>
-                <input type="text" name="username" placeholder="username" id="username" required>
+                <input type="text" name="username" placeholder="username" id="username" required oninvalid="this.setCustomValidity('Enter a username without:\n -space\n-special character')" oninput="setCustomValidity('')">
                 <label for="email">E-Mail</label>
-                <input type="text" name="email" placeholder="e-mail" id="email"required>
+                <input type="text" name="email" placeholder="e-mail" id="email" required>
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" placeholder="password" required>
+                <input type="password" name="password" id="password" placeholder="⁎⁎⁎⁎⁎⁎" required>
                 <label for="password">Confirm Password</label>
-                <input type="password" name="passwordverif" id="passwordverif" placeholder="password" required>
+                <input type="password" name="passwordverif" id="passwordverif" placeholder="⁎⁎⁎⁎⁎⁎" required>
                 <button type="submit" class="btn-register">Register</button>
-                <label for="forgot">already have an account </label>
+                <label id="goto-login" for="forgot">Already have an account </label>
             </form>
-            <a href="/login">Login</a>
+            <a id="goto-login" href="/login">Login</a>
         </div>
     </div>
 </body>
