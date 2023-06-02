@@ -31,7 +31,7 @@ type RegisterData struct {
 var user User
 var userList UserList
 
-func Register() {
+func Register(data RegisterData) {
 
 	db, err := sql.Open("sqlite3", "public/barkData.db")
 
@@ -39,9 +39,9 @@ func Register() {
 		log.Fatalln(err)
 	}
 
-	Username := "hi"
-	password := "test"
-	email := "mathis@ynov.com"
+	Username := data.Username
+	password := data.Password
+	email := data.Email
 	hashPass, _ := HashPassword(password)
 	Sql()
 

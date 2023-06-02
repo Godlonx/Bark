@@ -63,10 +63,11 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	data.Password = password
 	data.Username = username
 	data.Passwordverif = passwordverif
-	println(data.Username)
-	println(data.Email)
-	println(data.Password)
-	println(data.Passwordverif)
-	bark.Check(data)
+
+	isValid,err := bark.Check(data)
+	println(err)
+	if (isValid) {
+		
+	}
 	t.Execute(w, nil)
 }
