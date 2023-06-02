@@ -10,7 +10,7 @@
     <meta name="theme-color" content="#ffffff">
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <link rel='stylesheet' type='text/css' media='screen' href='../static/css/login.css'>
-    <script src='main.js'></script>
+    <script src='../static/js/login.js'></script>
 </head>
 <body>
     <div class="container">
@@ -23,11 +23,23 @@
                 <label for="password">Password</label>
                 <input type="password" name="password" id="password"placeholder="password" required>
                 <label for="remember">Remember me</label>
+                <input type="checkbox" name="remember" id="remember">
+                    <div class="box" onclick="openPopup()">Forgot Password</div >
                 <button type="submit" class="btn-login">Login</button>
                 <label for="forgot">need an account </label>
             </form>
             <a href="/register">Register</a>
         </div>
+
+        <div class="pop-up">
+            <form class="form-forgot-password">
+                <label for="email">E-Mail</label>
+                <input type="text" name="email" placeholder="e-mail" id="email"required>
+                <button type="submit" class="btn-login">Send</button>
+            </form>
+        </div>
+
     </div>
+    
 </body>
 </html>
