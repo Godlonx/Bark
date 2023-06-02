@@ -160,3 +160,31 @@ input[type="checkbox"]::before {
 input[type="checkbox"]:checked::before {
     transform: scale(1); 
 }
+
+.pop-up {
+    background-color: #1e1f22;
+    position : absolute; 
+    visibility: hidden; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 2vw;
+    border-radius: 0.5vw;
+}
+
+.active {
+    visibility: visible;
+    transition: all 0.5s ease-in-out;
+}
+
+.form-forgot-password {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1vw;
+    flex-direction: column;
+    text-align: center;
+}
+.blured {
+    filter: blur(5px);
+}
