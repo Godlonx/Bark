@@ -5,7 +5,6 @@ Bark is a student project that consists of creating a forum site similar to twit
 
 # How to run ⬇
 1. Download this repository `git clone https://github.com/Godlonx/Bark.git`
->>>>>>>>> Temporary merge branch 2
 2. `cd bark/scripts/main` 
 3. `go run main.go`
 4. `http://localhost:8080/`
@@ -23,20 +22,12 @@ This project consists in creating a web forum that allows :
 
 
 # Who are you 👨‍💻
-• SILOTIA Mathis
-• LAURENT Rémi
-• GUILLET Evan
-• LE BOURHIS Evan
+- SILOTIA Mathis
+- LAURENT Rémi
+- GUILLET Evan
+- LE BOURHIS Evan
 
 
 
 # Technical stuff ⚙️
 The whole project is coded in Golang + HTML + CSS. The project is saved and available on a Github repository.
-
-
-
-# Development time ⌛
-12 May – 21 June • 40 days
-=========
-12 May – 21 June • 40 days
->>>>>>>>> Temporary merge branch 2
