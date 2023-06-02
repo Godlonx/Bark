@@ -10,13 +10,102 @@
 
     <!----- FAVICON ----->
     <link rel="icon" type="image/png" sizes="16x16"  href="../static/favicons/favicon-16x16.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
 
     <!----- CSS ----->
-    <link href="../static/font/fonts.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/overview.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/settings.css" rel="stylesheet" type="text/css">
+
+    <!----- JS ----->
+    <script src="../static/js/settings.js"></script>
 </head>
 <body>
-    
+    <div class="leftPart" id="back1">
+        <div class="head">
+            <div class="img"><img src="../static/img/defaultPP.png" alt="" class="pp"></div>
+            <div class="username">UserTest</div>
+        </div>
+        <div class="stats">
+            <div class="stat lvl">
+                <div class="info">
+                    <span class="name">lvl 1</span> <span class="value">0 xp</span>
+                </div>
+                <div class="progressBar"></div>
+            </div>
+            <div class="stat barks"><span class="name">Bark</span> <span class="value">0</span></div>
+            <div class="stat likes"><span class="name">Likes</span> <span class="value">10</span></div>
+            <div class="stat dislikes"><span class="name">Dislikes</span> <span class="value">50</span></div>
+        </div>
+        <div class="buttons">
+            <div class="color"></div>
+            <button class="bark">+ Barking</button>
+        </div>
+    </div>
+    <div class="settings" id="back2">
+        <div class="setting head">
+            <div class="color"></div>
+            <span class="value">AVATAR</span>
+            <button class="edit" onclick="openPopup(1)">Edit</button>
+        </div>
+        <div class="setting username">
+            <div class="color"></div>
+            <span class="value">USERNAME</span>
+            <button class="edit" onclick="openPopup(2)">Edit</button>
+        </div>
+        <div class="setting email">
+            <div class="color"></div>
+            <span class="value">E-MAIL</span>
+            <button class="edit" onclick="openPopup(3)">Edit</button>
+        </div>
+        <div class="setting password">
+            <div class="color"></div>
+            <span class="value">PASSWORD</span>
+            <button class="edit" onclick="openPopup(4)">Edit</button>
+        </div>
+        <div class="setting account">
+            <div class="color"></div>
+            <span class="value">ACCOUNT</span>
+            <button class="delete" onclick="openPopup(5)">Delete</button>
+        </div>
+    </div>
+    <div class="backgroundPopup" id="background"></div>
+    <div class="popup head" id="1">
+        <div class="fa fa-close close" onclick="closePopup(1)"></div>
+        <span>Available soon</span>
+    </div>
+    <div class="popup username" id="2">
+        <div class="fa fa-close close" onclick="closePopup(2)"></div>
+        <span class="name">Change username</span>
+        <input type="text" placeholder="Username">
+        <div class="buttons">
+            <button type="submit" class="submit">Save</button>
+        </div>
+    </div>
+    <div class="popup email" id="3">
+        <div class="fa fa-close close" onclick="closePopup(3)"></div>
+        <span class="name">Change Email</span>
+        <input type="text" placeholder="Email">
+        <div class="buttons">
+            <button type="submit" class="submit">Save</button>
+        </div>
+    </div>
+    <div class="popup password" id="4">
+        <div class="fa fa-close close" onclick="closePopup(4)"></div>
+        <span class="name">Change Password</span>
+        <div class="inputs">
+            <input type="text" class="actualPassword" placeholder="actual password">
+            <input type="text" class="newPassword" placeholder="new password">
+            <input type="text" class="validatePassword" placeholder="validate password">
+        </div>
+        <div class="buttons">
+            <button type="submit" class="submit">Save</button>
+        </div>
+    </div>
+    <div class="popup account" id="5">
+        <div class="fa fa-close close" onclick="closePopup(5)"></div>
+    </div>
+
 </body>
 </html>
