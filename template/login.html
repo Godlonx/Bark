@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset='utf-8'>
-    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
-    <title>Bark</title>
+    <!----- FORMATTING ----->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Login / Bark</title>
+
     <!----- FAVICON ----->
     <link rel="icon" type="image/png" sizes="16x16"  href="../static/favicons/favicon-16x16.png">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
-    <meta name='viewport' content='width=device-width, initial-scale=1'>
-    <link rel='stylesheet' type='text/css' media='screen' href='../static/css/login.css'>
+
+    <!----- CSS ----->
+    <!-- <link href="../static/font/fonts.css" rel="stylesheet" type="text/css"> -->
+    <link href="../static/css/login.css" rel="stylesheet" type="text/css">
     <link rel='stylesheet' type='text/css' media='screen' href='../static/css/overview.css'>
     
 </head>
@@ -17,7 +23,7 @@
     <!-- <canvas id="c"></canvas> -->
     <div class="container">
         <div class="login">
-            <img src="../static/img/logo.png" onclick="bark()" alt="logo" class="logo" id="bark-logo">
+            <img src="../static/img/logo.png" onclick="barkColorLogin()" alt="logo" class="logo" id="bark-logo">
             <h1>Login</h1>
             <form action="" method="POST" class="form-login">
                 <label for="username">Username</label>
@@ -33,7 +39,10 @@
                 </button>
                 <label for="forgot"> </label>
             </form>
-            <a href="/register">Register</a>
+            <div id="toRegister">
+                <a  href="/register">Register</a>
+            </div>
+            
         </div>
     </div>
 </body>

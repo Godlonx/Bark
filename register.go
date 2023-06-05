@@ -53,7 +53,7 @@ func Register(data RegisterData) {
 
 	}
 
-	insert := "INSERT into user (Username,password,email) VALUES ('" + Username + "','" + hashPass + "','" + email + "')"
+	insert := "INSERT into user (pseudo,password,email) VALUES ('" + Username + "','" + hashPass + "','" + email + "')"
 
 	_, err = db.Exec(insert)
 

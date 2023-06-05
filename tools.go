@@ -11,6 +11,7 @@ const (
 	BadPassword               = "bad password"
 	UnequalPassword           = "unequal password"
 	BadEmail                  = "bad email"
+	Other 					  = "Other"
 	None					  = "none"
 )
 
@@ -50,10 +51,6 @@ func verifyPassword(s string) (bool) {
         }
     }
     sevenOrMore = letters >= 7
-	println(number)
-	println(upper)
-	println(special)
-	println(sevenOrMore)
 	if (number&&upper&&special&&sevenOrMore) {
 		return true
 	}
@@ -62,6 +59,6 @@ func verifyPassword(s string) (bool) {
 
 
 func isEmailValid(e string) bool {
-    emailRegex := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+    emailRegex := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")//regex found on stackOverflow
     return emailRegex.MatchString(e)
 }
