@@ -17,19 +17,9 @@ var port = ":8080"
 
 // }
 
-type LoginData struct {
-	Email    string
-	Password string
-}
 
-type RegisterData struct {
-	Email         string
-	Password      string
-	Username      string
-	Passwordverif string
-}
 
-// var user User
+var userConnected UserConnected
 
 func Server() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
@@ -47,21 +37,27 @@ func Server() {
 func ServHome(w http.ResponseWriter, r *http.Request) {
 
 	t := template.Must(template.ParseFiles("template/home.html"))
-	t.Execute(w, "")
+	println(userConnected.Username)
+	t.Execute(w, userConnected)
 }
 
 func ServLogin(w http.ResponseWriter, r *http.Request) {
-	user := Sql()
+	//user := Sql()
 	t := template.Must(template.ParseFiles("template/login.html"))
 
-	email := r.FormValue("email")
+	username := r.FormValue("username")
 	password := r.FormValue("password")
 	data := LoginData{}
-	data.Email = email
+	data.Username = username
 	data.Password = password
-	println(data.Email)
-	println(data.Password)
-	t.Execute(w, user)
+	authorize,idUser := Login(data)
+	println(authorize)
+	println(idUser)
+	if (authorize) {
+		userConnected=SelectUser(idUser)
+		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
+	}
+	t.Execute(w, "")
 }
 
 func ServRegister(w http.ResponseWriter, r *http.Request) {
@@ -75,10 +71,12 @@ func ServRegister(w http.ResponseWriter, r *http.Request) {
 	data.Password = password
 	data.Username = username
 	data.Passwordverif = passwordverif
-	println(data.Username)
-	println(data.Email)
-	println(data.Password)
-	println(data.Passwordverif)
+
+	isValid,err := Check(data)
+	println(err)
+	if (isValid) {
+		Register(data)
+	}
 	t.Execute(w, nil)
 }
 

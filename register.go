@@ -14,15 +14,24 @@ type UserList struct {
 
 type User struct {
 	Id       int
-	Pseudo   string
+	Username   string
 	Password string
 	Email    string
+}
+
+
+
+type RegisterData struct {
+	Email         string
+	Password      string
+	Username      string
+	Passwordverif string
 }
 
 var user User
 var userList UserList
 
-func Register() {
+func Register(data RegisterData) {
 
 	db, err := sql.Open("sqlite3", "public/barkData.db")
 
@@ -30,21 +39,21 @@ func Register() {
 		log.Fatalln(err)
 	}
 
-	Pseudo := "hi"
-	password := "test"
-	email := "mathis@ynov.com"
+	Username := data.Username
+	password := data.Password
+	email := data.Email
 	hashPass, _ := HashPassword(password)
 	Sql()
 
 	for i := 0; i < len(userList.User); i++ {
 
-		if userList.User[i].Pseudo == Pseudo {
+		if userList.User[i].Username == Username {
 			fmt.Println("error")
 		}
 
 	}
 
-	insert := "INSERT into user (pseudo,password,email) VALUES ('" + Pseudo + "','" + hashPass + "','" + email + "')"
+	insert := "INSERT into user (pseudo,password,email) VALUES ('" + Username + "','" + hashPass + "','" + email + "')"
 
 	_, err = db.Exec(insert)
 
@@ -71,7 +80,7 @@ func Sql() User {
 	}
 
 	for rows.Next() {
-		err := rows.Scan(&user.Id, &user.Pseudo, &user.Password, &user.Email)
+		err := rows.Scan(&user.Id, &user.Username, &user.Password, &user.Email)
 		if err != nil {
 			log.Fatal(err)
 		}
