@@ -29,25 +29,36 @@
                 <label for="username">Username</label>
                 <input type="text" name="username" placeholder="Username" id="username"required >
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password"placeholder="⁎⁎⁎⁎⁎⁎" required>
+                <input type="password" name="password" id="password"placeholder="password" required>
                 <div class="remember-box">
-                    <input onclick="pulse()" type="checkbox" id="remember">
+                    <input type="checkbox" name="remember" id="remember" onclick="pulse()">
                     <label for="remember">Remember me</label>
                 </div>
-                <button type="submit" class="btn-login" id="btn-login">
-                    Login
-                </button>
-                <label for="forgot"> </label>
+                
+                <button type="submit" class="btn-login">Login</button>
+                <div class="forgot-password" onclick="openPopup()">Forgot password?</div>
+                <label for="forgot">need an account </label>
             </form>
             <div id="toRegister">
                 <a  href="/register">Register</a>
             </div>
             
         </div>
+
+        <div class="pop-up">
+            <form class="form-forgot-password">
+                <label for="email">Type your e-mail to change your password</label>
+                <input type="text" name="email" placeholder="e-mail" id="email"required>
+                <button type="submit" class="btn-login">Send</button>
+            </form>
+        </div>
+
     </div>
+    
 </body>
 
 <!-- <script type="module" src="../static/js/background.js"></script> -->
 <script src='../static/js/script.js'></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="../static/js/login.js"></script>
 </html>

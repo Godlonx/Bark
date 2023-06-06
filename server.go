@@ -10,15 +10,6 @@ import (
 
 var port = ":8080"
 
-// type User struct {
-// 	Id       int
-// 	Pseudo   string
-// 	Password string
-
-// }
-
-
-
 var userConnected UserConnected
 
 func Server() {
@@ -35,7 +26,6 @@ func Server() {
 }
 
 func ServHome(w http.ResponseWriter, r *http.Request) {
-
 	t := template.Must(template.ParseFiles("template/home.html"))
 	println(userConnected.Username)
 	t.Execute(w, userConnected)
@@ -50,11 +40,11 @@ func ServLogin(w http.ResponseWriter, r *http.Request) {
 	data := LoginData{}
 	data.Username = username
 	data.Password = password
-	authorize,idUser := Login(data)
+	authorize, idUser := Login(data)
 	println(authorize)
 	println(idUser)
-	if (authorize) {
-		userConnected=SelectUser(idUser)
+	if authorize {
+		userConnected = SelectUser(idUser)
 		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 	}
 	t.Execute(w, "")
@@ -72,9 +62,9 @@ func ServRegister(w http.ResponseWriter, r *http.Request) {
 	data.Username = username
 	data.Passwordverif = passwordverif
 
-	isValid,err := Check(data)
+	isValid, err := Check(data)
 	println(err)
-	if (isValid) {
+	if isValid {
 		Register(data)
 	}
 	t.Execute(w, nil)
