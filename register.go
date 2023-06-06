@@ -14,12 +14,14 @@ type UserList struct {
 
 type User struct {
 	Id       int
-	Username   string
+	Username string
 	Password string
 	Email    string
+	Lvl      int
+	Barks    int
+	Likes    int
+	Dislikes int
 }
-
-
 
 type RegisterData struct {
 	Email         string
@@ -53,7 +55,7 @@ func Register(data RegisterData) {
 
 	}
 
-	insert := "INSERT into user (pseudo,password,email) VALUES ('" + Username + "','" + hashPass + "','" + email + "')"
+	insert := "INSERT into user (pseudo,password,email,lvl,barks,likes,dislikes) VALUES ('" + Username + "','" + hashPass + "','" + email + "','0', '0', '0', '0')"
 
 	_, err = db.Exec(insert)
 
@@ -80,7 +82,7 @@ func Sql() User {
 	}
 
 	for rows.Next() {
-		err := rows.Scan(&user.Id, &user.Username, &user.Password, &user.Email)
+		err := rows.Scan(&user.Id, &user.Username, &user.Password, &user.Email, &user.Lvl, &user.Barks, &user.Likes, &user.Dislikes)
 		if err != nil {
 			log.Fatal(err)
 		}
