@@ -16,6 +16,7 @@ func Server() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/", ServLogin)
 	http.HandleFunc("/home", ServHome)
+	http.HandleFunc("/topic", ServTopic)
 	http.HandleFunc("/login", ServLogin)
 	http.HandleFunc("/register", ServRegister)
 	http.HandleFunc("/settings", ServSettings)
@@ -27,8 +28,12 @@ func Server() {
 
 func ServHome(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/home.html"))
-	println(userConnected.Username)
-	t.Execute(w, userConnected)
+	t.Execute(w, nil)
+}
+
+func ServTopic(w http.ResponseWriter, r *http.Request) {
+	t := template.Must(template.ParseFiles("template/topic.html"))
+	t.Execute(w, nil)
 }
 
 func ServLogin(w http.ResponseWriter, r *http.Request) {
