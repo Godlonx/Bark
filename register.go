@@ -35,7 +35,7 @@ var userList UserList
 
 func Register(data RegisterData) {
 
-	db, err := sql.Open("sqlite3", "public/barkData.db")
+	db, err := sql.Open("sqlite3", "public/barkBDD.db")
 
 	if err != nil {
 		log.Fatalln(err)
@@ -55,7 +55,7 @@ func Register(data RegisterData) {
 
 	}
 
-	insert := "INSERT into user (pseudo,password,email,lvl,barks,likes,dislikes) VALUES ('" + Username + "','" + hashPass + "','" + email + "','0', '0', '0', '0')"
+	insert := "INSERT into user (username,password,email,lvl,barks,likes,dislikes) VALUES ('" + Username + "','" + hashPass + "','" + email + "','0', '0', '0', '0')"
 
 	_, err = db.Exec(insert)
 
@@ -69,7 +69,7 @@ func Register(data RegisterData) {
 
 func Sql() User {
 
-	db, err := sql.Open("sqlite3", "public/barkData.db")
+	db, err := sql.Open("sqlite3", "public/barkBDD.db")
 
 	if err != nil {
 		log.Fatalln(err)

@@ -26,7 +26,7 @@ type UserConnected struct {
 
 func Login(user LoginData) (bool, int) {
 
-	db, err := sql.Open("sqlite3", "public/barkData.db")
+	db, err := sql.Open("sqlite3", "public/barkBDD.db")
 
 	if err != nil {
 		log.Fatalln(err)
@@ -55,7 +55,7 @@ func Login(user LoginData) (bool, int) {
 func SelectUser(id int) UserConnected {
 	var user UserConnected
 
-	db, err := sql.Open("sqlite3", "public/barkData.db")
+	db, err := sql.Open("sqlite3", "public/barkBDD.db")
 
 	if err != nil {
 		log.Fatalln(err)
