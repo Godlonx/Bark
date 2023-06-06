@@ -270,3 +270,7 @@ body {
 .password {
     height: 400px;
 }
+
+.account .buttons .delete {
+    background-color: #eb3737;
+}
