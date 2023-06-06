@@ -22,17 +22,12 @@ This project consists in creating a web forum that allows :
 
 
 # Who are you 👨‍💻
-• SILOTIA Mathis
-• LAURENT Rémi
-• GUILLET Evan
-• LE BOURHIS Evan
+- SILOTIA Mathis
+- LAURENT Rémi
+- GUILLET Evan
+- LE BOURHIS Evan
 
 
 
 # Technical stuff ⚙️
 The whole project is coded in Golang + HTML + CSS. The project is saved and available on a Github repository.
-
-
-
-# Development time ⌛
-12 May – 21 June • 40 days
