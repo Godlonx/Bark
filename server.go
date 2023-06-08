@@ -34,18 +34,21 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 func ServLogin(w http.ResponseWriter, r *http.Request) {
 	//user := Sql()
 	t := template.Must(template.ParseFiles("template/login.html"))
-
-	username := r.FormValue("username")
-	password := r.FormValue("password")
-	data := LoginData{}
-	data.Username = username
-	data.Password = password
-	authorize, idUser := Login(data)
-	println(authorize)
-	println(idUser)
-	if authorize {
-		userConnected = SelectUser(idUser)
-		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
+	if r.Method == http.MethodPost {
+		
+		
+		username := r.FormValue("username")
+		password := r.FormValue("password")
+		data := LoginData{}
+		data.Username = username
+		data.Password = password
+		authorize, idUser := Login(data)
+		println(authorize)
+		println(idUser)
+		if authorize {
+			userConnected = SelectUser(idUser)
+			http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
+		}
 	}
 	t.Execute(w, "")
 }
@@ -65,7 +68,13 @@ func ServRegister(w http.ResponseWriter, r *http.Request) {
 	isValid, err := Check(data)
 	println(err)
 	if isValid {
-		Register(data)
+		error,idUser := Register(data)
+		print("id: ")
+		println(idUser)
+		if !error{
+			userConnected = SelectUser(idUser)
+			http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
+		}
 	}
 	t.Execute(w, nil)
 }
