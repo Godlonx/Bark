@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home / Bark</title>
 </head>
 <body>
     <h1>{{.Id}}</h1>
@@ -54,21 +54,64 @@
                 Settings
             </a>
         </div>
-        <div class="button" style="background-color: #9800fe;">
-            <a href="/barking">
-                <img class="barking-icon" src="../static/icons/barking.png" alt="barking-icon">
-                Barking
-            </a>
+        <button id="open-popup-button" class="button">
+            <img class="barking-icon" src="../static/icons/barking.png" alt="barking-icon">
+            <p>Barking</p>
+        </button>
+        <div id="popup-screen">
+            <button id="cancel-button"><img src="../static/icons/cancel-icon.png" alt="cancel"></button>
+            <div id="popup-text-input">
+                <input id="title-topic" type="text" placeholder="Title">
+                <textarea id="textarea" rows="5" cols="33" placeholder="What do you want to talk about ?"></textarea>
+                <button id="barking-button">Barking</button>
+            </div>
         </div>
-        <dialog id="favDialog">
-            <input type="text" id="post_title" name="post_title" placeholder="Title">
-            <textarea id="textarea" cols="100" rows="10" placeholder="What do you want to talk about ?"></textarea>
-        </dialog>
-        <menu>
-            <button id="updateDetails">Barking</button>
-        </menu>
     </div>
     <div class="center">
+        <button class="topic-link">
+            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
+            <div class="sub-info">
+                <img src="../static/icons/message-icon.png" alt="message-icon.png">
+                <h3>8<!--NUMBER OF MESSAGES--></h3>
+                <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;">
+                <h3>26 mai 2023<!--DATE--></h3>
+                <div class="tag">Hardware</div>
+                <div class="tag">Gaming</div>
+            </div>
+        </button>
+        <button class="topic-link">
+            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
+            <div class="sub-info">
+                <img src="../static/icons/message-icon.png" alt="message-icon.png">
+                <h3>8<!--NUMBER OF MESSAGES--></h3>
+                <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;">
+                <h3>26 mai 2023<!--DATE--></h3>
+                <div class="tag">Hardware</div>
+                <div class="tag">Gaming</div>
+            </div>
+        </button>
+        <button class="topic-link">
+            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
+            <div class="sub-info">
+                <img src="../static/icons/message-icon.png" alt="message-icon.png">
+                <h3>8<!--NUMBER OF MESSAGES--></h3>
+                <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;">
+                <h3>26 mai 2023<!--DATE--></h3>
+                <div class="tag">Hardware</div>
+                <div class="tag">Gaming</div>
+            </div>
+        </button>
+        <button class="topic-link">
+            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
+            <div class="sub-info">
+                <img src="../static/icons/message-icon.png" alt="message-icon.png">
+                <h3>8<!--NUMBER OF MESSAGES--></h3>
+                <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;">
+                <h3>26 mai 2023<!--DATE--></h3>
+                <div class="tag">Hardware</div>
+                <div class="tag">Gaming</div>
+            </div>
+        </button>
         <button class="topic-link">
             <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
             <div class="sub-info">
@@ -117,25 +160,26 @@
 </html>
 
 <script>
-    let updateButton = document.getElementById('updateDetails')
-    let favDialog = document.getElementById('favDialog')
-    let outputBox = document.querySelector('output')
-    let selectEl = document.querySelector('select')
-    let confirmBtn = document.getElementById('confirmBtn')
+    let openPopupButton = document.getElementById("open-popup-button")
+    let popupContainer = document.getElementById("popup-screen")
+    let cancelButton = document.getElementById("cancel-button")
+    let barkingButton = document.getElementById("barking-button")
+    let titleInput = document.getElementById("title-topic")
+    let textarea = document.getElementById("textarea")
 
-    updateButton.addEventListener('click', function onOpen() {
-    if (typeof favDialog.showModal === "function") {
-        favDialog.showModal()
-        document.body.classList.add('popup-overlay')
-    }
+    openPopupButton.addEventListener("click", function() {
+        popupContainer.style.display = "block"
     })
 
-    selectEl.addEventListener('change', function onSelect(e) {
-        confirmBtn.value = selectEl.value
+    cancelButton.addEventListener("click", function() {
+        popupContainer.style.display = "none"
+        titleInput.value = ""
+        textarea.value = ""
     })
 
-    favDialog.addEventListener('close', function onClose() {
-        outputBox.value = favDialog.returnValue + " bouton cliqué - " + (new Date()).toString()
-        document.body.classList.remove('popup-overlay')
+    barkingButton.addEventListener("click", function() {
+        popupContainer.style.display = "none"
+        titleInput.value = ""
+        textarea.value = ""
     })
 </script>

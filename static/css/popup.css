@@ -1,46 +1,60 @@
-menu button {
+button {
     background-color: #9800fe;
     color: white;
     border: 0;
     border-radius: 8px;
     font-size: 20px;
     padding: 10px 15px;
+    font-weight: 700;
 }
 
-menu button:hover {
+button:hover {
     background-color: #6800ae;
     cursor: pointer;
 }
 
-#favDialog {
-    background-color: #313338;
-    color: white;
-    border: 0;
-    border-radius: 8px 8px 0px 0px;
-
-    width: 800px;
-
+#popup-screen {
+    display: none;
     position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index: 9999;
+}
+
+#popup-text-input {
+    
+    border-radius: 8px 8px 0px 0px;
+    width: 800px;
+    padding: 20px;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-#post_title {
+#title-topic {
     resize: none;
     outline: none;
     border: none;
 
-    background-color: #313338;
-    border-bottom: 2px solid #80828c;
-
-    width: 742px;
-
-    padding: 10px;
-    margin: 17px;
+    width: 780px;
+    border: 2px solid #80828c;
+    border-radius: 8px;
+    padding: 5px 10px;
+    margin-bottom: 20px;
+    color: white;
 
     font-size: 20px;
-    font-weight: 600;
+    font-weight: 500;
+
+    background-color: #313338;
+}
+
+#title-topic::placeholder {
+    color: #80828c;
 }
 
 #textarea {
@@ -48,23 +62,59 @@ menu button:hover {
     outline: none;
     border: none;
     background-color: #313338;
-    color: #c5c9d8;
-    
+    color: white;
     font-size: 20px;
-    font-weight: 200;
+    font-weight: 500;
+    width: 780px;
 
-    width: 750px;
-    padding: 0px 25px 0px 25px;
+    padding: 10px;
+
+    border: 2px solid #80828c;
+    border-radius: 8px;
 }
 
 #textarea::placeholder {
     color: #80828c;
 }
 
-.popup-overlay {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
+#barking-button {
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+
+    float: right;
+    margin: auto;
+
+    resize: none;
+    outline: none;
+    border: none;
+
+    margin-top: 15px;
+    padding: 6px 15px;
+    border-radius: 6px;
+    background-color: #9800fe;
+    font-weight: 700;
+}
+
+#barking-button:hover {
+    background-color: #6800ae;
+    cursor: pointer;
+}
+
+#cancel-button {
+    border: none;
+    padding: 0;
+    margin: 25px 0px 0px 25px;
     background-color: black;
-    z-index: 10;
+    width: 25px;
+}
+
+#cancel-button img {
+    width: 25px;
+}
+
+#cancel-button img:hover {
+    cursor: pointer;
 }

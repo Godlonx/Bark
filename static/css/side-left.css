@@ -97,10 +97,15 @@
     left: -48px;
 }
 
-.side-left div a .barking-icon {
+.side-left button .barking-icon {
     height: 20px;
     position: relative;
-    left: -50px;
+    left: -61px;
+}
+
+.side-left button p {
+    position: relative;
+    left: -10px;
 }
 
 .side-left div .other-button:hover {
