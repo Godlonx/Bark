@@ -1,0 +1,70 @@
+menu button {
+    background-color: #9800fe;
+    color: white;
+    border: 0;
+    border-radius: 8px;
+    font-size: 20px;
+    padding: 10px 15px;
+}
+
+menu button:hover {
+    background-color: #6800ae;
+    cursor: pointer;
+}
+
+#favDialog {
+    background-color: #313338;
+    color: white;
+    border: 0;
+    border-radius: 8px 8px 0px 0px;
+
+    width: 800px;
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#post_title {
+    resize: none;
+    outline: none;
+    border: none;
+
+    background-color: #313338;
+    border-bottom: 2px solid #80828c;
+
+    width: 742px;
+
+    padding: 10px;
+    margin: 17px;
+
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#textarea {
+    resize: none;
+    outline: none;
+    border: none;
+    background-color: #313338;
+    color: #c5c9d8;
+    
+    font-size: 20px;
+    font-weight: 200;
+
+    width: 750px;
+    padding: 0px 25px 0px 25px;
+}
+
+#textarea::placeholder {
+    color: #80828c;
+}
+
+.popup-overlay {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    z-index: 10;
+}

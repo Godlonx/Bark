@@ -28,6 +28,7 @@
     <link href="../static/css/navigation.css" rel="stylesheet" type="text/css">
     <link href="../static/font/fonts.css" rel="stylesheet" type="text/css">
     <link href="../static/css/overview.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/popup.css" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div class="side-left">
@@ -59,6 +60,13 @@
                 Barking
             </a>
         </div>
+        <dialog id="favDialog">
+            <input type="text" id="post_title" name="post_title" placeholder="Title">
+            <textarea id="textarea" cols="100" rows="10" placeholder="What do you want to talk about ?"></textarea>
+        </dialog>
+        <menu>
+            <button id="updateDetails">Barking</button>
+        </menu>
     </div>
     <div class="center">
         <button class="topic-link">
@@ -107,3 +115,27 @@
     </div>
 </body>
 </html>
+
+<script>
+    let updateButton = document.getElementById('updateDetails')
+    let favDialog = document.getElementById('favDialog')
+    let outputBox = document.querySelector('output')
+    let selectEl = document.querySelector('select')
+    let confirmBtn = document.getElementById('confirmBtn')
+
+    updateButton.addEventListener('click', function onOpen() {
+    if (typeof favDialog.showModal === "function") {
+        favDialog.showModal()
+        document.body.classList.add('popup-overlay')
+    }
+    })
+
+    selectEl.addEventListener('change', function onSelect(e) {
+        confirmBtn.value = selectEl.value
+    })
+
+    favDialog.addEventListener('close', function onClose() {
+        outputBox.value = favDialog.returnValue + " bouton cliqué - " + (new Date()).toString()
+        document.body.classList.remove('popup-overlay')
+    })
+</script>
