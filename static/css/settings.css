@@ -193,9 +193,8 @@ body {
 .popup {
     color: #fff;
     width: 300px;
-    height: 200px;
+    height: 250px;
     font-size: 20px;
-    padding-top: 40px;
     background-color: #36383f;
     transform: translate(0, 0);
     opacity: 0;
@@ -207,6 +206,20 @@ body {
     visibility: hidden;
     transition: all 1s;
 }
+
+.popup form {
+    width: 300px;
+    height: 200px;
+    padding-top: 40px;
+    display: grid;
+    text-align: center;
+    justify-content: center;
+}
+
+.head {
+    padding-top: 50px;
+}
+
 
 .popup-Active {
     visibility: visible;
@@ -243,6 +256,7 @@ body {
 .popup .inputs {
     display: flex;
     flex-direction: column;
+    margin: 40px 0px;
     gap: 40px;
     height: 200px;
 }
@@ -262,10 +276,15 @@ body {
 .popup .close {
     color: #eb3737;
     position: absolute;
-    margin-top: 10px;
+    margin-top: -25px;
     margin-left: 270px;
     cursor: pointer;
 }
+
+.head .close {
+    margin-top: 15px;
+}
+
 
 .password {
     height: 400px;

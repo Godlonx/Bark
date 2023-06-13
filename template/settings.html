@@ -71,44 +71,57 @@
         </div>
     </div>
     <div class="backgroundPopup" id="background"></div>
+
     <div class="popup head" id="1">
         <div class="fa fa-close close" onclick="closePopup(1)"></div>
         <span>Available soon</span>
     </div>
     <div class="popup username" id="2">
-        <div class="fa fa-close close" onclick="closePopup(2)"></div>
-        <span class="name">Change username</span>
-        <input type="text" placeholder="Username">
-        <div class="buttons">
-            <button type="submit" class="submit">Save</button>
-        </div>
+        <form method="post">
+            <div class="fa fa-close close" onclick="closePopup(2)"></div>
+            <input type="text" hidden name="title" value="username">
+            <span class="name">Change username</span>
+            <input type="text" name="new" placeholder="Username">
+            <div class="buttons">
+                <button type="submit" class="submit">Save</button>
+            </div>
+        </form>
     </div>
     <div class="popup email" id="3">
-        <div class="fa fa-close close" onclick="closePopup(3)"></div>
-        <span class="name">Change Email</span>
-        <input type="text" placeholder="Email">
-        <div class="buttons">
-            <button type="submit" class="submit">Save</button>
-        </div>
+        <form method="post">
+            <div class="fa fa-close close" onclick="closePopup(3)"></div>
+            <input type="text" hidden name="title" value="email">
+            <span class="name">Change Email</span>
+            <input type="text" name="new" placeholder="Email">
+            <div class="buttons">
+                <button type="submit" class="submit">Save</button>
+            </div>
+        </form>
     </div>
     <div class="popup password" id="4">
-        <div class="fa fa-close close" onclick="closePopup(4)"></div>
-        <span class="name">Change Password</span>
-        <div class="inputs">
-            <input type="text" class="actualPassword" placeholder="actual password">
-            <input type="text" class="newPassword" placeholder="new password">
-            <input type="text" class="validatePassword" placeholder="validate password">
-        </div>
-        <div class="buttons">
-            <button type="submit" class="submit">Save</button>
-        </div>
+        <form method="post">
+            <div class="fa fa-close close" onclick="closePopup(4)"></div>
+            <span class="name">Change Password</span>
+            <div class="inputs">
+                <input type="text" hidden name="title" value="password">
+                <input type="text" name="actualPassword" class="actualPassword" placeholder="actual password">
+                <input type="text" name="newPassword" class="newPassword" placeholder="new password">
+                <input type="text" name="validatePassword" class="validatePassword" placeholder="validate password">
+            </div> 
+            <div class="buttons">
+                <button type="submit" class="submit">Save</button>
+            </div>
+        </form>
     </div>
     <div class="popup account" id="5">
-        <div class="fa fa-close close" onclick="closePopup(5)"></div>
-        <span class="name">Are you sure about that</span>
-        <div class="buttons">
-            <button class="delete">Delete</button>
-        </div>
+        <form method="post">
+            <input type="text" hidden name="title" value="account">
+            <div class="fa fa-close close" onclick="closePopup(5)"></div>
+            <span class="name">Are you sure about that</span>
+            <div class="buttons">
+                <button class="delete">Delete</button>
+            </div>
+        </form>
     </div>
 
 </body>

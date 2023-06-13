@@ -2,6 +2,8 @@ package bark
 
 import (
 	//"fmt"
+	"database/sql"
+	"log"
 	"regexp"
 	"unicode"
 )
@@ -62,4 +64,30 @@ func verifyPassword(s string) bool {
 func isEmailValid(e string) bool {
 	emailRegex := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$") //regex found on stackOverflow
 	return emailRegex.MatchString(e)
+}
+
+func sendData(request string) {
+	db, err := sql.Open("sqlite3", "public/barkBDD.db")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	rows, err := db.Exec(request)
+	if err != nil {
+		log.Fatal(err)
+	}
+	println(rows)
+
+}
+
+func getData(request string) *sql.Rows {
+	db, err := sql.Open("sqlite3", "public/barkBDD.db")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	rows, err := db.Query(request)
+	defer db.Close()
+	if err != nil {
+		log.Fatal(err)
+	}
+	return rows
 }

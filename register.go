@@ -68,19 +68,14 @@ func Register(data RegisterData) {
 }
 
 func Sql() User {
-
 	db, err := sql.Open("sqlite3", "public/barkBDD.db")
-
 	if err != nil {
 		log.Fatalln(err)
 	}
-
 	rows, err := db.Query("select * from user")
-
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	for rows.Next() {
 		err := rows.Scan(&user.Id, &user.Username, &user.Password, &user.Email, &user.Lvl, &user.Barks, &user.Likes, &user.Dislikes)
 		if err != nil {
@@ -88,7 +83,6 @@ func Sql() User {
 		}
 		userList.User = append(userList.User, user)
 	}
-
 	defer rows.Close()
 	return userList.User[0]
 }

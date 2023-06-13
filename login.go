@@ -25,17 +25,13 @@ type UserConnected struct {
 }
 
 func Login(user LoginData) (bool, int) {
-
 	db, err := sql.Open("sqlite3", "public/barkBDD.db")
-
 	if err != nil {
 		log.Fatalln(err)
 	}
 	Sql()
-
 	if len(userList.User) > 0 {
 		for i := 0; i < len(userList.User); i++ {
-
 			if user.Username == userList.User[i].Username {
 				if CheckPasswordHash(user.Password, userList.User[i].Password) {
 					return true, userList.User[i].Id
@@ -47,7 +43,6 @@ func Login(user LoginData) (bool, int) {
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	defer db.Close()
 	return false, 0
 }

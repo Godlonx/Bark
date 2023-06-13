@@ -27,50 +27,63 @@ func Server() {
 
 func ServHome(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/home.html"))
-	println(userConnected.Username)
-	t.Execute(w, userConnected)
+	t.Execute(w, nil)
 }
 
 func ServLogin(w http.ResponseWriter, r *http.Request) {
 	//user := Sql()
 	t := template.Must(template.ParseFiles("template/login.html"))
-
-	username := r.FormValue("username")
-	password := r.FormValue("password")
-	data := LoginData{}
-	data.Username = username
-	data.Password = password
-	authorize, idUser := Login(data)
-	println(authorize)
-	println(idUser)
-	if authorize {
-		userConnected = SelectUser(idUser)
-		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
+	if r.Method == http.MethodPost {
+		username := r.FormValue("username")
+		password := r.FormValue("password")
+		data := LoginData{}
+		data.Username = username
+		data.Password = password
+		authorize, idUser := Login(data)
+		println(authorize)
+		println(idUser)
+		if authorize {
+			userConnected = SelectUser(idUser)
+			http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
+		}
 	}
 	t.Execute(w, "")
 }
 
 func ServRegister(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/register.html"))
-	username := r.FormValue("username")
-	password := r.FormValue("password")
-	email := r.FormValue("email")
-	passwordverif := r.FormValue("passwordverif")
-	data := RegisterData{}
-	data.Email = email
-	data.Password = password
-	data.Username = username
-	data.Passwordverif = passwordverif
-
-	isValid, err := Check(data)
-	println(err)
-	if isValid {
-		Register(data)
+	if r.Method == http.MethodPost {
+		username := r.FormValue("username")
+		password := r.FormValue("password")
+		email := r.FormValue("email")
+		passwordverif := r.FormValue("passwordverif")
+		data := RegisterData{}
+		data.Email = email
+		data.Password = password
+		data.Username = username
+		data.Passwordverif = passwordverif
+		isValid, err := Check(data)
+		println(err)
+		if isValid {
+			Register(data)
+		}
 	}
 	t.Execute(w, nil)
 }
 
 func ServSettings(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/settings.html"))
+	if r.Method == http.MethodPost {
+		title := r.FormValue("title")
+		if title == "password" {
+			actualPassword := r.FormValue("actualPassword")
+			newPassword := r.FormValue("newPassword")
+			validPassword := r.FormValue("validatePassword")
+			println(actualPassword, newPassword, validPassword)
+		} else {
+			new := r.FormValue("new")
+			println(new)
+		}
+	}
 	t.Execute(w, nil)
 }
