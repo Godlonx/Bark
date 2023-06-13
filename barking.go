@@ -6,13 +6,14 @@ import (
 )
 
 type Post struct {
+	Id        int
+	IdUser    int
+	IdComment int
+	Text      string
+	Likes     int
+	Dislikes  int
+	Date      string
 	Title     string
-	NbReplies int
-	Timestamp string
-	Tag       string
-	Content   string
-	Like      int
-	Dislike   int
 }
 
 type AllPosts struct {
@@ -22,8 +23,9 @@ type AllPosts struct {
 var post Post
 var allPosts AllPosts
 
+/*
 func selectPost() {
-	db, errSQLOpen := sql.Open("sqlite3", "./bark.db")
+	db, errSQLOpen := sql.Open("sqlite3", "./public/barkBDD.db")
 	if errSQLOpen != nil {
 		log.Fatalln(errSQLOpen)
 	}
@@ -34,7 +36,7 @@ func selectPost() {
 	}
 
 	for row.Next() {
-		err := row.Scan(&post.Title, &post.NbReplies, &post.Timestamp, &post.Tag, &post.Content, &post.Like, &post.Dislike)
+		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Text, &post.Likes, &post.Dislikes, &post.Date, &post.Title)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -42,9 +44,28 @@ func selectPost() {
 	}
 	row.Close()
 }
+*/
 
+func insertPost(insert Post) {
+
+	db, errSQLOpen := sql.Open("sqlite3", "./public/barkBDD.db")
+	if errSQLOpen != nil {
+		log.Fatalln(errSQLOpen)
+	}
+
+	statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, text, likes, dislikes, date, title) VALUES(?, ?, ?, ?, ?, ?, ?, ?)")
+	if errPrepare != nil {
+		log.Fatalln(errPrepare)
+	}
+	_, errExec := statement.Exec(insert.Id, insert.IdUser, insert.IdComment, insert.Text, insert.Likes, insert.Dislikes, insert.Date, insert.Title)
+	if errExec != nil {
+		log.Fatalln(errExec)
+	}
+}
+
+/*
 func updatePost(update string) {
-	db, errSQLOpen := sql.Open("sqlite3", "./bark.db")
+	db, errSQLOpen := sql.Open("sqlite3", "./public/barkBDD.db")
 	if errSQLOpen != nil {
 		log.Fatalln(errSQLOpen)
 	}
@@ -55,24 +76,9 @@ func updatePost(update string) {
 	}
 }
 
-func insertPost(insert Post) {
-	db, errSQLOpen := sql.Open("sqlite3", "./bark.db")
-	if errSQLOpen != nil {
-		log.Fatalln(errSQLOpen)
-	}
-
-	statement, errPrepare := db.Prepare("INSERT INTO Post (title, number_replies, timestamp, tag, content, number_like, number_dislike) VALUES(?, ?, ?, ?, ?, ?, ?)")
-	if errPrepare != nil {
-		log.Fatalln(errPrepare)
-	}
-	_, errExec2 := statement.Exec(insert.Title, insert.NbReplies, insert.Timestamp, insert.Tag, insert.Content, insert.Like, insert.Dislike)
-	if errExec2 != nil {
-		log.Fatalln(errExec2)
-	}
-}
 
 func delatePost(delate string) {
-	db, errSQLOpen := sql.Open("sqlite3", "./bark.db")
+	db, errSQLOpen := sql.Open("sqlite3", "./public/barkBDD.db")
 	if errSQLOpen != nil {
 		log.Fatalln(errSQLOpen)
 	}
@@ -82,3 +88,4 @@ func delatePost(delate string) {
 		log.Fatalln(errExec)
 	}
 }
+*/
