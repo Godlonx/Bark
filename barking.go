@@ -2,7 +2,9 @@ package bark
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
+	"time"
 )
 
 type Post struct {
@@ -23,7 +25,6 @@ type AllPosts struct {
 var post Post
 var allPosts AllPosts
 
-/*
 func selectPost() {
 	db, errSQLOpen := sql.Open("sqlite3", "./public/barkBDD.db")
 	if errSQLOpen != nil {
@@ -44,7 +45,6 @@ func selectPost() {
 	}
 	row.Close()
 }
-*/
 
 func insertPost(insert Post) {
 
@@ -89,3 +89,17 @@ func delatePost(delate string) {
 	}
 }
 */
+
+func getDatePost() string {
+	timeNow := time.Now()
+
+	hour := timeNow.Hour()
+	minutes := timeNow.Minute()
+	day := timeNow.Day()
+	month := timeNow.Month()
+	year := timeNow.Year()
+
+	var date string = fmt.Sprintf("%d:%d %d/%d/%d", hour, minutes, day, month, year)
+
+	return date
+}
