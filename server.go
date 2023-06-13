@@ -30,20 +30,25 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/home.html"))
 
 	if r.Method == http.MethodPost {
-		post.Id = 0
-		post.IdUser = 0
-		post.IdComment = 0
+		post.Id = 2
+		post.IdUser = 3
+		post.IdComment = 3
 		post.Text = r.FormValue("textarea")
-		post.Likes = 0
-		post.Dislikes = 0
-		post.Date = "à 16:17 le 13/06/2023"
+		post.Likes = 43
+		post.Dislikes = 5
+		post.Date = "à 16:51 le 13/06/2023"
 		post.Title = r.FormValue("title")
 
 		insertPost(post)
-		/*
-			fmt.Println(post.Title)
-			fmt.Println(post.Text)
-		*/
+
+		fmt.Println(post.Id)
+		fmt.Println(post.IdUser)
+		fmt.Println(post.IdComment)
+		fmt.Println(post.Text)
+		fmt.Println(post.Likes)
+		fmt.Println(post.Dislikes)
+		fmt.Println(post.Date)
+		fmt.Println(post.Title)
 	}
 
 	t.Execute(w, nil)

@@ -53,7 +53,7 @@ func insertPost(insert Post) {
 		log.Fatalln(errSQLOpen)
 	}
 
-	statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, text, likes, dislikes, date, title) VALUES(?, ?, ?, ?, ?, ?, ?, ?)")
+	statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, text, likes, dislikes, date, title) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
 	if errPrepare != nil {
 		log.Fatalln(errPrepare)
 	}
