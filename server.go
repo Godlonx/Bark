@@ -28,6 +28,12 @@ func Server() {
 
 func ServHome(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/home.html"))
+
+	if r.Method == http.MethodPost {
+		title := r.FormValue("title")
+		fmt.Println(title)
+	}
+
 	t.Execute(w, nil)
 }
 

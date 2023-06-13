@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home / Bark</title>
-</head>
-<body>
-    <h1>{{.Id}}</h1>
-    <h1>{{.Pseudo}}</h1>
-    <h1>{{.Password}}</h1>
     <!----- FORMATTING ----->
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,12 +20,13 @@
     <link href="../static/font/fonts.css" rel="stylesheet" type="text/css">
     <link href="../static/css/overview.css" rel="stylesheet" type="text/css">
     <link href="../static/css/popup.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
     <div class="side-left">
         <div class="my-profile">
             <img src="" class="avatar" alt="my-avatar">
-            <h2>Arcada</h2>
+            <h2>Harcadakad</h2>
             <!-- <h2>{{.Username}}PSEUDO</h2> -->
         </div>
         <div class="consumer-profile">
@@ -54,16 +46,18 @@
                 Settings
             </a>
         </div>
-        <button id="open-popup-button" class="button">
+        <button id="open-popup-button" class="button" onclick="openPopup()">
             <img class="barking-icon" src="../static/icons/barking.png" alt="barking-icon">
             <p>Barking</p>
         </button>
-        <div id="popup-screen">
-            <button id="cancel-button"><img src="../static/icons/cancel-icon.png" alt="cancel"></button>
+        <div class="popup-screen" id="popup">
+            <button id="cancel-button" onclick="closePopup()"><img src="../static/icons/cancel-icon.png" alt="cancel"></button>
             <div id="popup-text-input">
-                <input id="title-topic" type="text" placeholder="Title">
-                <textarea id="textarea" rows="5" cols="33" placeholder="What do you want to talk about ?"></textarea>
-                <button id="barking-button">Barking</button>
+                <form action="" method="POST">
+                    <input id="title-topic" type="text" name="title" placeholder="Title" required>
+                    <textarea id="textarea" rows="5" cols="33" placeholder="What do you want to talk about ?"></textarea>
+                    <button id="barking-button" onclick="closePopup()">Barking</button>
+                </form>
             </div>
         </div>
     </div>
@@ -160,26 +154,13 @@
 </html>
 
 <script>
-    let openPopupButton = document.getElementById("open-popup-button")
-    let popupContainer = document.getElementById("popup-screen")
-    let cancelButton = document.getElementById("cancel-button")
-    let barkingButton = document.getElementById("barking-button")
-    let titleInput = document.getElementById("title-topic")
-    let textarea = document.getElementById("textarea")
+    function openPopup() {
+        popup = document.getElementById('popup')
+        popup.classList.add('popup-active')
+    }
 
-    openPopupButton.addEventListener("click", function() {
-        popupContainer.style.display = "block"
-    })
-
-    cancelButton.addEventListener("click", function() {
-        popupContainer.style.display = "none"
-        titleInput.value = ""
-        textarea.value = ""
-    })
-
-    barkingButton.addEventListener("click", function() {
-        popupContainer.style.display = "none"
-        titleInput.value = ""
-        textarea.value = ""
-    })
+    function closePopup() {
+        popup = document.getElementById('popup')
+        popup.classList.remove('popup-active')
+    }
 </script>
