@@ -27,7 +27,7 @@
         <div class="my-profile">
             <img src="" class="avatar" alt="my-avatar">
             <h2>Harcadakad</h2>
-            <!-- <h2>{{.Username}}PSEUDO</h2> -->
+            
         </div>
         <div class="consumer-profile">
             <table>
@@ -62,67 +62,18 @@
         </div>
     </div>
     <div class="center">
-        <button class="topic-link">
-            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
-            <div class="sub-info">
-                <img src="../static/icons/message-icon.png" alt="message-icon.png">
-                <h3>8<!--NUMBER OF MESSAGES--></h3>
-                <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;">
-                <h3>26 mai 2023<!--DATE--></h3>
-                <div class="tag">Hardware</div>
-                <div class="tag">Gaming</div>
-            </div>
-        </button>
-        <button class="topic-link">
-            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
-            <div class="sub-info">
-                <img src="../static/icons/message-icon.png" alt="message-icon.png">
-                <h3>8<!--NUMBER OF MESSAGES--></h3>
-                <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;">
-                <h3>26 mai 2023<!--DATE--></h3>
-                <div class="tag">Hardware</div>
-                <div class="tag">Gaming</div>
-            </div>
-        </button>
-        <button class="topic-link">
-            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
-            <div class="sub-info">
-                <img src="../static/icons/message-icon.png" alt="message-icon.png">
-                <h3>8<!--NUMBER OF MESSAGES--></h3>
-                <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;">
-                <h3>26 mai 2023<!--DATE--></h3>
-                <div class="tag">Hardware</div>
-                <div class="tag">Gaming</div>
-            </div>
-        </button>
-        <button class="topic-link">
-            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
-            <div class="sub-info">
-                <img src="../static/icons/message-icon.png" alt="message-icon.png">
-                <h3>8<!--NUMBER OF MESSAGES--></h3>
-                <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;">
-                <h3>26 mai 2023<!--DATE--></h3>
-                <div class="tag">Hardware</div>
-                <div class="tag">Gaming</div>
-            </div>
-        </button>
-        <button class="topic-link">
-            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
-            <div class="sub-info">
-                <img src="../static/icons/message-icon.png" alt="message-icon.png">
-                <h3>8<!--NUMBER OF MESSAGES--></h3>
-                <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;">
-                <h3>26 mai 2023<!--DATE--></h3>
-                <div class="tag">Hardware</div>
-                <div class="tag">Gaming</div>
-            </div>
-        </button>
-        <div class="nav-button">
-            <button class="nav-element"><img src="../static/icons/extremity-icon.png" alt="extremity-icon"></button>
-            <button class="nav-element"><img src="../static/icons/proximity-icon.png" alt="proximity-icon"></button>
-            <button class="nav-element"><img src="../static/icons/proximity-icon.png" alt="proximity-icon"></button>
-            <button class="nav-element"><img src="../static/icons/extremity-icon.png" alt="extremity-icon"></button>
-        </div>
+        {{ range $element := .Post }}
+            <button class="topic-link">
+                <h1>{{ $element.Title }}</h1>
+                <div class="sub-info">
+                    <img src="../static/icons/message-icon.png" alt="message-icon.png">
+                    <h3>0<!--NUMBER OF MESSAGES--></h3>
+                    <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;">
+                    <h3>{{ $element.Date }}</h3>
+                    <div class="tag">TAG</div>
+                </div>
+            </button>
+        {{ end }}
     </div>
     <div class="navigation">
         <div>

@@ -18,14 +18,9 @@ type Post struct {
 	Title     string
 }
 
-type AllPosts struct {
+type CurrentPosts struct {
 	Post []Post
 }
-
-var post Post
-var allPosts AllPosts
-
-//SELECT MAX(id) FROM table;
 
 func getDataBase() *sql.DB {
 	db, errSQLOpen := sql.Open("sqlite3", "./public/barkBDD.db")
@@ -57,28 +52,28 @@ func selectLastId() int {
 	return idLastPost
 }
 
-/*
-	func selectPost() {
-		db, errSQLOpen := sql.Open("sqlite3", "./public/barkBDD.db")
-		if errSQLOpen != nil {
-			log.Fatalln(errSQLOpen)
-		}
+func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) CurrentPosts {
+	db := getDataBase()
 
-		row, errQuery := db.Query("SELECT * FROM Post")
-		if errQuery != nil {
-			log.Fatalln(errQuery)
-		}
+	var request string = fmt.Sprintf("SELECT * FROM Post WHERE id BETWEEN %d AND %d LIMIT 25", firstId, lastId)
 
-		for row.Next() {
-			err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Text, &post.Likes, &post.Dislikes, &post.Date, &post.Title)
-			if err != nil {
-				log.Fatal(err)
-			}
-			allPosts.Post = append(allPosts.Post, post)
-		}
-		row.Close()
+	row, errQuery := db.Query(request)
+	if errQuery != nil {
+		log.Fatalln(errQuery)
 	}
-*/
+
+	for row.Next() {
+		var post Post
+		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Text, &post.Likes, &post.Dislikes, &post.Date, &post.Title)
+		if err != nil {
+			log.Fatal(err)
+		}
+		currentPosts.Post = append(currentPosts.Post, post)
+	}
+	row.Close()
+
+	return currentPosts
+}
 
 func insertPost(insert Post) {
 
@@ -103,7 +98,6 @@ func updatePost(update string) {
 		log.Fatalln(errExec)
 	}
 }
-
 
 func delatePost(delate string) {
 	db := getDataBase()
