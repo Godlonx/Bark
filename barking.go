@@ -25,33 +25,64 @@ type AllPosts struct {
 var post Post
 var allPosts AllPosts
 
-func selectPost() {
+//SELECT MAX(id) FROM table;
+
+func getDataBase() *sql.DB {
 	db, errSQLOpen := sql.Open("sqlite3", "./public/barkBDD.db")
 	if errSQLOpen != nil {
 		log.Fatalln(errSQLOpen)
 	}
 
-	row, errQuery := db.Query("SELECT * FROM Post")
+	return db
+}
+
+func selectLastId() int {
+	db := getDataBase()
+
+	row, errQuery := db.Query("SELECT MAX(id) FROM Post")
 	if errQuery != nil {
 		log.Fatalln(errQuery)
 	}
 
+	var idLastPost int = 0
+
 	for row.Next() {
-		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Text, &post.Likes, &post.Dislikes, &post.Date, &post.Title)
+		err := row.Scan(&idLastPost)
 		if err != nil {
 			log.Fatal(err)
 		}
-		allPosts.Post = append(allPosts.Post, post)
 	}
 	row.Close()
+
+	return idLastPost
 }
+
+/*
+	func selectPost() {
+		db, errSQLOpen := sql.Open("sqlite3", "./public/barkBDD.db")
+		if errSQLOpen != nil {
+			log.Fatalln(errSQLOpen)
+		}
+
+		row, errQuery := db.Query("SELECT * FROM Post")
+		if errQuery != nil {
+			log.Fatalln(errQuery)
+		}
+
+		for row.Next() {
+			err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Text, &post.Likes, &post.Dislikes, &post.Date, &post.Title)
+			if err != nil {
+				log.Fatal(err)
+			}
+			allPosts.Post = append(allPosts.Post, post)
+		}
+		row.Close()
+	}
+*/
 
 func insertPost(insert Post) {
 
-	db, errSQLOpen := sql.Open("sqlite3", "./public/barkBDD.db")
-	if errSQLOpen != nil {
-		log.Fatalln(errSQLOpen)
-	}
+	db := getDataBase()
 
 	statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, text, likes, dislikes, date, title) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
 	if errPrepare != nil {
@@ -65,10 +96,7 @@ func insertPost(insert Post) {
 
 /*
 func updatePost(update string) {
-	db, errSQLOpen := sql.Open("sqlite3", "./public/barkBDD.db")
-	if errSQLOpen != nil {
-		log.Fatalln(errSQLOpen)
-	}
+	db := getDataBase()
 
 	_, errExec := db.Exec("UPDATE Post SET title = '" + update + "'")
 	if errExec != nil {
@@ -78,10 +106,7 @@ func updatePost(update string) {
 
 
 func delatePost(delate string) {
-	db, errSQLOpen := sql.Open("sqlite3", "./public/barkBDD.db")
-	if errSQLOpen != nil {
-		log.Fatalln(errSQLOpen)
-	}
+	db := getDataBase()
 
 	_, errExec := db.Exec("DELETE FROM Post WHERE title = ''")
 	if errExec != nil {

@@ -30,7 +30,7 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/home.html"))
 
 	if r.Method == http.MethodPost {
-		post.Id = 3
+		post.Id = selectLastId() + 1
 		post.IdUser = 0
 		post.IdComment = 0
 		post.Text = r.FormValue("textarea")
