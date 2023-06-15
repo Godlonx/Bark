@@ -14,6 +14,9 @@ var userConnected UserConnected
 
 const NUMBER_CURRENT_POSTS = 25
 
+var firstPost = 1
+var lastPost = NUMBER_CURRENT_POSTS
+
 func Server() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/", ServHome)
@@ -31,9 +34,10 @@ func Server() {
 func ServHome(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/home.html"))
 
-	if r.Method == http.MethodPost {
+	var post Post
+	var browseDirection string
 
-		var post Post
+	if r.Method == http.MethodPost {
 
 		if tableIsEmpty() {
 			post.Id = 1
@@ -47,15 +51,17 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 		post.Date = getDatePost()
 		post.Likes = 0
 		post.Dislikes = 0
-
 		insertPost(post)
+
+		browseDirection = r.FormValue("browse-posts")
+		browsePosts(browseDirection)
 
 		http.Redirect(w, r, "/home", http.StatusSeeOther)
 		return
 	}
 
 	var currentPosts CurrentPosts
-	currentPosts = selectTwentyFivePost(1, 25, currentPosts)
+	currentPosts = selectTwentyFivePost(firstPost, lastPost, currentPosts)
 
 	t.Execute(w, currentPosts)
 }

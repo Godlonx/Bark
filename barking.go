@@ -91,18 +91,55 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 	return currentPosts
 }
 
-func insertPost(insert Post) {
+func insertPost(post Post) {
 
-	db := getDataBase()
+	if post.Title != "" && post.Content != "" {
+		db := getDataBase()
 
-	statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, title, content, date, likes, dislikes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
-	if errPrepare != nil {
-		log.Fatalln(errPrepare)
+		statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, title, content, date, likes, dislikes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+		if errPrepare != nil {
+			log.Fatalln(errPrepare)
+		}
+		_, errExec := statement.Exec(post.Id, post.IdUser, post.IdComment, post.Title, post.Content, post.Date, post.Likes, post.Dislikes)
+		if errExec != nil {
+			log.Fatalln(errExec)
+		}
 	}
-	_, errExec := statement.Exec(insert.Id, insert.IdUser, insert.IdComment, insert.Title, insert.Content, insert.Date, insert.Likes, insert.Dislikes)
-	if errExec != nil {
-		log.Fatalln(errExec)
+}
+
+func browsePosts(browseDirection string) {
+
+	switch browseDirection {
+	case "first-posts":
+		firstPost = 1
+		lastPost = NUMBER_CURRENT_POSTS
+		break
+
+	case "prev-posts":
+		break
+
+	case "next-posts":
+		break
+
+	case "last-posts":
+		firstPost = selectLastId() - NUMBER_CURRENT_POSTS
+		lastPost = selectLastId()
+		break
 	}
+}
+
+func getDatePost() string {
+	timeNow := time.Now()
+
+	hour := timeNow.Hour()
+	minutes := timeNow.Minute()
+	day := timeNow.Day()
+	month := timeNow.Month()
+	year := timeNow.Year()
+
+	var date string = fmt.Sprintf("%d:%d %d/%d/%d", hour, minutes, day, month, year)
+
+	return date
 }
 
 /*
@@ -124,17 +161,3 @@ func delatePost(delate string) {
 	}
 }
 */
-
-func getDatePost() string {
-	timeNow := time.Now()
-
-	hour := timeNow.Hour()
-	minutes := timeNow.Minute()
-	day := timeNow.Day()
-	month := timeNow.Month()
-	year := timeNow.Year()
-
-	var date string = fmt.Sprintf("%d:%d %d/%d/%d", hour, minutes, day, month, year)
-
-	return date
-}
