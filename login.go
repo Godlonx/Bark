@@ -75,5 +75,7 @@ func SelectUser(id int) UserConnected {
 	}
 
 	defer row.Close()
+	println(user.Id)
+	println(user.Username)
 	return user
 }

@@ -1,22 +1,59 @@
+body{
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'gg sans', sans-serif;
+    --main-color:#9800fe;
+    --bg-color:#1e1f22;
+    background-image: url(../img/home-bg.svg);
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+*{
+    /* border: dashed rgb(33, 169, 56) 0.1vw; */
+}
+
+
 .center {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: absolute;
+    top: 20px;
+    left: 20%;
 }
 
 .topic-link {
 
     display: flex;
     flex-direction: column;
-
-    width: 800px;
+    position: relative;
+    width: 52vw;
     background-color: #313338;
     color: white;
-    border: 0px;
+    border: none;
     border-radius: 8px;
-    padding: 19px;
+    padding: 1vw;
     margin-bottom: 12px;
+    overflow: hidden;
 }
+
+/* .topic-link::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--main-color);
+    z-index: 2;
+    clip-path: polygon(100% 50%, 80% 100%, 100% 100%);
+    pointer-events: none;
+} */
 
 .topic-link:hover {
     background-color: #3a3d43;
@@ -24,42 +61,56 @@
 }
 
 
-
-
-
 .topic-link h1 {
-    padding-bottom: 12px;
+    padding-bottom: 0.9vw;
+    font-size: 1.5vw;
 }
 
 .topic-link .sub-info {
     display: flex;
     align-items: center;
+    position: relative;
+    min-width: 60%;
+    max-width: 80%;
+    gap: 1vw;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
 .topic-link .sub-info img {
     height: 12px;
-    margin-right: 6px;
 }
 
 .topic-link h3 {
     color: #b5bac1;
-    font-size: 16px;
+    font-size: 1.1vw;
     font-weight: 600;
+    position: relative;
+}
+
+.date::before{
+    font-family: "FontAwesome";
+    content: "\f073 \00a0\00a0";
+    font-weight: 900;
+
+}
+
+.mssgNumber::before{
+    font-family: "FontAwesome";
+    content: "\f075 \00a0\00a0";
+    font-weight: 900;
+
 }
 
 .topic-link .tag {
     background-color: #232428;
 
     font-weight: 700;
-    font-size: 16px;
+    font-size: 1vw;
 
-    margin-left: 16px;
-    margin-right: -9px;
-
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 11px;
-    padding-right: 11.5px;
+    padding: 0.3vw;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
 
     border-radius: 25px;
 }

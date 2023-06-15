@@ -68,9 +68,7 @@ func Register(data RegisterData) (bool,int) {
 	}
 
 	defer db.Close()
-	print("id last : ")
-	println(userList.User[len(userList.User)].Id)
-	return error,userList.User[len(userList.User)].Id-1
+	return error,userList.User[len(userList.User)-1].Id+1
 
 }
 

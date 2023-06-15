@@ -1,106 +1,114 @@
-.navigation {
-    width: 240px;
-    margin-left: 22px;
-    color: white;
+body {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'gg sans', sans-serif;
+    --main-color:#9800fe;
+    --bg-color:#1e1f22;
 }
 
-.navigation img {
+.search-bar {
     position: relative;
-    top: -55px;
-    left: 16px;
-    height: 20px;
 }
 
-.navigation div input {
+.search{
+    position: relative;
+    padding: 1vw;
+    width: 18vw;
+    height: 1vw;
+    border-radius: 5px;
     background-color: #313338;
     color: white;
-    caret-color: white;
-    font-size: 19px;
-    
-    padding-left: 51px;
-
-    width: 189px;
-    height: 48px;
-
-    border: 0px;
-    border-radius: 8px;
-    margin-bottom: 22px;
-}
-
-input:focus {
-    outline: none;
-}
-
-input::placeholder {
-    color: white;
-}
-
-
-
-
-
-.navigation .selector:last-child {
-    position: relative;
-    top: -25px;
-}
-
-.navigation .selector select {
-
-    width: 240px;
-    height: 48px;
-
-    position: relative;
-    top: -25px;
-
-    background-color: #313338;
-    color: white;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    border: 0px;
-    border-radius: 8px;
-    margin-bottom: 22px;
-
-    font-size: 20px;
-    font-weight: 500;
-
-    text-align: center;
-
     appearance: none;
-}
-
-.navigation .selector select:hover {
-    background-color: #454950;
-    cursor: pointer;
-}
-
-.navigation .selector select:focus {
     outline: none;
+    border: none;
+    font-size: 1.1vw;
+    
 }
 
-.navigation .selector select:last-child {
+.search:focus{
+    outline: solid var(--main-color) 0.2vw;
+}
+
+.search-bar::after{
+    font-family: "FontAwesome";
+    content: "\f002";
+    font-weight: 900;
+    font-size: 1.5vw;
+    color: white;
+    height: 1.5vw;
+    width: 1.5vw;
+    transform-origin: center;
+    position: absolute;
+    pointer-events: none;
+    top: 25%;
+    right: 3%;
+    z-index: 1;
+}
+
+
+.navigation {
+    width: 20vw;
+    color: white;
+    position: fixed;
+    left:75%;
+    top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.selector-sort,.selector-filter{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
     position: relative;
-    top: -50px;
+    align-items: center;
 }
 
-.navigation .selector img {
+.selector-sort select,.selector-filter select{
+    width: 17vw;
+    height: 3vw;
+    border-radius: 5px;
+    text-align: center;
+    background-color: #313338;
+    color: white;
+    appearance: none;
+    outline: none;
+    border: none;
     position: relative;
-    top: -81px;
+    font-size: 1.1vw;
 }
 
-.navigation div:last-child img {
-    height: 13px;
+.selector-sort::after,.selector-filter::after{
+    font-family: "FontAwesome";
+    content: "\f0de";
+    pointer-events: none;
+    font-weight: 900;
+    font-size: 1.5vw;
+    z-index: 2;
+    display: flex;
+    text-align: center;
+    transform-origin: 50% 85%;
+    height: 0.5vw;
+    color: white;
+    top:35%;
+    right: 20%;
+    
+    position: absolute;
+    transform: rotate(0deg);
+    transition: all 0.5s;
+}
+.selector-sort:focus-within::after,.selector-filter:focus-within::after{
+    transform: rotate(180deg);
+    transition: all 0.5s;
 }
 
-.navigation .selector img:last-child {
-    height: 7px;
-}
-
-.selector img:last-child {
-    float: right;
+.selector-sort div,.selector-filter div{
+    font-size: 2vw;
     position: relative;
-    left: -16px;
-    top: -75px;
+    top: 100%;
+    height: 2vw;
 }
+

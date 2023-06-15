@@ -22,40 +22,28 @@ function pulse() {
   }
 
 
-function barkColorLogin(){
+function barkColor(){
     var link = document.querySelector("link[rel~='icon']");
     const logo =  document.getElementById("bark-logo")
-    const newDiv = document.createElement("div");
     if (logo.value !== "angry") {
         link.href = '../static/img/angry-face.png';
         document.body.style.setProperty('--main-color', '#AA0C18');
-        document.body.style.backgroundImage = "url(../static/img/angry-bg.svg)";
+        if (document.title == "Home / Bark") {
+            document.body.style.backgroundImage = "url(../static/img/home-bg-angry.svg)";
+        }else{
+            document.body.style.backgroundImage = "url(../static/img/angry-bg.svg)";
+        }
+        
         logo.value = "angry"
         logo.src ="../static/img/angry-face.png"
     }else{
         link.href = '../static/img/logo.png';
         document.body.style.setProperty('--main-color', '#9800fe');
-        document.body.style.backgroundImage = "url(../static/img/background.svg)";
-        logo.value = "calm"
-        logo.src ="../static/img/logo.png"
-    }
-}
-
-function barkColorRegister(){
-    var link = document.querySelector("link[rel~='icon']");
-    const logo =  document.getElementById("bark-logo")
-    const newDiv = document.createElement("div");
-    console.log("test");
-    if (logo.value !== "cool") {
-        link.href = '../static/img/cool.png';
-        document.body.style.setProperty('--main-color', '#F29555');
-        document.body.style.backgroundImage = "url(../static/img/cool-bg.svg)";
-        logo.value = "cool"
-        logo.src ="../static/img/cool.png"
-    }else{
-        link.href = '../static/img/logo.png';
-        document.body.style.setProperty('--main-color', '#9800fe');
-        document.body.style.backgroundImage = "url(../static/img/background.svg)";
+        if (document.title == "Home / Bark") {
+            document.body.style.backgroundImage = "url(../static/img/home-bg.svg)";
+        }else{
+            document.body.style.backgroundImage = "url(../static/img/angry-bg.svg)";
+        }
         logo.value = "calm"
         logo.src ="../static/img/logo.png"
     }
