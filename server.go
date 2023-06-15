@@ -16,7 +16,7 @@ const NUMBER_CURRENT_POSTS = 25
 
 func Server() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	http.HandleFunc("/", ServLogin)
+	http.HandleFunc("/", ServHome)
 	http.HandleFunc("/home", ServHome)
 	http.HandleFunc("/topic", ServTopic)
 	http.HandleFunc("/login", ServLogin)
@@ -31,27 +31,31 @@ func Server() {
 func ServHome(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/home.html"))
 
-	var currentPosts CurrentPosts
-	currentPosts = selectTwentyFivePost(1, 25, currentPosts)
-
 	if r.Method == http.MethodPost {
 
 		var post Post
 
-		post.Id = selectLastId() + 1
+		if tableIsEmpty() {
+			post.Id = 1
+		} else {
+			post.Id = selectLastId() + 1
+		}
 		post.IdUser = 0
 		post.IdComment = 0
-		post.Text = r.FormValue("textarea")
+		post.Title = r.FormValue("title")
+		post.Content = r.FormValue("textarea")
+		post.Date = getDatePost()
 		post.Likes = 0
 		post.Dislikes = 0
-		post.Date = getDatePost()
-		post.Title = r.FormValue("title")
 
 		insertPost(post)
 
 		http.Redirect(w, r, "/home", http.StatusSeeOther)
 		return
 	}
+
+	var currentPosts CurrentPosts
+	currentPosts = selectTwentyFivePost(1, 25, currentPosts)
 
 	t.Execute(w, currentPosts)
 }

@@ -11,11 +11,11 @@ type Post struct {
 	Id        int
 	IdUser    int
 	IdComment int
-	Text      string
+	Title     string
+	Content   string
+	Date      string
 	Likes     int
 	Dislikes  int
-	Date      string
-	Title     string
 }
 
 type CurrentPosts struct {
@@ -29,6 +29,22 @@ func getDataBase() *sql.DB {
 	}
 
 	return db
+}
+
+func tableIsEmpty() bool {
+	db := getDataBase()
+
+	var rowCount int
+	err := db.QueryRow("SELECT COUNT(*) FROM Post").Scan(&rowCount)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if rowCount == 0 {
+		return true
+	} else {
+		return false
+	}
 }
 
 func selectLastId() int {
@@ -64,7 +80,7 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 
 	for row.Next() {
 		var post Post
-		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Text, &post.Likes, &post.Dislikes, &post.Date, &post.Title)
+		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Title, &post.Content, &post.Date, &post.Likes, &post.Dislikes)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -79,11 +95,11 @@ func insertPost(insert Post) {
 
 	db := getDataBase()
 
-	statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, text, likes, dislikes, date, title) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+	statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, title, content, date, likes, dislikes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
 	if errPrepare != nil {
 		log.Fatalln(errPrepare)
 	}
-	_, errExec := statement.Exec(insert.Id, insert.IdUser, insert.IdComment, insert.Text, insert.Likes, insert.Dislikes, insert.Date, insert.Title)
+	_, errExec := statement.Exec(insert.Id, insert.IdUser, insert.IdComment, insert.Title, insert.Content, insert.Date, insert.Likes, insert.Dislikes)
 	if errExec != nil {
 		log.Fatalln(errExec)
 	}

@@ -27,7 +27,6 @@
         <div class="my-profile">
             <img src="" class="avatar" alt="my-avatar">
             <h2>Harcadakad</h2>
-            
         </div>
         <div class="consumer-profile">
             <table>
@@ -55,25 +54,35 @@
             <div id="popup-text-input">
                 <form action="" method="POST">
                     <input id="title-topic" type="text" name="title" placeholder="Title" required>
-                    <textarea id="textarea" name="textarea" rows="5" cols="33" placeholder="What do you want to talk about ?"></textarea>
+                    <textarea id="textarea" name="textarea" rows="5" cols="33" placeholder="What do you want to talk about ?" required></textarea>
                     <button id="barking-button" onclick="closePopup()">Barking</button>
                 </form>
             </div>
         </div>
     </div>
     <div class="center">
-        {{ range $element := .Post }}
-            <button class="topic-link">
-                <h1>{{ $element.Title }}</h1>
-                <div class="sub-info">
-                    <img src="../static/icons/message-icon.png" alt="message-icon.png">
-                    <h3>0<!--NUMBER OF MESSAGES--></h3>
-                    <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;">
-                    <h3>{{ $element.Date }}</h3>
-                    <div class="tag">TAG</div>
-                </div>
-            </button>
-        {{ end }}
+        <div class="center">
+            {{ range $element := .Post }}
+                <button class="topic-link">
+                    <h1>{{ $element.Title }}</h1>
+                    <div class="sub-info">
+                        <img src="../static/icons/message-icon.png" alt="message-icon.png">
+                        <h3>0<!--NUMBER OF MESSAGES--></h3>
+                        <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;">
+                        <h3>{{ $element.Date }}</h3>
+                        <div class="tag">TAG</div>
+                    </div>
+                </button>
+            {{ end }}
+        </div>
+        <div class="nav-button">
+            <form action="" method="POST">
+                <button class="nav-element" name="extrem-first" value="extrem-first"><img src="../static/icons/extremity-icon.png" alt="extremity-icon"></button>
+                <button class="nav-element" name="previous" value="previous"><img src="../static/icons/proximity-icon.png" alt="proximity-icon"></button>
+                <button class="nav-element" name="next" value="next"><img src="../static/icons/proximity-icon.png" alt="proximity-icon"></button>
+                <button class="nav-element" name="extrem-last" value="extrem-last"><img src="../static/icons/extremity-icon.png" alt="extremity-icon"></button>
+            </form>
+        </div>
     </div>
     <div class="navigation">
         <div>
