@@ -24,6 +24,7 @@ type UserConnected struct {
 	Dislikes int
 }
 
+
 func Login(user LoginData) (bool, int) {
 
 	db, err := sql.Open("sqlite3", "public/barkBDD.db")
@@ -75,7 +76,5 @@ func SelectUser(id int) UserConnected {
 	}
 
 	defer row.Close()
-	println(user.Id)
-	println(user.Username)
 	return user
 }

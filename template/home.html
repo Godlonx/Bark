@@ -20,6 +20,8 @@
     <link href="../static/css/navigation.css" rel="stylesheet" type="text/css">
     <link href="../static/css/overview.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../static/css/popup.css" rel="stylesheet" type="text/css">
+
 </head>
 <body>
     <div class="side-left">
@@ -28,8 +30,7 @@
         </div>
         <div class="my-profile">
             <img src="../static/images/avatar2-tmp.png" class="avatar" alt="my-avatar">
-
-            <h2>{{.Username}} : PSEUDO</h2>
+            <h2>Harcadakad</h2>
         </div>
         <div class="consumer-profile">
             <div>
@@ -52,122 +53,48 @@
             <div id="icon" class="fa fa-cog"></div>
             <a class="link-setting" href="/settings">Settings</a>
         </div>
-        <div class="barking-button">
-            <div id="icon" class="fa fa-pencil"></div>
-            <a href="/barking">Barking</a>
+        <div class="barking-button" onclick="openPopup()">
+
+                <div id="icon" class="fa fa-pencil"></div>
+                <p>Barking</p>
+        </div>
+    </div>
+        <div class="popup-screen" id="popup">
+            <button id="cancel-button" onclick="closePopup()"><img src="../static/icons/cancel-icon.png" alt="cancel"></button>
+            <div id="popup-text-input">
+                <form action="" method="POST">
+                    <input id="title-topic" type="text" name="title" placeholder="Title" required>
+                    <textarea id="textarea" name="textarea" rows="5" cols="33" placeholder="What do you want to talk about ?" required></textarea>
+                    <button id="barking-button" onclick="closePopup()">Barking</button>
+                </form>
+            </div>
         </div>
     </div>
     <div class="center">
-        <button class="topic-link">
-            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
-            <div class="sub-info">
-                <!-- <img src="../static/icons/message-icon.png" alt="message-icon.png"> -->
-                <h3 class="mssgNumber">8<!--NUMBER OF MESSAGES--></h3>
-                <!-- <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;"> -->
-                <h3 class="date">26 mai 2023<!--DATE--></h3>
-                <div class="tag">Hardware</div>
-                <div class="tag">Gaming</div>
-            </div>
-        </button>
-        <button class="topic-link">
-            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
-            <div class="sub-info">
-                <!-- <img src="../static/icons/message-icon.png" alt="message-icon.png"> -->
-                <h3 class="mssgNumber">8<!--NUMBER OF MESSAGES--></h3>
-                <!-- <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;"> -->
-                <h3 class="date">26 mai 2023<!--DATE--></h3>
-                <div class="tag">Hardware</div>
-                <div class="tag">Gaming</div>
-            </div>
-        </button>
-        <button class="topic-link">
-            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
-            <div class="sub-info">
-                <!-- <img src="../static/icons/message-icon.png" alt="message-icon.png"> -->
-                <h3 class="mssgNumber">8<!--NUMBER OF MESSAGES--></h3>
-                <!-- <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;"> -->
-                <h3 class="date">26 mai 2023<!--DATE--></h3>
-                <div class="tag">Hardware</div>
-                <div class="tag">Gaming</div>
-            </div>
-        </button>
-        <button class="topic-link">
-            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
-            <div class="sub-info">
-                <!-- <img src="../static/icons/message-icon.png" alt="message-icon.png"> -->
-                <h3 class="mssgNumber">8<!--NUMBER OF MESSAGES--></h3>
-                <!-- <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;"> -->
-                <h3 class="date">26 mai 2023<!--DATE--></h3>
-                <div class="tag">Hardware</div>
-                <div class="tag">Gaming</div>
-            </div>
-        </button>
-        <button class="topic-link">
-            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
-            <div class="sub-info">
-                <!-- <img src="../static/icons/message-icon.png" alt="message-icon.png"> -->
-                <h3 class="mssgNumber">8<!--NUMBER OF MESSAGES--></h3>
-                <!-- <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;"> -->
-                <h3 class="date">26 mai 2023<!--DATE--></h3>
-                <div class="tag">Hardware</div>
-                <div class="tag">Gaming</div>
-            </div>
-        </button>
-        <button class="topic-link">
-            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
-            <div class="sub-info">
-                <!-- <img src="../static/icons/message-icon.png" alt="message-icon.png"> -->
-                <h3 class="mssgNumber">8<!--NUMBER OF MESSAGES--></h3>
-                <!-- <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;"> -->
-                <h3 class="date">26 mai 2023<!--DATE--></h3>
-                <div class="tag">Hardware</div>
-                <div class="tag">Gaming</div>
-            </div>
-        </button>
-        <button class="topic-link">
-            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
-            <div class="sub-info">
-                <!-- <img src="../static/icons/message-icon.png" alt="message-icon.png"> -->
-                <h3 class="mssgNumber">8<!--NUMBER OF MESSAGES--></h3>
-                <!-- <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;"> -->
-                <h3 class="date">26 mai 2023<!--DATE--></h3>
-                <div class="tag">Hardware</div>
-                <div class="tag">Gaming</div>
-            </div>
-        </button>
-        <button class="topic-link">
-            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
-            <div class="sub-info">
-                <!-- <img src="../static/icons/message-icon.png" alt="message-icon.png"> -->
-                <h3 class="mssgNumber">8<!--NUMBER OF MESSAGES--></h3>
-                <!-- <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;"> -->
-                <h3 class="date">26 mai 2023<!--DATE--></h3>
-                <div class="tag">Hardware</div>
-                <div class="tag">Gaming</div>
-            </div>
-        </button>
-        <button class="topic-link">
-            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
-            <div class="sub-info">
-                <!-- <img src="../static/icons/message-icon.png" alt="message-icon.png"> -->
-                <h3 class="mssgNumber">8<!--NUMBER OF MESSAGES--></h3>
-                <!-- <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;"> -->
-                <h3 class="date">26 mai 2023<!--DATE--></h3>
-                <div class="tag">Hardware</div>
-                <div class="tag">Gaming</div>
-            </div>
-        </button>
-        <button class="topic-link">
-            <h1>Overclock/Undervolt 7900XT 250W IG<!--TITLE TOPIC--></h1>
-            <div class="sub-info">
-                <!-- <img src="../static/icons/message-icon.png" alt="message-icon.png"> -->
-                <h3 class="mssgNumber">8<!--NUMBER OF MESSAGES--></h3>
-                <!-- <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;"> -->
-                <h3 class="date">26 mai 2023<!--DATE--></h3>
-                <div class="tag">Hardware</div>
-                <div class="tag">Gaming</div>
-            </div>
-        </button>
+            {{ range $element := .Post }}
+                <button class="topic-link">
+                    <h1>{{ $element.Title }}</h1>
+                    <div class="sub-info">
+                        <h3 class="mssgNumber">0<!--NUMBER OF MESSAGES--></h3>
+                        <h3 class="date">{{ $element.Date }}</h3>
+                        <div class="tag">TAG</div>
+                    </div>
+                </button>
+            {{ end }}
+        <div class="nav-button">
+            <form action="" method="POST">
+                <button class="nav-element" id="first-posts" type="submit"><input type="hidden" value="first-posts" name="browse-posts"></button>
+            </form>
+            <form action="" method="POST">
+                <button class="nav-element" id="prev-posts" type="submit"><input type="hidden" value="prev-posts" name="browse-posts"></button>
+            </form>
+            <form action="" method="POST">
+                <button class="nav-element" id="next-posts" type="submit"><input type="hidden" value="next-posts" name="browse-posts"></button>
+            </form>
+            <form action="" method="POST">
+                <button class="nav-element" id="last-posts" type="submit"><input type="hidden" value="last-posts" name="browse-posts"></button>
+            </form>
+        </div>
     </div>
     <div class="navigation">
         <div class="search-bar">
@@ -199,3 +126,15 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="../static/js/login.js"></script>
 </html>
+
+<script>
+    function openPopup() {
+        popup = document.getElementById('popup')
+        popup.classList.add('popup-active')
+    }
+
+    function closePopup() {
+        popup = document.getElementById('popup')
+        popup.classList.remove('popup-active')
+    }
+</script>

@@ -110,8 +110,33 @@ body{
 .nav-button {
     display: flex;
     justify-content: center;
-    margin-bottom: 100px;
+    position: relative;
 }
+
+#first-posts::after{
+    font-family: "FontAwesome";
+    content: "\f048";
+    font-weight: 900;
+}
+
+#prev-posts::after{
+    font-family: "FontAwesome";
+    content: "\f053";
+    font-weight: 900;
+}
+
+#next-posts::after{
+    font-family: "FontAwesome";
+    content: "\f054";
+    font-weight: 900;
+}
+
+#last-posts::after{
+    font-family: "FontAwesome";
+    content: "\f051";
+    font-weight: 900;
+}
+
 
 .nav-button .nav-element {
     background-color: #313338;

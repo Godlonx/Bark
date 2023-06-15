@@ -2,6 +2,7 @@ package bark
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -32,8 +33,8 @@ type RegisterData struct {
 var user User
 var userList UserList
 
-func Register(data RegisterData) (bool,int) {
-	var error = false
+func Register(data RegisterData) {
+
 	db, err := sql.Open("sqlite3", "public/barkBDD.db")
 
 	if err != nil {
@@ -48,27 +49,21 @@ func Register(data RegisterData) (bool,int) {
 
 	for i := 0; i < len(userList.User); i++ {
 
-		if userList.User[i].Username == Username || userList.User[i].Email == email {
-			error = true
+		if userList.User[i].Username == Username {
+			fmt.Println("error")
 		}
 
 	}
-	println(error)
-	if !error {
-		insert := "INSERT into user (username,password,email,lvl,barks,likes,dislikes) VALUES ('" + Username + "','" + hashPass + "','" + email + "','0', '0', '0', '0')"
-	
-	
-		_, err = db.Exec(insert)
 
+	insert := "INSERT into user (username,password,email,lvl,barks,likes,dislikes) VALUES ('" + Username + "','" + hashPass + "','" + email + "','0', '0', '0', '0')"
 
-		if err != nil {
-			log.Fatal(err)
-		}
+	_, err = db.Exec(insert)
 
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	defer db.Close()
-	return error,userList.User[len(userList.User)-1].Id+1
 
 }
 
@@ -80,14 +75,14 @@ func Sql() User {
 		log.Fatalln(err)
 	}
 
-	rows, err := db.Query("select id,username,email from user")
+	rows, err := db.Query("select * from user")
 
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	for rows.Next() {
-		err := rows.Scan(&user.Id,&user.Username,&user.Email)
+		err := rows.Scan(&user.Id, &user.Username, &user.Password, &user.Email, &user.Lvl, &user.Barks, &user.Likes, &user.Dislikes)
 		if err != nil {
 			log.Fatal(err)
 		}
