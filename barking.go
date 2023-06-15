@@ -116,13 +116,35 @@ func browsePosts(browseDirection string) {
 		break
 
 	case "prev-posts":
+
+		whatIdFirstPostBelow := firstPost - NUMBER_CURRENT_POSTS
+
+		if whatIdFirstPostBelow <= 0 {
+			firstPost = 1
+			lastPost = NUMBER_CURRENT_POSTS
+
+		} else {
+			firstPost -= NUMBER_CURRENT_POSTS
+			lastPost -= NUMBER_CURRENT_POSTS
+		}
 		break
 
 	case "next-posts":
+
+		whatIdLastPostAbove := lastPost + NUMBER_CURRENT_POSTS
+
+		if whatIdLastPostAbove >= selectLastId() {
+			firstPost = selectLastId() - NUMBER_CURRENT_POSTS + 1
+			lastPost = selectLastId()
+
+		} else {
+			firstPost += NUMBER_CURRENT_POSTS
+			lastPost += NUMBER_CURRENT_POSTS
+		}
 		break
 
 	case "last-posts":
-		firstPost = selectLastId() - NUMBER_CURRENT_POSTS
+		firstPost = selectLastId() - NUMBER_CURRENT_POSTS + 1
 		lastPost = selectLastId()
 		break
 	}
