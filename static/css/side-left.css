@@ -6,7 +6,9 @@ body {
     font-family: 'gg sans', sans-serif;
     --main-color:#9800fe;
     --bg-color:#1e1f22;
+    height: 100%;
 }
+
 .side-left {
     
     position: fixed;
@@ -28,7 +30,7 @@ body {
 
 .logo-bark img {
     position: relative;
-    width: 25%;
+    width: 30%;
 }
 
 .progress-bar{
@@ -121,8 +123,6 @@ body {
 }
 
 
-
-
 .side-left .button {
     display: flex;
     justify-content: center;
@@ -146,7 +146,7 @@ body {
     padding-top: 0.6vw;
     padding-bottom: 0.5vw;
     justify-content: flex-start;
-
+    cursor: pointer;
 }
 
 .barking-button{
@@ -158,7 +158,7 @@ body {
 
 .setting-button a,.barking-button a{
     /* border: dashed white 0.1vw; */
-    font-size: 1.5vw;
+    font-size: 1.3vw;
     color: white;
 }
 
@@ -171,3 +171,11 @@ body {
 
 
 
+@media screen and (max-width: 900px) {
+    .side-left {
+        left: 0%;
+        top:0%;
+        height: 100%;
+        background-color: var(--main-color);
+    }
+}

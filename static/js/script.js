@@ -22,6 +22,10 @@ function pulse() {
   }
 
 
+function toSetting(){
+    window.location = "http://localhost:8080/settings";
+}
+
 function barkColor(){
     var link = document.querySelector("link[rel~='icon']");
     const logo =  document.getElementById("bark-logo")
