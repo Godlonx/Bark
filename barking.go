@@ -148,8 +148,14 @@ func browsePosts(browseDirection string) {
 		break
 
 	case "last-posts":
-		firstPost = selectLastId() - NUMBER_CURRENT_POSTS + 1
+		howManyCurrentPostsAlreadyRead := math.Round(float64(selectLastId()/NUMBER_CURRENT_POSTS)) * NUMBER_CURRENT_POSTS
+
+		firstPost = int(howManyCurrentPostsAlreadyRead) + 1
 		lastPost = selectLastId()
+		/*
+			firstPost = selectLastId() - NUMBER_CURRENT_POSTS + 1
+			lastPost = selectLastId()
+		*/
 		break
 	}
 }
