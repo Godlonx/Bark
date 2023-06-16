@@ -125,8 +125,12 @@ func browsePosts(browseDirection string) {
 			lastPost = NUMBER_CURRENT_POSTS
 
 		} else {
-			firstPost -= NUMBER_CURRENT_POSTS
-			lastPost -= NUMBER_CURRENT_POSTS
+			lastPost = firstPost - 1
+			firstPost = lastPost - NUMBER_CURRENT_POSTS + 1
+			/*
+				firstPost -= NUMBER_CURRENT_POSTS
+				lastPost -= NUMBER_CURRENT_POSTS
+			*/
 		}
 		break
 
