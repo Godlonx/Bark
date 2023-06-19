@@ -20,6 +20,7 @@ func main() {
 	http.HandleFunc("/home", Home)
 	http.HandleFunc("/login", Login)
 	http.HandleFunc("/register", Register)
+	http.HandleFunc("/submit", Tag)
 
 	fmt.Println("http://localhost" + port + "/")
 	fmt.Println("Server started on port", port)
@@ -42,11 +43,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	data := bark.LoginData{}
 	data.Username = username
 	data.Password = password
-	authorize,idUser := bark.Login(data)
+	authorize, idUser := bark.Login(data)
 	println(authorize)
 	println(idUser)
-	if (authorize) {
-		userConnected=bark.SelectUser(idUser)
+	if authorize {
+		userConnected = bark.SelectUser(idUser)
 		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 	}
 	t.Execute(w, "")
@@ -68,5 +69,12 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	println(data.Password)
 	println(data.Passwordverif)
 	bark.Check(data)
+	t.Execute(w, nil)
+}
+
+func Tag(w http.ResponseWriter, r *http.Request) {
+	t := template.Must(template.ParseFiles("template/tag.html"))
+	tag := r.FormValue("tag")
+	println(tag)
 	t.Execute(w, nil)
 }
