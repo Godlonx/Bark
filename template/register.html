@@ -14,14 +14,14 @@
     <meta name="theme-color" content="#ffffff">
 
     <!----- CSS ----->
-    <link href="../static/font/fonts.css" rel="stylesheet" type="text/css">
+    <!-- <link href="../static/font/fonts.css" rel="stylesheet" type="text/css"> -->
     <link href="../static/css/register.css" rel="stylesheet" type="text/css">
     <link rel='stylesheet' type='text/css' media='screen' href='../static/css/overview.css'>
 </head>
 <body>
     <div class="container">
         <div class="register">
-            <img src="../static/img/logo.png" alt="logo" class="logo">
+            <img onclick="barkColor()" src="../static/img/logo.png" alt="logo" class="logo" id="bark-logo">
             <h1>Create an account</h1>
             <form action="" method="POST" class="form-register">
                 <label for="username">Username</label>
@@ -35,8 +35,12 @@
                 <button type="submit" class="btn-register">Register</button>
                 <label id="goto-login" for="forgot">Already have an account </label>
             </form>
-            <a id="goto-login" href="/login">Login</a>
+            <div id="toLogin">
+                <a href="/login">Login</a>
+            </div>
         </div>
     </div>
 </body>
+<script src='../static/js/script.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 </html>

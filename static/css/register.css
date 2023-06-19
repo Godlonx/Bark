@@ -10,6 +10,9 @@ body {
     background-repeat: no-repeat;
     background-image: url(../img/background.svg);
     background-size: cover;
+
+    background-position: center center;
+    background-attachment: fixed;
 }
 
 .container {
@@ -83,8 +86,8 @@ input {
     width: 100%;
     padding: 10px;
     border-radius: 5px;
-    border: solid #9800fe;
-    background-color: #9800fe;
+    border: solid var(--main-color);
+    background-color: var(--main-color);
     color: #fff;
     cursor: pointer;
     overflow: hidden;
@@ -98,16 +101,26 @@ input {
     position: absolute;
     top: 0;
     left: 0;
-    padding-top: 3%;
     width: 100%;
     height: 100%;
-    color: #9800fe;
-    background-color: #000000;
+    color: var(--main-color);
+    background-color: #1E1F22;
     clip-path: circle(0% at 50% 40%);
     transition: clip-path 1.5s;
+    display:flex;
+    flex-direction:row;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-register:hover:before{
     clip-path: circle(100% at 50% 40%);
 }
 
+#toLogin{
+    padding-top: 1vw;
+    padding-left: 5vw;
+    padding-right: 5vw;
+    margin-top: 1vw;
+    border-top: outset var(--bg-color);
+}

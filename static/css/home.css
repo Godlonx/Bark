@@ -1,81 +1,144 @@
+body{
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'gg sans', sans-serif;
+    --main-color:#9800fe;
+    --bg-color:#1e1f22;
+    background-image: url(../img/home-bg.svg);
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
 .center {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: absolute;
+    top: 20px;
+    left: 20%;
+    gap: 0.2vw;
 }
 
-.center .topic-link {
+.topic-link {
 
     display: flex;
     flex-direction: column;
-
-    width: 800px;
+    position: relative;
+    width: 52vw;
     background-color: #313338;
     color: white;
-    border: 0px;
+    border: none;
     border-radius: 8px;
-    padding: 19px;
+    padding: 1vw;
     margin-bottom: 12px;
+    overflow: hidden;
 }
 
-.center .topic-link:hover {
+.topic-link::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: var(--main-color);
+    z-index: 2;
+    clip-path: polygon(100% 50%, 90% 100%, 100% 100%);
+    pointer-events: none;
+}
+
+.topic-link:hover {
     background-color: #3a3d43;
     cursor: pointer;
 }
 
 
-
-
-
-.center .topic-link h1 {
-    padding-bottom: 12px;
+.topic-link h1 {
+    padding-bottom: 0.9vw;
+    font-size: 1.5vw;
 }
 
-.center .topic-link .sub-info {
+.topic-link .sub-info {
     display: flex;
     align-items: center;
+    position: relative;
+    min-width: 60%;
+    max-width: 80%;
+    gap: 1vw;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
-.center .topic-link .sub-info img {
-    height: 12px;
-    margin-right: 6px;
-}
-
-.center .topic-link h3 {
+.topic-link h3 {
     color: #b5bac1;
-    font-size: 16px;
+    font-size: 1.1vw;
     font-weight: 600;
+    position: relative;
 }
 
-.center .topic-link .tag {
+.date::before{
+    font-family: "FontAwesome";
+    content: "\f073 \00a0\00a0";
+    font-weight: 900;
+
+}
+
+.mssgNumber::before{
+    font-family: "FontAwesome";
+    content: "\f075 \00a0\00a0";
+    font-weight: 900;
+
+}
+
+.topic-link .tag {
     background-color: #232428;
 
     font-weight: 700;
-    font-size: 16px;
+    font-size: 1vw;
 
-    margin-left: 16px;
-    margin-right: -9px;
-
-    padding-top: 5px;
-    padding-bottom: 5px;
-    padding-left: 11px;
-    padding-right: 11.5px;
+    padding: 0.3vw;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
 
     border-radius: 25px;
 }
 
-.center .topic-link .tag:hover {
-    background-color: #9800fe;
-    cursor: pointer;
-}
-
-.center .nav-button {
+.nav-button {
     display: flex;
     justify-content: center;
-    margin-bottom: 100px;
+    position: relative;
 }
 
-.center .nav-button .nav-element {
+#first-posts::after{
+    font-family: "FontAwesome";
+    content: "\f048";
+    font-weight: 900;
+}
+
+#prev-posts::after{
+    font-family: "FontAwesome";
+    content: "\f053";
+    font-weight: 900;
+}
+
+#next-posts::after{
+    font-family: "FontAwesome";
+    content: "\f054";
+    font-weight: 900;
+}
+
+#last-posts::after{
+    font-family: "FontAwesome";
+    content: "\f051";
+    font-weight: 900;
+}
+
+
+.nav-button .nav-element {
     background-color: #313338;
     color: white;
     width: 50px;
@@ -89,15 +152,50 @@
     justify-content: center;
 }
 
-.center .nav-button .nav-element:hover {
+.nav-button .nav-element:hover {
     background-color: #454950;
     cursor: pointer;
 }
 
-.center .nav-button .nav-element img {
+.nav-button .nav-element img {
     height: 18px;
 }
 
-.center .nav-button .nav-element:nth-last-child(-n+2) img {
+.nav-button .nav-element:nth-last-child(-n+2) img {
     transform: scaleX(-1);
+}
+
+
+@media screen and (max-width: 900px) {
+    .center{
+        left: 10%;
+    }
+    
+    .topic-link{
+        
+        width: 70vw;
+        height: 18vw;
+    }
+
+    .topic-link h1 {
+        margin-top: 2vw;
+        margin-left: 2vw;
+        padding-bottom: 0.9vw;
+        font-size: 3.2vw;
+        font-weight: 550;
+    }
+
+    .topic-link .sub-info h3{
+
+        font-size: 3vw;
+    }
+    .topic-link .sub-info .tag{
+        padding-left: 0.8vw;
+        padding-right: 0.8vw;
+        font-size: 2.4vw;
+    }
+    .topic-link .sub-info{
+        margin-top: 2vw;
+        margin-left: 2vw;
+    }
 }

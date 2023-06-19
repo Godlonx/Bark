@@ -1,0 +1,61 @@
+.side-right {
+    width: 240px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 22px;
+}
+
+.side-right .my-profile img {
+    width: 240px;
+    height: 240px;
+    display: flex;
+    background-color: gray;
+
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.side-right .my-profile h2 {
+    background-color: #313338;
+    height: 48px;
+
+    color: white;
+    font-size: 18px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 22px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.side-right .consumer-profile {
+    background-color: #313338;
+    color: white;
+    border-radius: 8px;
+    margin-bottom: 22px;
+
+    padding-left: 13px;
+    padding-right: 13px;
+    padding-top: 10px;
+    padding-bottom: 4px;
+}
+
+.side-right .consumer-profile table tr {
+    width: 209px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 19px;
+    padding-bottom: 6px;
+}
+
+.side-right .consumer-profile table tr :nth-child(2n+1) {
+    font-weight: 700;
+}
+
+.side-right .consumer-profile table tr :nth-child(2n) {
+    color: #c4cad3;
+    font-weight: 500;
+}

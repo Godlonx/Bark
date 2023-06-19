@@ -1,0 +1,276 @@
+body {
+    background-color: #1e1f22;
+    font-family: 'gg sans', sans-serif;
+    display: flex;
+    position: relative;
+    justify-content: center;
+    flex-direction: row;
+}
+
+.leftPart {
+    margin-top: 60px;
+}
+
+.leftPart .head {
+    display: grid;
+    background-color: #36383f;
+    width: 200px;
+    height: 220px;
+    text-align: center;
+    border-radius: 15px;
+    color: #fff;
+    padding-bottom: 25px;
+}
+
+.leftPart .head .pp {
+    border-radius: 15px;
+    margin: 10px;
+    width: 180px;
+    height: 180px;
+}
+
+.leftPart .head .username {
+    height: 20px;
+    margin-top: 10px;
+}
+
+.leftPart .stats {
+    border-radius: 15px;
+    display: grid;
+    background-color: #36383f;
+    margin-top: 30px;
+    padding: 10px;
+    row-gap: 10px;    
+}
+
+.leftPart .stat {
+    display: flex;
+    justify-content: space-between;
+}
+
+.leftPart .stat .name {
+    color: #fff;
+}
+
+.leftPart .stat .value {
+    color: #a4a4a4;
+}
+
+.leftPart .lvl {
+    display: grid;
+    margin-bottom: 20px;
+}
+
+.leftPart .lvl .progressBar {
+    display: flex;
+    width: 160px;
+    height: 5px;
+    border-radius: 40px;
+    background-color: pink;
+    justify-self: center;
+}
+
+.leftPart .lvl .info {
+    width: 180px;
+    display: flex;
+    margin-bottom: 15px;
+    justify-content: space-between;
+}
+
+.leftPart .buttons {
+    width: 200px;
+    height: 35px;
+    margin-top: 30px;
+    position: relative;
+}
+
+.leftPart .buttons .bark {
+    font-weight: 600;
+    font-size: 15px;
+    height: 35px;
+    width: 200px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #36383f;
+    transition: all 0.75s;
+}
+
+.leftPart .buttons .bark:hover{
+    background-color: #9800fe;
+}
+
+.settings {
+    display: grid;
+    margin-top: 90px;
+    margin-left: 30px;  
+}
+
+.settings .setting {
+    background-color: #36383f;
+    color: #fff;
+    font-size: 15px;
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+    position: relative;
+    width: 600px;
+    overflow: hidden;
+}
+
+.settings .setting button {
+    font-weight: 600;
+    height: 25px;
+    width: 60px;
+    z-index: 1;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.settings .setting .value {
+    font-weight: 600;
+    z-index: 1;
+}
+
+.settings .setting .edit {
+    background-color: #61636d;
+    transition: background-color 1s;
+}
+
+.settings .setting .delete {
+    background-color: #eb3737;
+}
+
+.settings .setting .color {
+    z-index: 0;
+    position: absolute;
+    left: 0;
+    width: 660px;
+    height: 50px;
+    background-color: #9800fe;
+    clip-path: polygon(0 0, 43% 0, 51% 100%, 0% 100%);
+    transition: all 1s;
+}
+
+.settings .setting:hover>.color {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+}
+
+.settings .setting:hover>.edit {
+    background-color: #1e1f22;
+}
+
+.settings .account:hover>.color {
+    background-color: #642020;
+}
+
+.settings .account .delete:hover ~ .settings .account .color {
+    background-color: #1e1f22;
+}
+
+.backgroundPopup {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    visibility: hidden;
+}
+
+.back-Active {
+    visibility: visible;
+    opacity: 0.4;
+    filter: blur(40px);
+    
+}
+
+.popup {
+    color: #fff;
+    width: 300px;
+    height: 200px;
+    font-size: 20px;
+    padding-top: 40px;
+    background-color: #36383f;
+    transform: translate(0, 0);
+    opacity: 0;
+    position: absolute;
+    display: grid;
+    text-align: center;
+    justify-content: center;
+    border-radius: 30px;
+    visibility: hidden;
+    transition: all 1s;
+}
+
+.popup-Active {
+    visibility: visible;
+    z-index: 3;
+    transform: translate(0, 180px);
+    opacity: 1;
+    transition: all 1s;
+}
+
+.blured  {
+    filter: blur(10px);
+    pointer-events: none;
+}
+
+.popup button {
+    font-weight: 600;
+    height: 25px;
+    width: 70px;
+    z-index: 1;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    color: #fff;
+}
+
+.popup .submit {
+    background-color: #9800fe;
+}
+
+.popup .exit {
+    background-color: #eb3737;
+}
+
+.popup .inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    height: 200px;
+}
+
+
+.popup input {
+    width: 200px;
+    height: 40px;
+    border-radius: 15px;
+    border: none;
+    color: #fff;
+    outline: none;
+    padding-left: 10px;
+    background-color: #1e1f22;
+}
+
+.popup .close {
+    color: #eb3737;
+    position: absolute;
+    margin-top: 10px;
+    margin-left: 270px;
+    cursor: pointer;
+}
+
+.password {
+    height: 400px;
+}
+
+.account .buttons .delete {
+    background-color: #eb3737;
+}

@@ -22,19 +22,32 @@ function pulse() {
   }
 
 
-function bark(){
+function toSetting(){
+    window.location = "http://localhost:8080/settings";
+}
+
+function barkColor(){
+    var link = document.querySelector("link[rel~='icon']");
     const logo =  document.getElementById("bark-logo")
-    const logButton = document.getElementById("btn-login")
-    const newDiv = document.createElement("div");
-    newDiv.style
     if (logo.value !== "angry") {
+        link.href = '../static/img/angry-face.png';
         document.body.style.setProperty('--main-color', '#AA0C18');
-        document.body.style.backgroundImage = "url(../static/img/angry-bg.svg)";
+        if (document.title == "Home / Bark") {
+            document.body.style.backgroundImage = "url(../static/img/home-bg-angry.svg)";
+        }else{
+            document.body.style.backgroundImage = "url(../static/img/angry-bg.svg)";
+        }
+        
         logo.value = "angry"
         logo.src ="../static/img/angry-face.png"
     }else{
+        link.href = '../static/img/logo.png';
         document.body.style.setProperty('--main-color', '#9800fe');
-        document.body.style.backgroundImage = "url(../static/img/background.svg)";
+        if (document.title == "Home / Bark") {
+            document.body.style.backgroundImage = "url(../static/img/home-bg.svg)";
+        }else{
+            document.body.style.backgroundImage = "url(../static/img/angry-bg.svg)";
+        }
         logo.value = "calm"
         logo.src ="../static/img/logo.png"
     }
