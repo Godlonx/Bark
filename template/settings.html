@@ -23,9 +23,9 @@
 </head>
 <body>
     <div class="leftPart" id="back1">
-        <div class="head">
+        <div class="profile">
             <div class="img"><img src="../static/img/defaultPP.png" alt="" class="pp"></div>
-            <div class="username">UserTest</div>
+            <div class="username">{{.Username}}</div>
         </div>
         <div class="stats">
             <div class="stat lvl">
@@ -115,11 +115,11 @@
     </div>
     <div class="popup account" id="5">
         <form method="post">
-            <input type="text" hidden name="title" value="account">
+            <input type="text" hidden name="title" value="delete">
             <div class="fa fa-close close" onclick="closePopup(5)"></div>
             <span class="name">Are you sure about that</span>
             <div class="buttons">
-                <button class="delete">Delete</button>
+                <button type="submit" class="delete">Delete</button>
             </div>
         </form>
     </div>

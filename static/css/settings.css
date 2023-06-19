@@ -11,7 +11,7 @@ body {
     margin-top: 60px;
 }
 
-.leftPart .head {
+.leftPart .profile {
     display: grid;
     background-color: #36383f;
     width: 200px;
@@ -22,14 +22,14 @@ body {
     padding-bottom: 25px;
 }
 
-.leftPart .head .pp {
+.leftPart .profile .pp {
     border-radius: 15px;
     margin: 10px;
     width: 180px;
     height: 180px;
 }
 
-.leftPart .head .username {
+.leftPart .profile .username {
     height: 20px;
     margin-top: 10px;
 }
@@ -94,7 +94,7 @@ body {
     cursor: pointer;
     color: #fff;
     background-color: #36383f;
-    transition: all 0.75s;
+    transition: background-color 0.50s;
 }
 
 .leftPart .buttons .bark:hover{
@@ -155,7 +155,7 @@ body {
     height: 50px;
     background-color: #9800fe;
     clip-path: polygon(0 0, 43% 0, 51% 100%, 0% 100%);
-    transition: all 1s;
+    transition: clip-path 750ms 0ms, background-color 250ms 500ms;
 }
 
 .settings .setting:hover>.color {

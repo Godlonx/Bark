@@ -10,8 +10,6 @@ import (
 
 var port = ":8080"
 
-var userConnected UserConnected
-
 func Server() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/", ServLogin)
@@ -39,11 +37,11 @@ func ServLogin(w http.ResponseWriter, r *http.Request) {
 		data := LoginData{}
 		data.Username = username
 		data.Password = password
-		authorize, idUser := Login(data)
-		println(authorize)
-		println(idUser)
-		if authorize {
-			userConnected = SelectUser(idUser)
+		err := Login(data)
+		if err != nil {
+			fmt.Println(err)
+			t.Execute(w, err)
+		} else {
 			http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 		}
 	}
@@ -67,6 +65,7 @@ func ServRegister(w http.ResponseWriter, r *http.Request) {
 		if isValid {
 			Register(data)
 		}
+		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 	}
 	t.Execute(w, nil)
 }
@@ -75,15 +74,43 @@ func ServSettings(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/settings.html"))
 	if r.Method == http.MethodPost {
 		title := r.FormValue("title")
-		if title == "password" {
-			actualPassword := r.FormValue("actualPassword")
-			newPassword := r.FormValue("newPassword")
-			validPassword := r.FormValue("validatePassword")
-			println(actualPassword, newPassword, validPassword)
-		} else {
-			new := r.FormValue("new")
-			println(new)
+		switch title {
+		case ("password"):
+			{
+				actualPassword := r.FormValue("actualPassword")
+				newPassword := r.FormValue("newPassword")
+				validPassword := r.FormValue("validatePassword")
+				err := ChangePassword(actualPassword, newPassword, validPassword)
+				if err != nil {
+					fmt.Println(err)
+				}
+				break
+			}
+		case ("username"):
+			{
+				newUsername := r.FormValue("new")
+				err := ChangeUsername(newUsername)
+				if err != nil {
+					fmt.Println(err)
+				}
+				break
+			}
+		case ("email"):
+			{
+				newEmail := r.FormValue("new")
+				err := ChangeEmail(newEmail)
+				if err != nil {
+					fmt.Println(err)
+				}
+				break
+			}
+		case ("delete"):
+			{
+				DeleteAccount()
+				println("AAAAAAAAAAA")
+				http.Redirect(w, r, "http://localhost:8080/", http.StatusSeeOther)
+			}
 		}
 	}
-	t.Execute(w, nil)
+	t.Execute(w, user)
 }

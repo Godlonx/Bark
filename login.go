@@ -1,74 +1,23 @@
 package bark
 
 import (
-	"database/sql"
-	"log"
-	"strconv"
+	"errors"
+	"fmt"
 
 	_ "github.com/mattn/go-sqlite3"
 )
 
-type LoginData struct {
-	Username string
-	Password string
-}
+var test User
 
-type UserConnected struct {
-	Id       int
-	Username string
-	Password string
-	Email    string
-	Lvl      int
-	Barks    int
-	Likes    int
-	Dislikes int
-}
-
-func Login(user LoginData) (bool, int) {
-	db, err := sql.Open("sqlite3", "public/barkBDD.db")
-	if err != nil {
-		log.Fatalln(err)
+func Login(userLogin LoginData) error {
+	fmt.Println(userLogin.Username)
+	rows := getData("SELECT * From user where username = '" + userLogin.Username + "'")
+	for rows.Next() {
+		fmt.Println("aaaaaaaaaaa")
+		err := rows.Scan(&user.Id, &user.Username, &user.Password, &user.Email, &user.Lvl, &user.Barks, &user.Likes, &user.Dislikes)
+		return err
 	}
-	Sql()
-	if len(userList.User) > 0 {
-		for i := 0; i < len(userList.User); i++ {
-			if user.Username == userList.User[i].Username {
-				if CheckPasswordHash(user.Password, userList.User[i].Password) {
-					return true, userList.User[i].Id
-				}
+	defer rows.Close()
+	return errors.New("No existing account")
 
-			}
-		}
-	}
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
-	return false, 0
-}
-
-func SelectUser(id int) UserConnected {
-	var user UserConnected
-
-	db, err := sql.Open("sqlite3", "public/barkBDD.db")
-
-	if err != nil {
-		log.Fatalln(err)
-	}
-
-	row, err := db.Query("select * from user where id=" + strconv.Itoa(id))
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	for row.Next() {
-		err = row.Scan(&user.Id, &user.Username, &user.Password, &user.Email, &user.Lvl, &user.Barks, &user.Likes, &user.Dislikes)
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
-
-	defer row.Close()
-	return user
 }
