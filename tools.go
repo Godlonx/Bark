@@ -86,16 +86,16 @@ func isUsernameAlreadyUsed(username string) bool {
 }
 
 func sendData(request string) {
-	db, err := sql.Open("sqlite3", "file:public/barkBDD.db?cache=shared")
+	db, err := sql.Open("sqlite3", "public/barkBDD.db")
 	if err != nil {
 		log.Fatalln(err)
 	}
-	defer db.Close()
 	query, err := db.Prepare(request)
 	if err != nil {
 		log.Fatalln(err)
 	}
 	query.Exec()
+	db.Close()
 }
 
 func getData(request string) *sql.Rows {

@@ -3,39 +3,24 @@ package bark
 import (
 	"database/sql"
 	"errors"
+	"fmt"
 	"log"
 	"strconv"
 )
 
 func ChangeUsername(newUsername string) error {
-	/*val := ""
-	rows := getData("Select username From User")
-	for rows.Next() {
-		err := rows.Scan(&val)
-		print("tttttttttttttttttt")
-		if err != nil {
-			println(err)
-		}
-		if val == newUsername {
-			return errors.New("Already existing username")
-		}
-	}
-	rows.Close()
-	print(user.Id)*/
-	db, err := sql.Open("sqlite3", "file:public/barkBDD.db?cache=shared")
+	db, err := sql.Open("sqlite3", "./public/barkBDD.db")
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatal(err)
+		return nil
 	}
 	defer db.Close()
-	query, err := db.Prepare("UPDATE User SET username = '" + newUsername + "' WHERE id = '" + strconv.Itoa(user.Id) + "';")
+	fmt.Println(newUsername, user.Username)
+	_, err = db.Exec("UPDATE User SET username = ? WHERE username = ?;", newUsername, user.Username)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatal(err)
+		return nil
 	}
-	_, err = query.Exec()
-	if err != nil {
-		log.Fatalln(err)
-	}
-	println("UPDATE User SET username = '" + newUsername + "' WHERE id = '" + strconv.Itoa(user.Id) + "';")
 	user.Username = newUsername
 	return nil
 }
@@ -55,8 +40,9 @@ func ChangeEmail(newMail string) error {
 			return errors.New("Already existing email")
 		}
 	}
+	rows.Close()
 	user.Email = newMail
-	sendData("UPDATE user SET email = " + newMail + " WHERE id=" + strconv.Itoa(user.Id) + "")
+	sendData("UPDATE user SET email = '" + newMail + "' WHERE id='" + strconv.Itoa(user.Id) + "'")
 	return nil
 }
 

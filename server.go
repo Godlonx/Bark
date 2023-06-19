@@ -17,7 +17,7 @@ var lastPost = NUMBER_CURRENT_POSTS
 
 func Server() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	http.HandleFunc("/", ServHome)
+	http.HandleFunc("/", ServLogin)
 	http.HandleFunc("/home", ServHome)
 	http.HandleFunc("/topic", ServTopic)
 	http.HandleFunc("/login", ServLogin)
