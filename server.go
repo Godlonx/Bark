@@ -46,6 +46,7 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 		post.IdComment = 0
 		post.Title = r.FormValue("title")
 		post.Content = r.FormValue("textarea")
+		post.Tags = r.FormValue("tag")
 		post.Date = getDatePost()
 		post.Likes = 0
 		post.Dislikes = 0
@@ -53,14 +54,12 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 
 		browseDirection = r.FormValue("browse-posts")
 		browsePosts(browseDirection)
-
 		http.Redirect(w, r, "/home", http.StatusSeeOther)
 		return
 	}
 
 	var currentPosts CurrentPosts
 	currentPosts = selectTwentyFivePost(firstPost, lastPost, currentPosts)
-
 	t.Execute(w, currentPosts)
 }
 
