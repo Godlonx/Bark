@@ -103,24 +103,10 @@ func getData(request string) *sql.Rows {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	defer db.Close()
 	rows, err := db.Query(request)
 	if err != nil {
 		log.Fatal(err)
 	}
-	db.Close()
 	return rows
 }
-
-/*
-records := `UPDATE USER
-    SET  profilDescription = $1
-    WHERE id = $2`
-    query, err := db.Prepare(records)
-    if err != nil {
-        log.Fatal(err)
-    }
-    _, err = query.Exec(description, id)
-    if err != nil {
-        log.Fatal(err)
-    }
-*/

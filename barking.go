@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"strings"
 	"time"
 )
 
@@ -24,6 +25,7 @@ func tableIsEmpty() bool {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer db.Close()
 
 	if rowCount == 0 {
 		return true
@@ -39,6 +41,8 @@ func selectLastId() int {
 	if errQuery != nil {
 		log.Fatalln(errQuery)
 	}
+	defer db.Close()
+	defer row.Close()
 
 	var idLastPost int = 0
 
@@ -48,7 +52,6 @@ func selectLastId() int {
 			log.Fatal(err)
 		}
 	}
-	row.Close()
 
 	return idLastPost
 }
@@ -62,6 +65,8 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 	if errQuery != nil {
 		log.Fatalln(errQuery)
 	}
+	defer db.Close()
+	defer row.Close()
 
 	for row.Next() {
 		var post Post
@@ -71,7 +76,6 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 		}
 		currentPosts.Post = append(currentPosts.Post, post)
 	}
-	row.Close()
 
 	return currentPosts
 }
@@ -80,11 +84,11 @@ func insertPost(post Post) {
 
 	if post.Title != "" && post.Content != "" {
 		db := getDataBase()
+		defer db.Close()
 		statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, title, content, date, like, dislike, tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
 		if errPrepare != nil {
 			log.Fatalln(errPrepare)
 		}
-		defer db.Close()
 		_, errExec := statement.Exec(post.Id, post.IdUser, post.IdComment, post.Title, post.Content, post.Date, post.Likes, post.Dislikes, post.Tag)
 		if errExec != nil {
 			log.Fatalln(errExec)
@@ -149,26 +153,6 @@ func getDatePost() string {
 	return date
 }
 
-/*
-func updatePost(update string) {
-	db := getDataBase()
-
-	_, errExec := db.Exec("UPDATE Post SET title = '" + update + "'")
-	if errExec != nil {
-		log.Fatalln(errExec)
-	}
-}
-
-func delatePost(delate string) {
-	db := getDataBase()
-
-	_, errExec := db.Exec("DELETE FROM Post WHERE title = ''")
-	if errExec != nil {
-		log.Fatalln(errExec)
-	}
-}
-*/
-
 func GetTag() []string {
 	var Tags []string
 	db := getDataBase()
@@ -178,16 +162,34 @@ func GetTag() []string {
 		log.Fatalln(errQuery)
 	}
 	defer db.Close()
+	defer row.Close()
 
 	for row.Next() {
 		var tagName string
-		err := row.Scan(&tagName)
+		var id int
+		err := row.Scan(&id, &tagName)
 		if err != nil {
 			log.Fatal(err)
 		}
 		fmt.Println(tagName)
 		Tags = append(Tags, tagName)
 	}
-	row.Close()
 	return Tags
+}
+
+func addTag(newtag string) string {
+	newtag = strings.ToLower(newtag)
+	tags := GetTag()
+	for _, tag := range tags {
+		if newtag == strings.ToLower(tag) {
+			return tag
+		}
+	}
+	db := getDataBase()
+	defer db.Close()
+	_, err := db.Exec("INSERT INTO tag(name) VALUES(?);", newtag)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return newtag
 }

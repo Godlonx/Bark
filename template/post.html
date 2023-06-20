@@ -3,26 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../static/css/popup.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/post.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Document</title>
 </head>
-<body>
-    <div class="popup-screen" id="popup">
-        <button id="cancel-button" onclick="closePopup()"><img src="../static/icons/cancel-icon.png" alt="cancel"></button>
-        <div id="popup-text-input">
-            <form action="" method="POST">
-                <input id="title-topic" type="text" name="title" placeholder="Title" required>
-                <textarea id="textarea" name="textarea" rows="5" cols="33" placeholder="What do you want to talk about ?" required></textarea>
-                <select id="tag">
-                    <option value="Tag">Tag</option>
-                    <option value="Hardware">Hardware</option>
-                    <option value="Gaming">Gaming</option>
-                    <option value="Music">Music</option>
-                    <option value="Cinema">Cinema</option>
-                </select>
-                <button id="barking-button" onclick="closePopup()">Barking</button>
-            </form>
-        </div>
+    <button class="cancel-button"><i class="fa fa-angle-left"></i></button>
+
+    <div class="popup-text-input">
+        <form action="" method="POST">
+            <input class="title-topic" type="text" name="title" placeholder="Title" required>
+            <textarea class="textarea" name="textarea" rows="5" cols="33" placeholder="What do you want to talk about ?" required></textarea>
+            <select class="tag" name="tag">
+                <option disabled selected>Select Tag</option>
+                {{ range $element := . }}
+                    <option>{{$element}}</option>
+                {{ end }}
+            </select>
+            <input type="text" placeholder="new Tag" name="newTag" class="input tag">
+            <button class="button bark" onclick="closePopup()">Barking</button>
+        </form>
     </div>
 </body>
 </html>

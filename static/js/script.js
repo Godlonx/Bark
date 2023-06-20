@@ -22,7 +22,7 @@ function pulse() {
   }
 
 function redirection(ref) {
-    window.location = ref
+    window.location = "http://localhost:8080" + ref
 }
 
 function barkColor(){

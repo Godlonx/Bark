@@ -33,25 +33,9 @@ func Server() {
 func ServHome(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/home.html"))
 
-	var post Post
 	var browseDirection string
 
 	if r.Method == http.MethodPost {
-
-		if tableIsEmpty() {
-			post.Id = 1
-		} else {
-			post.Id = selectLastId() + 1
-		}
-		post.IdUser = 0
-		post.IdComment = 0
-		post.Title = r.FormValue("title")
-		post.Content = r.FormValue("textarea")
-		post.Date = getDatePost()
-		post.Likes = 0
-		post.Dislikes = 0
-		post.Tag = ""
-		insertPost(post)
 
 		browseDirection = r.FormValue("browse-posts")
 		browsePosts(browseDirection)
@@ -157,5 +141,32 @@ func ServSettings(w http.ResponseWriter, r *http.Request) {
 
 func ServPost(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/post.html"))
-	t.Execute(w, "")
+
+	var tags = GetTag()
+
+	if r.Method == http.MethodPost {
+
+		var post Post
+		if tableIsEmpty() {
+			post.Id = 1
+		} else {
+			post.Id = selectLastId() + 1
+		}
+		post.IdUser = 0
+		post.IdComment = 0
+		post.Title = r.FormValue("title")
+		post.Content = r.FormValue("textarea")
+		post.Date = getDatePost()
+		post.Likes = 0
+		post.Dislikes = 0
+		tag := r.FormValue("newTag")
+		if tag != "" {
+			tag = addTag(tag)
+			post.Tag = tag
+		} else {
+			post.Tag = r.FormValue("tag")
+		}
+		insertPost(post)
+	}
+	t.Execute(w, tags)
 }
