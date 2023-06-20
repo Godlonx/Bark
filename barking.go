@@ -12,11 +12,12 @@ type Post struct {
 	Id        int
 	IdUser    int
 	IdComment int
-	Title     string
 	Content   string
+	Title     string
+	Like      int
+	Dislike   int
 	Date      string
-	Likes     int
-	Dislikes  int
+	Tag       string
 }
 
 type CurrentPosts struct {
@@ -83,7 +84,7 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 
 	for row.Next() {
 		var post Post
-		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Title, &post.Content, &post.Date, &post.Likes, &post.Dislikes)
+		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Content, &post.Title, &post.Like, &post.Dislike, &post.Date, &post.Tag)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -94,28 +95,25 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 	return currentPosts
 }
 
-func getPost() Post {
+func getPost() {
 	db := getDataBase()
-
-	//var request string = fmt.Sprintf("SELECT * FROM Post WHERE id = %s", idPost)
 
 	defer db.Close()
 
-	row, errQuery := db.Query("SELECT * FROM Post WHERE id = 3")
+	fmt.Println(idPost)
+
+	row, errQuery := db.Query("SELECT * FROM Post WHERE id = '" + idPost + "';")
 	if errQuery != nil {
 		log.Fatalln(errQuery)
 	}
 
-	var post Post
 	for row.Next() {
-		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Title, &post.Content, &post.Date, &post.Likes, &post.Dislikes)
+		err := row.Scan(&postClick.Id, &postClick.IdUser, &postClick.IdComment, &postClick.Content, &postClick.Title, &postClick.Like, &postClick.Dislike, &postClick.Date, &postClick.Tag)
 		if err != nil {
 			log.Fatal(err)
 		}
 	}
 	row.Close()
-
-	return post
 }
 
 func insertPost(post Post) {
@@ -123,11 +121,11 @@ func insertPost(post Post) {
 	if post.Title != "" && post.Content != "" {
 		db := getDataBase()
 
-		statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, title, content, date, likes, dislikes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+		statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, content, title, like, dislike, date, tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
 		if errPrepare != nil {
 			log.Fatalln(errPrepare)
 		}
-		_, errExec := statement.Exec(post.Id, post.IdUser, post.IdComment, post.Title, post.Content, post.Date, post.Likes, post.Dislikes)
+		_, errExec := statement.Exec(post.Id, post.IdUser, post.IdComment, post.Content, post.Title, post.Like, post.Dislike, post.Date, post.Tag)
 		if errExec != nil {
 			log.Fatalln(errExec)
 		}
@@ -178,10 +176,6 @@ func browsePosts(browseDirection string) {
 
 		firstPost = int(howManyCurrentPostsAlreadyRead) + 1
 		lastPost = selectLastId()
-		/*
-			firstPost = selectLastId() - NUMBER_CURRENT_POSTS + 1
-			lastPost = selectLastId()
-		*/
 		break
 	}
 }
@@ -192,10 +186,62 @@ func getDatePost() string {
 	hour := timeNow.Hour()
 	minutes := timeNow.Minute()
 	day := timeNow.Day()
-	month := timeNow.Month()
+	monthTmp := timeNow.Month()
 	year := timeNow.Year()
 
-	var date string = fmt.Sprintf("%d:%d %d/%d/%d", hour, minutes, day, month, year)
+	var month string
+
+	switch monthTmp {
+	case 1:
+		month = "Jan."
+		break
+
+	case 2:
+		month = "Feb."
+		break
+
+	case 3:
+		month = "Mar."
+		break
+
+	case 4:
+		month = "Apr."
+		break
+
+	case 5:
+		month = "May"
+		break
+
+	case 6:
+		month = "Jun."
+		break
+
+	case 7:
+		month = "Jul."
+		break
+
+	case 8:
+		month = "Aug."
+		break
+
+	case 9:
+		month = "Sep."
+		break
+
+	case 10:
+		month = "Oct."
+		break
+
+	case 11:
+		month = "Nov."
+		break
+
+	case 12:
+		month = "Dec."
+		break
+	}
+
+	var date string = fmt.Sprintf("%d %s %d, at %d:%d", day, month, year, hour, minutes)
 
 	return date
 }
