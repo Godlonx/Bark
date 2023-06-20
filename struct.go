@@ -38,4 +38,20 @@ const (
 	None                          = "none"
 )
 
+type Post struct {
+	Id        int
+	IdUser    int
+	IdComment int
+	Title     string
+	Content   string
+	Date      string
+	Likes     int
+	Dislikes  int
+	Tag       string
+}
+
+type CurrentPosts struct {
+	Post []Post
+}
+
 var user User

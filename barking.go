@@ -7,22 +7,6 @@ import (
 	"time"
 )
 
-type Post struct {
-	Id        int
-	IdUser    int
-	IdComment int
-	Title     string
-	Content   string
-	Date      string
-	Likes     int
-	Dislikes  int
-	Tags	   	string
-}
-
-type CurrentPosts struct {
-	Post []Post
-}
-
 func getDataBase() *sql.DB {
 	db, errSQLOpen := sql.Open("sqlite3", "./public/barkBDD.db")
 	if errSQLOpen != nil {
@@ -81,7 +65,7 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 
 	for row.Next() {
 		var post Post
-		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Title, &post.Content, &post.Date, &post.Likes, &post.Dislikes)
+		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Content, &post.Title, &post.Likes, &post.Dislikes, &post.Date, &post.Tag)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -96,12 +80,12 @@ func insertPost(post Post) {
 
 	if post.Title != "" && post.Content != "" {
 		db := getDataBase()
-
-		statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, title, content, date, likes, dislikes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+		statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, title, content, date, like, dislike, tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
 		if errPrepare != nil {
 			log.Fatalln(errPrepare)
 		}
-		_, errExec := statement.Exec(post.Id, post.IdUser, post.IdComment, post.Title, post.Content, post.Date, post.Likes, post.Dislikes)
+		defer db.Close()
+		_, errExec := statement.Exec(post.Id, post.IdUser, post.IdComment, post.Title, post.Content, post.Date, post.Likes, post.Dislikes, post.Tag)
 		if errExec != nil {
 			log.Fatalln(errExec)
 		}
@@ -184,3 +168,26 @@ func delatePost(delate string) {
 	}
 }
 */
+
+func GetTag() []string {
+	var Tags []string
+	db := getDataBase()
+
+	row, errQuery := db.Query("SELECT * FROM Tag")
+	if errQuery != nil {
+		log.Fatalln(errQuery)
+	}
+	defer db.Close()
+
+	for row.Next() {
+		var tagName string
+		err := row.Scan(&tagName)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(tagName)
+		Tags = append(Tags, tagName)
+	}
+	row.Close()
+	return Tags
+}

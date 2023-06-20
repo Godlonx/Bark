@@ -17,12 +17,13 @@ var lastPost = NUMBER_CURRENT_POSTS
 
 func Server() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	http.HandleFunc("/", ServHome)
+	http.HandleFunc("/", ServLogin)
 	http.HandleFunc("/home", ServHome)
 	http.HandleFunc("/topic", ServTopic)
 	http.HandleFunc("/login", ServLogin)
 	http.HandleFunc("/register", ServRegister)
 	http.HandleFunc("/settings", ServSettings)
+	http.HandleFunc("/post", ServPost)
 
 	fmt.Println("http://localhost" + port + "/")
 	fmt.Println("Server started on port", port)
@@ -46,10 +47,10 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 		post.IdComment = 0
 		post.Title = r.FormValue("title")
 		post.Content = r.FormValue("textarea")
-		post.Tags = r.FormValue("tag")
 		post.Date = getDatePost()
 		post.Likes = 0
 		post.Dislikes = 0
+		post.Tag = ""
 		insertPost(post)
 
 		browseDirection = r.FormValue("browse-posts")
@@ -57,7 +58,6 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/home", http.StatusSeeOther)
 		return
 	}
-
 	var currentPosts CurrentPosts
 	currentPosts = selectTwentyFivePost(firstPost, lastPost, currentPosts)
 	t.Execute(w, currentPosts)
@@ -153,4 +153,9 @@ func ServSettings(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	t.Execute(w, user)
+}
+
+func ServPost(w http.ResponseWriter, r *http.Request) {
+	t := template.Must(template.ParseFiles("template/post.html"))
+	t.Execute(w, "")
 }
