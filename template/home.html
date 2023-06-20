@@ -23,7 +23,11 @@
     <link href="../static/css/popup.css" rel="stylesheet" type="text/css">
 
 <body>
-    <div class="side-left">
+    <div class="side-open" id="side-open" onclick="openNav()">
+        <div class="line1"></div>
+        <div class="line2"></div>
+    </div>
+    <div class="side-left" id="side-left">
         <div class="logo-bark">
             <img src="../static/favicons/icon.ico" id="bark-logo" alt="" onclick="barkColor()" value="calm">
         </div>
@@ -49,12 +53,12 @@
             </div>
         </div>
         <div class="setting-button" onclick="toSetting()">
-            <div id="icon" class="fa fa-cog"></div>
+           
             <a class="link-setting" href="/settings">Settings</a>
         </div>
         <div class="barking-button" onclick="openPopup()">
 
-                <div id="icon" class="fa fa-pencil"></div>
+                
                 <p>Barking</p>
         </div>
     </div>
@@ -122,6 +126,7 @@
     </div>
 </body>
 <script src='../static/js/script.js'></script>
+<script src='../static/js/sidenav.js'></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="../static/js/login.js"></script>
 </html>

@@ -1,4 +1,4 @@
-body {
+/* body {
     margin: 0;
     padding: 0;
     text-decoration: none;
@@ -7,6 +7,13 @@ body {
     --main-color:#9800fe;
     --bg-color:#1e1f22;
     height: 100%;
+} */
+
+#side-open{
+    position: fixed;
+    display: none;
+    top: 20px;
+    left: 20px;
 }
 
 .side-left {
@@ -149,6 +156,8 @@ body {
     cursor: pointer;
 }
 
+
+
 .barking-button{
     background-color: var(--main-color);
 }
@@ -156,10 +165,23 @@ body {
     background-color: #313338;
 }
 
-.setting-button a,.barking-button a{
+.setting-button a,.barking-button p{
     /* border: dashed white 0.1vw; */
     font-size: 1.3vw;
     color: white;
+    margin-left: 1vw;
+}
+
+.setting-button a::before{
+    font-family: "FontAwesome";
+    content: "\f013 \00a0\00a0";
+    font-weight: 900;
+}
+
+.barking-button p::before{
+    font-family: "FontAwesome";
+    content: "\f040 \00a0\00a0";
+    font-weight: 900;
 }
 
 .settings-icon,.barking-icon{
@@ -172,10 +194,116 @@ body {
 
 
 @media screen and (max-width: 900px) {
-    .side-left {
-        left: 0%;
-        top:0%;
-        height: 100%;
-        background-color: var(--main-color);
+    #side-open{
+        display: flex;
+        position: fixed;
+        z-index: 4;
+        top: 5px;
+        left: 5px;
+        width: 30px;
+        height: 30px;
+        /* background-color: var(--main-color); */
+        
     }
+
+
+    .line1,.line2 {
+        
+        position: absolute;
+        top: 25%;
+        width: 75%;
+        height: 4px;
+        border-radius: 2px;
+        background-color: var(--main-color);
+        transition: all 1s;
+    }
+
+    .line2 {
+        top:75% ;
+        width: 55%;
+    }
+
+    #side-open.active .line1{
+        background-color: rgb(255, 0, 0);
+        transform-origin: center;
+        transform: rotate(45deg);
+        width: 100%;
+
+        position: absolute;
+        top: 50%;
+    }
+    #side-open.active .line2{
+        background-color: rgb(255, 0, 0);
+        transform-origin: center;
+        transform: rotate(-45deg);
+        width: 100%;
+
+        position: absolute;
+        top: 50%;
+    }
+
+
+    .side-left {
+        left: -140px;
+        top:0;
+        height: 100%;
+        max-width: 130px;
+        min-width: 130px;
+        z-index: 3;
+        padding-bottom: 50px;
+        align-items: center;
+        background-color: #1e1f22;
+        outline: solid var(--main-color);
+        transition: left 1s;
+        gap: 20px;
+    }
+
+    .side-left.active {
+        left: 0;
+      }
+
+    .side-left #bark-logo{
+        height: 30px;
+        width: 30px;
+        margin-top: 20px;
+    }
+
+    .my-profile{
+        width: 75%;
+    }
+    .side-left .my-profile img {
+        width: 100%;
+        height: auto;
+        margin-top: 0;
+    }
+
+    .consumer-profile{
+        width: 75%;
+    }
+
+    .consumer-profile p {
+        font-size: 15px;
+    }
+
+    .setting-button,.barking-button{
+        
+        justify-content: center;
+        align-items: center;
+        align-self: center;
+        width: 70%;
+        padding: 5px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .setting-button a,.barking-button p{
+        font-size: 15px;
+    }
+
+    .settings-icon,.barking-icon{
+        width: 5px;
+        height: 5px;
+    }
+
+
+    
 }

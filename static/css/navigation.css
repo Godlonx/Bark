@@ -112,3 +112,21 @@ body {
     height: 2vw;
 }
 
+
+@media screen and (max-width: 900px) {
+    .search{
+        height: 20px;
+        font-size: 10px;
+    }
+
+    .search-bar::after{
+        font-size: 15px;
+        margin-right: 10px;
+    }
+
+    .selector-sort select,.selector-filter select{
+        height: 20px;
+       
+        font-size: 10px;
+    }
+}

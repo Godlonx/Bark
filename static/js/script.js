@@ -67,6 +67,18 @@ window.onload = function registerError(){
             case "bad email":
                 errDiv.innerHTML = "Your email isn't valid"
                 break;
+            case "bad username":
+                errDiv.innerHTML = "Your username isn't valid"
+                break;
+            case "unequal password":
+                errDiv.innerHTML = "Your passwords doesn't match"
+                break;
+            case "name already used":
+                errDiv.innerHTML = "Username already used"
+                break;
+            case "unequal password":
+                errDiv.innerHTML = "Email already used"
+                break; 
             default:
                 break;
         }
