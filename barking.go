@@ -94,14 +94,14 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 	return currentPosts
 }
 
-func getPost(idPost string) Post {
+func getPost() Post {
 	db := getDataBase()
 
-	var request string = fmt.Sprintf("SELECT * FROM Post WHERE id = %s", idPost)
+	//var request string = fmt.Sprintf("SELECT * FROM Post WHERE id = %s", idPost)
 
 	defer db.Close()
 
-	row, errQuery := db.Query(request)
+	row, errQuery := db.Query("SELECT * FROM Post WHERE id = 3")
 	if errQuery != nil {
 		log.Fatalln(errQuery)
 	}
@@ -153,10 +153,6 @@ func browsePosts(browseDirection string) {
 		} else {
 			lastPost = firstPost - 1
 			firstPost = lastPost - NUMBER_CURRENT_POSTS + 1
-			/*
-				firstPost -= NUMBER_CURRENT_POSTS
-				lastPost -= NUMBER_CURRENT_POSTS
-			*/
 		}
 		break
 

@@ -59,6 +59,7 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 		browsePosts(browseDirection)
 
 		idPost = r.FormValue("idPost")
+		println(idPost)
 
 		http.Redirect(w, r, "/home", http.StatusSeeOther)
 		return
@@ -73,9 +74,17 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 func ServTopic(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/topic.html"))
 
-	var post Post = getPost(idPost)
+	var post Post = getPost()
+	println(post.Id)
+	println(post.IdUser)
+	println(post.IdComment)
+	println(post.Title)
+	println(post.Content)
+	println(post.Date)
+	println(post.Likes)
+	println(post.Dislikes)
 
-	t.Execute(w, post)
+	t.Execute(w, nil) //post
 }
 
 func ServLogin(w http.ResponseWriter, r *http.Request) {
