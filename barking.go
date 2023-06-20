@@ -92,7 +92,7 @@ func insertPost(post Post) {
 		db := getDataBase()
 		defer db.Close()
 
-		statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, title, content, date, likes, dislikes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+		statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, title, content, date, like, dislike, tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
 		if errPrepare != nil {
 			log.Fatalln(errPrepare)
 			return
