@@ -19,6 +19,7 @@ func getDataBase() *sql.DB {
 
 func tableIsEmpty() bool {
 	db := getDataBase()
+	defer db.Close()
 
 	var rowCount int
 	err := db.QueryRow("SELECT COUNT(*) FROM Post").Scan(&rowCount)
@@ -36,10 +37,12 @@ func tableIsEmpty() bool {
 
 func selectLastId() int {
 	db := getDataBase()
+	defer db.Close()
 
 	row, errQuery := db.Query("SELECT MAX(id) FROM Post")
 	if errQuery != nil {
 		log.Fatalln(errQuery)
+		return 0
 	}
 	defer db.Close()
 	defer row.Close()
@@ -50,6 +53,7 @@ func selectLastId() int {
 		err := row.Scan(&idLastPost)
 		if err != nil {
 			log.Fatal(err)
+			return 0
 		}
 	}
 
@@ -58,12 +62,13 @@ func selectLastId() int {
 
 func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) CurrentPosts {
 	db := getDataBase()
-
+	defer db.Close()
 	var request string = fmt.Sprintf("SELECT * FROM Post WHERE id BETWEEN %d AND %d LIMIT 25", firstId, lastId)
 
 	row, errQuery := db.Query(request)
 	if errQuery != nil {
 		log.Fatalln(errQuery)
+		return CurrentPosts{}
 	}
 	defer db.Close()
 	defer row.Close()
@@ -73,6 +78,7 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Content, &post.Title, &post.Likes, &post.Dislikes, &post.Date, &post.Tag)
 		if err != nil {
 			log.Fatal(err)
+			return CurrentPosts{}
 		}
 		currentPosts.Post = append(currentPosts.Post, post)
 	}
@@ -85,13 +91,16 @@ func insertPost(post Post) {
 	if post.Title != "" && post.Content != "" {
 		db := getDataBase()
 		defer db.Close()
-		statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, title, content, date, like, dislike, tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+
+		statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, title, content, date, likes, dislikes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
 		if errPrepare != nil {
 			log.Fatalln(errPrepare)
+			return
 		}
 		_, errExec := statement.Exec(post.Id, post.IdUser, post.IdComment, post.Title, post.Content, post.Date, post.Likes, post.Dislikes, post.Tag)
 		if errExec != nil {
 			log.Fatalln(errExec)
+			return
 		}
 	}
 }
