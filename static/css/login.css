@@ -6,18 +6,15 @@
     list-style: none;
 }
 
-canvas {
-    display: block;
-    background-color: #1e1f22;
-    z-index: 8;
-  }
 
 body {
     background-image: url(../img/background.svg);
     background-size: cover;
     --main-color:#9800fe;
     --bg-color:#1e1f22;
-    
+    overflow: hidden;
+    background-position: center center;
+    background-attachment: fixed;
 }
 
 .container {
@@ -28,7 +25,11 @@ body {
     border-radius: 10px;
     background-color: #313338;
     padding: 80px;
+    z-index: 3;
+}
 
+div{
+    text-align: center;
 }
 
 .login {
@@ -60,6 +61,10 @@ h1 {
     align-items: center;
     gap: 1vw;
     flex-direction: column;
+}
+
+#username:focus,#password:focus{
+    outline:  solid var(--main-color);
 }
 
 input {
@@ -176,7 +181,7 @@ input[type="checkbox"]:checked::before {
     transition: all 0.5s ease-in-out;
 }
 
-.form-forgot-password {
+.forgot-password {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -184,13 +189,21 @@ input[type="checkbox"]:checked::before {
     flex-direction: column;
     text-align: center;
 }
+
+.forgot-password:hover {
+    color: var(--main-color);
+}
 .blured {
     filter: blur(5px);
 }
 
-#toRegister{
+.toRegister{
     padding-top: 1vw;
     padding-left: 5vw;
     padding-right: 5vw;
     border-top: outset var(--bg-color);
+}
+
+.toRegister:hover{
+    color: var(--main-color);
 }

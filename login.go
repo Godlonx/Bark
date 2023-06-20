@@ -24,6 +24,7 @@ type UserConnected struct {
 	Dislikes int
 }
 
+
 func Login(user LoginData) (bool, int) {
 
 	db, err := sql.Open("sqlite3", "public/barkBDD.db")

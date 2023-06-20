@@ -10,8 +10,9 @@ body {
     background-repeat: no-repeat;
     background-image: url(../img/background.svg);
     background-size: cover;
-    --main-color:#9800fe;
-    --bg-color:#1e1f22;
+
+    background-position: center center;
+    background-attachment: fixed;
 }
 
 .container {

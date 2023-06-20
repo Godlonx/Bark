@@ -74,6 +74,8 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 
 	var request string = fmt.Sprintf("SELECT * FROM Post WHERE id BETWEEN %d AND %d LIMIT 25", firstId, lastId)
 
+	defer db.Close()
+
 	row, errQuery := db.Query(request)
 	if errQuery != nil {
 		log.Fatalln(errQuery)
@@ -90,6 +92,30 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 	row.Close()
 
 	return currentPosts
+}
+
+func getPost(idPost string) Post {
+	db := getDataBase()
+
+	var request string = fmt.Sprintf("SELECT * FROM Post WHERE id = %s", idPost)
+
+	defer db.Close()
+
+	row, errQuery := db.Query(request)
+	if errQuery != nil {
+		log.Fatalln(errQuery)
+	}
+
+	var post Post
+	for row.Next() {
+		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Title, &post.Content, &post.Date, &post.Likes, &post.Dislikes)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	row.Close()
+
+	return post
 }
 
 func insertPost(post Post) {
@@ -177,23 +203,3 @@ func getDatePost() string {
 
 	return date
 }
-
-/*
-func updatePost(update string) {
-	db := getDataBase()
-
-	_, errExec := db.Exec("UPDATE Post SET title = '" + update + "'")
-	if errExec != nil {
-		log.Fatalln(errExec)
-	}
-}
-
-func delatePost(delate string) {
-	db := getDataBase()
-
-	_, errExec := db.Exec("DELETE FROM Post WHERE title = ''")
-	if errExec != nil {
-		log.Fatalln(errExec)
-	}
-}
-*/

@@ -17,6 +17,8 @@ const NUMBER_CURRENT_POSTS = 25
 var firstPost = 1
 var lastPost = NUMBER_CURRENT_POSTS
 
+var idPost string
+
 func Server() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/", ServHome)
@@ -56,6 +58,8 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 		browseDirection = r.FormValue("browse-posts")
 		browsePosts(browseDirection)
 
+		idPost = r.FormValue("idPost")
+
 		http.Redirect(w, r, "/home", http.StatusSeeOther)
 		return
 	}
@@ -68,7 +72,10 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 
 func ServTopic(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/topic.html"))
-	t.Execute(w, nil)
+
+	var post Post = getPost(idPost)
+
+	t.Execute(w, post)
 }
 
 func ServLogin(w http.ResponseWriter, r *http.Request) {
