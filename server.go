@@ -10,8 +10,6 @@ import (
 
 var port = ":8080"
 
-var userConnected UserConnected
-
 const NUMBER_CURRENT_POSTS = 25
 
 var firstPost = 1
@@ -90,43 +88,86 @@ func ServTopic(w http.ResponseWriter, r *http.Request) {
 func ServLogin(w http.ResponseWriter, r *http.Request) {
 	//user := Sql()
 	t := template.Must(template.ParseFiles("template/login.html"))
-
-	username := r.FormValue("username")
-	password := r.FormValue("password")
-	data := LoginData{}
-	data.Username = username
-	data.Password = password
-	authorize, idUser := Login(data)
-	println(authorize)
-	println(idUser)
-	if authorize {
-		userConnected = SelectUser(idUser)
-		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
+	if r.Method == http.MethodPost {
+		username := r.FormValue("username")
+		password := r.FormValue("password")
+		data := LoginData{}
+		data.Username = username
+		data.Password = password
+		err := Login(data)
+		if err != nil {
+			fmt.Println(err)
+			t.Execute(w, err)
+		} else {
+			http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
+		}
 	}
 	t.Execute(w, "")
 }
 
 func ServRegister(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/register.html"))
-	username := r.FormValue("username")
-	password := r.FormValue("password")
-	email := r.FormValue("email")
-	passwordverif := r.FormValue("passwordverif")
-	data := RegisterData{}
-	data.Email = email
-	data.Password = password
-	data.Username = username
-	data.Passwordverif = passwordverif
-
-	isValid, err := Check(data)
-	println(err)
-	if isValid {
-		Register(data)
+	if r.Method == http.MethodPost {
+		username := r.FormValue("username")
+		password := r.FormValue("password")
+		email := r.FormValue("email")
+		passwordverif := r.FormValue("passwordverif")
+		data := RegisterData{}
+		data.Email = email
+		data.Password = password
+		data.Username = username
+		data.Passwordverif = passwordverif
+		isValid, err := Check(data)
+		println(err)
+		if isValid {
+			Register(data)
+		}
+		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 	}
 	t.Execute(w, nil)
 }
 
 func ServSettings(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/settings.html"))
-	t.Execute(w, nil)
+	if r.Method == http.MethodPost {
+		title := r.FormValue("title")
+		switch title {
+		case ("password"):
+			{
+				actualPassword := r.FormValue("actualPassword")
+				newPassword := r.FormValue("newPassword")
+				validPassword := r.FormValue("validatePassword")
+				err := ChangePassword(actualPassword, newPassword, validPassword)
+				if err != nil {
+					fmt.Println(err)
+				}
+				break
+			}
+		case ("username"):
+			{
+				newUsername := r.FormValue("new")
+				err := ChangeUsername(newUsername)
+				if err != nil {
+					fmt.Println(err)
+				}
+				break
+			}
+		case ("email"):
+			{
+				newEmail := r.FormValue("new")
+				err := ChangeEmail(newEmail)
+				if err != nil {
+					fmt.Println(err)
+				}
+				break
+			}
+		case ("delete"):
+			{
+				DeleteAccount()
+				println("AAAAAAAAAAA")
+				http.Redirect(w, r, "http://localhost:8080/", http.StatusSeeOther)
+			}
+		}
+	}
+	t.Execute(w, user)
 }

@@ -2,19 +2,10 @@ package bark
 
 import (
 	//"fmt"
+	"database/sql"
+	"log"
 	"regexp"
 	"unicode"
-)
-
-type registerError string
-
-const (
-	BadUsername     registerError = "bad username"
-	BadPassword                   = "bad password"
-	UnequalPassword               = "unequal password"
-	BadEmail                      = "bad email"
-	Other                         = "Other"
-	None                          = "none"
 )
 
 func Check(registerData RegisterData) (bool, registerError) {
@@ -32,7 +23,6 @@ func Check(registerData RegisterData) (bool, registerError) {
 }
 
 func verifyPassword(s string) bool {
-
 	letters := 0
 	number := false
 	upper := false
@@ -59,7 +49,78 @@ func verifyPassword(s string) bool {
 	return false
 }
 
-func isEmailValid(e string) bool {
-	emailRegex := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$") //regex found on stackOverflow
-	return emailRegex.MatchString(e)
+// regex found on stackOverflow
+func isEmailValid(email string) bool {
+	emailRegex := regexp.MustCompile("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")
+	return emailRegex.MatchString(email)
 }
+
+func isEmailAlreadyUsed(email string) bool {
+	existingEmail := ""
+	rows := getData("Select email From User")
+	for rows.Next() {
+		err := rows.Scan(&existingEmail)
+		if err != nil {
+			println(err)
+		}
+		if existingEmail == email {
+			return true
+		}
+	}
+	return false
+}
+
+func isUsernameAlreadyUsed(username string) bool {
+	existingUsername := ""
+	rows := getData("Select username From User")
+	for rows.Next() {
+		err := rows.Scan(&existingUsername)
+		if err != nil {
+			println(err)
+		}
+		if existingUsername == username {
+			return true
+		}
+	}
+	return false
+}
+
+func sendData(request string) {
+	db, err := sql.Open("sqlite3", "file:public/barkBDD.db?cache=shared")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer db.Close()
+	query, err := db.Prepare(request)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	query.Exec()
+}
+
+func getData(request string) *sql.Rows {
+	db, err := sql.Open("sqlite3", "public/barkBDD.db")
+	if err != nil {
+		log.Fatalln(err)
+	}
+	rows, err := db.Query(request)
+	if err != nil {
+		log.Fatal(err)
+	}
+	db.Close()
+	return rows
+}
+
+/*
+records := `UPDATE USER
+    SET  profilDescription = $1
+    WHERE id = $2`
+    query, err := db.Prepare(records)
+    if err != nil {
+        log.Fatal(err)
+    }
+    _, err = query.Exec(description, id)
+    if err != nil {
+        log.Fatal(err)
+    }
+*/
