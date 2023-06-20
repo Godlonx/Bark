@@ -34,8 +34,30 @@ const (
 	BadPassword                   = "bad password"
 	UnequalPassword               = "unequal password"
 	BadEmail                      = "bad email"
+	AlredyUsedUsername			  = "name already used"
+	AlredyUsedEmail 			  = "email already used"
 	Other                         = "Other"
 	None                          = "none"
 )
+
+type Post struct {
+	Id        int
+	IdUser    int
+	IdComment int
+	Title     string
+	Content   string
+	Date      string
+	Likes     int
+	Dislikes  int
+}
+
+type CurrentPosts struct {
+	Post []Post
+}
+
+type HomeStruct struct {
+	Post CurrentPosts
+	UserConnected User
+}
 
 var user User

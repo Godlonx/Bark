@@ -46,9 +46,37 @@ function barkColor(){
         if (document.title == "Home / Bark") {
             document.body.style.backgroundImage = "url(../static/img/home-bg.svg)";
         }else{
-            document.body.style.backgroundImage = "url(../static/img/angry-bg.svg)";
+            document.body.style.backgroundImage = "url(../static/img/background.svg)";
         }
         logo.value = "calm"
         logo.src ="../static/img/logo.png"
     }
+}
+
+window.onload = function registerError(){
+    if (document.title == "Register / Bark") {
+    errDiv = document.getElementById("err")
+    errText = errDiv.innerHTML
+    console.log(errDiv.innerHTML);
+    if (errDiv.innerHTML != "none") {
+        
+        switch (errText) {
+            case "bad password":
+                errDiv.innerHTML = "Your password isn't valid"
+                break;
+            case "bad email":
+                errDiv.innerHTML = "Your email isn't valid"
+                break;
+            default:
+                break;
+        }
+        errDiv.style.animation=" pop-up 3s cubic-bezier(0,.93,0,1) forwards";
+        const vanish = new Promise((resolve, reject) => {
+            setTimeout(() => {
+              resolve('toto');
+            }, 5000);
+          });
+        vanish.then(e =>{ errDiv.style.animation="pop-out 3s cubic-bezier(0,.93,0,1) forwards";})
+    }
+}
 }

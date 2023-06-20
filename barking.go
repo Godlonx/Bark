@@ -7,20 +7,7 @@ import (
 	"time"
 )
 
-type Post struct {
-	Id        int
-	IdUser    int
-	IdComment int
-	Title     string
-	Content   string
-	Date      string
-	Likes     int
-	Dislikes  int
-}
 
-type CurrentPosts struct {
-	Post []Post
-}
 
 func getDataBase() *sql.DB {
 	db, errSQLOpen := sql.Open("sqlite3", "./public/barkBDD.db")

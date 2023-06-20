@@ -22,7 +22,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="../static/css/popup.css" rel="stylesheet" type="text/css">
 
-</head>
 <body>
     <div class="side-left">
         <div class="logo-bark">
@@ -30,22 +29,22 @@
         </div>
         <div class="my-profile">
             <img src="../static/images/avatar2-tmp.png" class="avatar" alt="my-avatar">
-            <h2>Harcadakad</h2>
+            <h2>{{.UserConnected.Username}}</h2>
         </div>
         <div class="consumer-profile">
             <div>
-                <p>LEVEL 1</p>
+                <p>LEVEL {{.UserConnected.Lvl}}</p>
                 <div class="progress-bar"></div>
             </div>
             <div class="stat">
                 <div class="Bark-stat">
-                    <p id="Denomination1">Barks</p><p>791</p> <!--NUMBER-->
+                    <p id="Denomination1">Barks</p><p>{{.UserConnected.Barks}}</p> <!--NUMBER-->
                 </div>
                 <div class="Like-stat">
-                    <p id="Denomination2">Likes</p><p>1463</p><!--NUMBER-->
+                    <p id="Denomination2">Likes</p><p>{{.UserConnected.Likes}}</p><!--NUMBER-->
                 </div>
                 <div class="Dislike-stat">
-                    <p id="Denomination3">Dislikes</p><p>294</p><!--NUMBER-->
+                    <p id="Denomination3">Dislikes</p><p>{{.UserConnected.Dislikes}}</p><!--NUMBER-->
                 </div>
             </div>
         </div>
@@ -71,7 +70,7 @@
         </div>
     </div>
     <div class="center">
-            {{ range $element := .Post }}
+            {{ range $element := .Post.Post }}
                 <button class="topic-link">
                     <h1>{{ $element.Title }}</h1>
                     <div class="sub-info">
