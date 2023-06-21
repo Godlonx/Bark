@@ -29,7 +29,7 @@ function barkColor(){
     var link = document.querySelector("link[rel~='icon']");
     const logo =  document.getElementById("bark-logo")
     if (logo.value !== "angry") {
-        link.href = '../static/img/angry-face.png';
+        link.src = '../static/img/angry-face.png';
         document.body.style.setProperty('--main-color', '#AA0C18');
         if (document.title == "Home / Bark") {
             document.body.style.backgroundImage = "url(../static/img/home-bg-angry.svg)";
@@ -40,7 +40,7 @@ function barkColor(){
         logo.value = "angry"
         logo.src ="../static/img/angry-face.png"
     }else{
-        link.href = '../static/img/logo.png';
+        link.src = '../static/img/logo.png';
         document.body.style.setProperty('--main-color', '#9800fe');
         if (document.title == "Home / Bark") {
             document.body.style.backgroundImage = "url(../static/img/home-bg.svg)";
