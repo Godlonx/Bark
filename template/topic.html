@@ -15,36 +15,102 @@
 
     <!----- CSS ----->
     <link href="../static/css/topic.css" rel="stylesheet" type="text/css">
-    <link href="../static/font/fonts.css" rel="stylesheet" type="text/css">
     <link href="../static/css/overview.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="../static/css/popup.css" rel="stylesheet" type="text/css">
 
     <!----- JS ----->
     <script src="../static/js/topic.js"></script>
 
 </head>
 <body>
-    <div class="post">
-        <span class="title">{{.Post.Title}}</span>
-        <span class="content">{{.Post.Content}}</span>
-        <span class="date">{{.Post.Date}}</span>
-        <span class="like">{{.Post.Likes}}</span>
-        <span class="dislike">{{.Post.Dislikes}}</span>
-        <span class="tag">{{.Post.Tag}}</span>
+    <div class="side-open" id="side-open" onclick="openNav()">
+        <div class="line1"></div>
+        <div class="line2"></div>
     </div>
-    {{ range $element := .Comments }}
-    <div class="comment" id="{{$element.Id}}">
-        <span class="title">{{$element.Title}}</span>
-        <span class="content">{{$element.Content}}</span>
-        <span class="date">{{$element.Date}}</span>
-        <span class="like">{{$element.Likes}}</span>
-        <span class="dislike">{{$element.Dislikes}}</span>
-        <span class="tag">{{$element.Tag}}</span>
+    <div class="side-left" id="side-left">
+        <div class="logo-bark">
+            <img src="../static/favicons/icon.ico" id="bark-logo" alt="" onclick="barkColor()" value="calm">
+        </div>
+        <div class="my-profile">
+            <img src="../static/images/avatar2-tmp.png" class="avatar" alt="my-avatar">
+            <h2>{{.UserConnected.Username}}</h2>
+        </div>
+        <div class="consumer-profile">
+            <div>
+                <p>LEVEL {{.UserConnected.Lvl}}</p>
+                <div class="progress-bar"></div>
+            </div>
+            <div class="stat">
+                <div class="Bark-stat">
+                    <p id="Denomination1">Barks</p><p>{{.UserConnected.Barks}}</p> <!--NUMBER-->
+                </div>
+                <div class="Like-stat">
+                    <p id="Denomination2">Likes</p><p>{{.UserConnected.Likes}}</p><!--NUMBER-->
+                </div>
+                <div class="Dislike-stat">
+                    <p id="Denomination3">Dislikes</p><p>{{.UserConnected.Dislikes}}</p><!--NUMBER-->
+                </div>
+            </div>
+        </div>
+        <button class="comment-btn" onclick="commentRedirection('{{.Post.Id}}')">Comment</button>
     </div>
-    {{ end }}
-    <div class="users">
-        <span>User1:{{.UserConnected.Username}}</span>
-        <span>User2:{{.User2.Username}}</span>
+
+    <div class="center">
+        <div class="post">
+            <span class="title">{{.Post.Title}}</span>
+            <div class="subInfo">
+                <span class="date">{{.Post.Date}}</span>
+                <span class="like">{{.Post.Likes}}</span>
+                <span class="dislike">{{.Post.Dislikes}}</span>
+                <span class="tag">{{.Post.Tag}}</span>
+            </div>
+            <span class="content">{{.Post.Content}}</span>
+        </div>
+        {{ range $element := .Comments }}
+        <div class="comment" id="{{$element.Id}}">
+            <span class="title">{{$element.Title}}</span>
+            <div class="subInfo">
+                
+                <span class="date">{{$element.Date}}</span>
+                <span class="like">{{$element.Likes}}</span>
+                <span class="dislike">{{$element.Dislikes}}</span>
+                <span class="tag">{{$element.Tag}}</span>
+            </div>
+            <span class="content">{{$element.Content}}</span>
+        </div>
+        {{ end }}
     </div>
-    <button class="comment" onclick="commentRedirection('{{.Post.Id}}')"></button>
+
+    <div class="side-right" id="side-right">
+        
+        <div class="my-profile">
+            <img src="../static/images/avatar-tmp.png" class="avatar" alt="my-avatar">
+            <h2>{{.User2.Username}}</h2>
+        </div>
+        <div class="consumer-profile">
+            <div>
+                <p>LEVEL {{.User2.Lvl}}</p>
+                <div class="progress-bar"></div>
+            </div>
+            <div class="stat">
+                <div class="Bark-stat">
+                    <p id="Denomination1">Barks</p><p>{{.User2.Barks}}</p> <!--NUMBER-->
+                </div>
+                <div class="Like-stat">
+                    <p id="Denomination2">Likes</p><p>{{.User2.Likes}}</p><!--NUMBER-->
+                </div>
+                <div class="Dislike-stat">
+                    <p id="Denomination3">Dislikes</p><p>{{.User2.Dislikes}}</p><!--NUMBER-->
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </body>
+
+<script src='../static/js/script.js'></script>
+<script src='../static/js/sidenav.js'></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script src="../static/js/login.js"></script>
 </html>

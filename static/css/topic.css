@@ -1,3 +1,439 @@
 body {
-    color:azure;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+    font-family: 'gg sans', sans-serif;
+    --main-color:#9800fe;
+    --bg-color:#1e1f22;
+    background-image: url(../img/home-bg.svg);
+    background-size: cover;
+    background-position: center center;
+    background-attachment: fixed;
 }
+
+#side-open{
+    position: fixed;
+    display: none;
+    top: 20px;
+    left: 20px;
+}
+
+.side-left {
+    
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    max-width: 13vw;
+    max-height: 600px;
+
+    display: flex;
+    flex-direction: column;
+    /* margin-right: 22px; */
+    gap: 1.2vw;
+}
+
+.logo-bark{
+    display: flex;
+    justify-content: center;
+}
+
+.logo-bark img {
+    position: relative;
+    width: 30%;
+}
+
+.progress-bar{
+    height: 0.8vw;
+    width: auto;
+    border-radius: 10px;
+    background-color: #a6aab5;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar::before{
+    content: "";
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0.8vw;
+    width: 50%;
+    border-radius: 10px;
+    background-color: var(--main-color);
+    /* animation: progressBar 2s linear infinite; */
+}
+
+
+.progress-bar:hover::before{
+    animation: progressBar 1s linear infinite;
+}
+
+@keyframes progressBar {
+    from{
+        width: 0%;
+    }
+    to{
+        width: 100%;
+    }
+  }
+
+#icon{
+    font-size: 1.8vw;
+    height: 2vw;
+    width: 2vw;
+    margin-left: 0.5vw;
+}
+
+.my-profile img {
+    width: auto;
+    height: 13vw;
+    display: flex;
+    background-color: gray;
+
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+
+.my-profile h2 {
+    background-color: #313338;
+    height: 48px;
+
+    color: white;
+    font-size: 18px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin-bottom: 22px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.consumer-profile {
+    background-color: #313338;
+    color: white;
+    border-radius: 8px;
+    margin-bottom: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+    padding: 1vw;
+    /* border: dashed white 0.1vw; */
+}
+
+
+.Bark-stat,.Like-stat,.Dislike-stat{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 8px;
+    margin-bottom: 22px;
+}
+
+.setting-button,.barking-button{
+    /* border: dashed white 0.1vw; */
+    display: flex;
+    flex-direction: row;
+    border-radius: 8px;
+    align-self: start;
+    align-items: center;
+    color: white;
+    height: 3.5vw;
+    width: 13vw;
+    gap: 1.5vw;
+    padding-top: 0.6vw;
+    padding-bottom: 0.5vw;
+    justify-content: flex-start;
+    cursor: pointer;
+}
+
+
+
+@media screen and (max-width: 900px) {
+
+    #side-open{
+        display: flex;
+        position: fixed;
+        z-index: 4;
+        top: 5px;
+        left: 5px;
+        width: 30px;
+        height: 30px;
+        /* background-color: var(--main-color); */
+    }
+
+
+    .line1,.line2 {
+        
+        position: absolute;
+        top: 25%;
+        width: 75%;
+        height: 4px;
+        border-radius: 2px;
+        background-color: var(--main-color);
+        outline: solid #313338 1px;
+        transition: all 1s;
+    }
+
+    .line2 {
+        top:75% ;
+        width: 55%;
+    }
+
+    #side-open.active .line1{
+        background-color: rgb(255, 0, 0);
+        transform-origin: center;
+        transform: rotate(45deg);
+        width: 100%;
+        outline: none;
+        position: absolute;
+        top: 50%;
+    }
+    #side-open.active .line2{
+        background-color: rgb(255, 0, 0);
+        transform-origin: center;
+        transform: rotate(-45deg);
+        width: 100%;
+        outline: none;
+        position: absolute;
+        top: 50%;
+    }
+
+
+    .side-left {
+        left: -140px;
+        top:0;
+        height: 100%;
+        max-width: 130px;
+        min-width: 130px;
+        z-index: 3;
+        padding-bottom: 50px;
+        align-items: center;
+        background-color: #1e1f22;
+        outline: solid var(--main-color);
+        transition: left 1s;
+        gap: 20px;
+    }
+
+    .side-left.active {
+        left: 0;
+      }
+
+    .side-left #bark-logo{
+        height: 30px;
+        width: 30px;
+        margin-top: 20px;
+    }
+
+    .my-profile{
+        width: 75%;
+    }
+    .side-left .my-profile img {
+        width: 100%;
+        height: auto;
+        margin-top: 0;
+    }
+
+    .consumer-profile{
+        width: 75%;
+    }
+
+    .consumer-profile p {
+        font-size: 15px;
+    }
+
+    .setting-button,.barking-button{
+        
+        justify-content: center;
+        align-items: center;
+        align-self: center;
+        width: 70%;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+}
+
+.comment-btn{
+    position: relative;
+    z-index: 5;
+    width: auto;
+    height: auto;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    font-size: 1.4vw;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: absolute;
+    top: 20px;
+    left: 20%;
+    gap: 0.2vw;
+    align-items: center;
+}
+
+/* .post * {
+    border: dashed white 0.1vw;
+} */
+
+.post {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 52vw;
+    height: auto;
+    background-color: #313338;
+    color: white;
+    border-radius: 8px;
+    padding: 1vw;
+    margin-bottom: 12px;
+    overflow: hidden;
+    gap: 1vw;
+}
+
+.comment {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 40vw;
+    height: auto;
+    background-color: #313338;
+    color: white;
+    border-radius: 8px;
+    padding: 1vw;
+    margin-bottom: 12px;
+    overflow: hidden;
+    gap: 1vw;
+}
+.post span {
+    color: #ffffff;
+}
+
+.post .title{
+    font-size: 2vw;
+    padding-bottom: 1vw;
+    border-bottom: solid #58595c 0.2vw;
+}
+
+.subInfo {
+    display: flex;
+    align-items: center;
+    position: relative;
+    min-width: 60%;
+    max-width: 80%;
+    gap: 2vw;
+    flex-direction: row;
+    justify-content: start;
+    padding-top: 0.1vw;
+}
+
+.tag{
+    background-color:#1e1f22;
+    border-radius: 100px;
+    padding: 0.7vw;
+}
+
+.like::before{
+    font-family: "FontAwesome";
+    content: "\f164 \00a0\00a0";
+    font-weight: 900;
+}
+
+.dislike::before{
+    font-family: "FontAwesome";
+    content: "\f165 \00a0\00a0";
+    font-weight: 900;
+}
+
+.date::before{
+    font-family: "FontAwesome";
+    content: "\f073 \00a0\00a0";
+    font-weight: 900;
+}
+
+.mssgNumber::before{
+    font-family: "FontAwesome";
+    content: "\f075 \00a0\00a0";
+    font-weight: 900;
+}
+
+.topic-link .tag {
+    background-color: #232428;
+
+    font-weight: 700;
+    font-size: 1vw;
+
+    padding: 0.3vw;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+
+    border-radius: 25px;
+}
+
+
+.side-right {
+    
+    position: fixed;
+    top: 90px;
+    right: 30px;
+    max-width: 13vw;
+    max-height: 600px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 1.2vw;
+}
+/* 
+.logo-bark{
+    display: flex;
+    justify-content: center;
+}
+
+.logo-bark img {
+    position: relative;
+    width: 30%;
+}
+
+.progress-bar{
+    height: 0.8vw;
+    width: auto;
+    border-radius: 10px;
+    background-color: #a6aab5;
+    position: relative;
+    overflow: hidden;
+}
+
+.progress-bar::before{
+    content: "";
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 0.8vw;
+    width: 50%;
+    border-radius: 10px;
+    background-color: var(--main-color);
+     animation: progressBar 2s linear infinite; 
+}
+
+
+.progress-bar:hover::before{
+    animation: progressBar 1s linear infinite;
+} */
