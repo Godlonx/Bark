@@ -49,6 +49,7 @@ type Post struct {
 	Date      string
 	Likes     int
 	Dislikes  int
+	Tag       string
 }
 
 type CurrentPosts struct {

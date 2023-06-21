@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -19,12 +20,13 @@ var postClick Post
 
 func Server() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
-	http.HandleFunc("/", ServHome)
+	http.HandleFunc("/", ServLogin)
 	http.HandleFunc("/home", ServHome)
 	http.HandleFunc("/topic", ServTopic)
 	http.HandleFunc("/login", ServLogin)
 	http.HandleFunc("/register", ServRegister)
 	http.HandleFunc("/settings", ServSettings)
+	http.HandleFunc("/post", ServPost)
 
 	fmt.Println("http://localhost" + port + "/")
 	fmt.Println("Server started on port", port)
@@ -38,26 +40,9 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 	}
 	t := template.Must(template.ParseFiles("template/home.html"))
 
-	var post Post
 	var browseDirection string
 
 	if r.Method == http.MethodPost {
-
-		if tableIsEmpty() {
-			post.Id = 1
-		} else {
-			post.Id = selectLastId() + 1
-		}
-		post.IdUser = user.Id
-		post.IdComment = 0
-		post.Content = r.FormValue("textarea")
-		post.Title = r.FormValue("title")
-		post.Like = 0
-		post.Dislike = 0
-		post.Date = getDatePost()
-		post.Tag = ""
-		insertPost(post)
-
 		browseDirection = r.FormValue("browse-posts")
 		browsePosts(browseDirection)
 
@@ -66,17 +51,13 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 			http.Redirect(w, r, "/topic", http.StatusSeeOther)
 		}
 		println(idPost)
-
 		http.Redirect(w, r, "/home", http.StatusSeeOther)
 		return
 	}
-
 	var currentPosts CurrentPosts
 	currentPosts = selectTwentyFivePost(firstPost, lastPost, currentPosts)
 
-
-	
-	homeStruct := HomeStruct{currentPosts,user}
+	homeStruct := HomeStruct{currentPosts, user}
 
 	t.Execute(w, homeStruct)
 }
@@ -84,15 +65,13 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 func ServTopic(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/topic.html"))
 
-	getPost()
-
 	t.Execute(w, postClick) //post
 }
 
 func ServLogin(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/login.html"))
 	aliveCookie := false
-	dataCookie := getCookie(w,r)
+	dataCookie := getCookie(w, r)
 	if dataCookie.Username != "" {
 		aliveCookie = true
 	}
@@ -100,17 +79,15 @@ func ServLogin(w http.ResponseWriter, r *http.Request) {
 	if !aliveCookie {
 		var data LoginData
 
-
 		err := Login(data)
 		_ = err
-		
-		if r.Method ==	http.MethodPost {
+
+		if r.Method == http.MethodPost {
 			username := r.FormValue("username")
 			password := r.FormValue("password")
 			r.ParseForm()
 			box := r.Form["remember"]
-			
-			
+
 			data.Username = username
 			data.Password = password
 			err := Login(data)
@@ -118,19 +95,18 @@ func ServLogin(w http.ResponseWriter, r *http.Request) {
 				fmt.Println(err)
 				t.Execute(w, err)
 			} else {
-				if len(box)==1 {
-					SetCookie(w,r)
+				if len(box) == 1 {
+					SetCookie(w, r)
 				}
-				
+
 				http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 			}
 		}
-	}else{
+	} else {
 		user = dataCookie
 		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 	}
-	
-	
+
 	//w.WriteHeader(http.StatusOK)
 	t.Execute(w, "")
 }
@@ -139,7 +115,7 @@ func ServRegister(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/register.html"))
 	var errRegister registerError = None
 	var err error
-	isValid :=false
+	isValid := false
 	if r.Method == "POST" {
 		username := r.FormValue("username")
 		password := r.FormValue("password")
@@ -151,15 +127,15 @@ func ServRegister(w http.ResponseWriter, r *http.Request) {
 		data.Username = username
 		data.Passwordverif = passwordverif
 		isValid, errRegister = Check(data)
-		
+
 		if isValid {
-			err,errRegister = Register(data)
+			err, errRegister = Register(data)
 			if err == nil {
 				http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 			}
-			
+
 		}
-		
+		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 	}
 	println(errRegister)
 	t.Execute(w, errRegister)
@@ -167,12 +143,11 @@ func ServRegister(w http.ResponseWriter, r *http.Request) {
 
 func ServSettings(w http.ResponseWriter, r *http.Request) {
 
-	
 	t := template.Must(template.ParseFiles("template/settings.html"))
 	if r.Method == http.MethodPost {
 		disconnect := r.FormValue("disconnect")
-		if disconnect=="disconnect" {
-			DeleteCookie(w,r)
+		if disconnect == "disconnect" {
+			DeleteCookie(w, r)
 		}
 		println(disconnect)
 		title := r.FormValue("title")
@@ -215,4 +190,40 @@ func ServSettings(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	t.Execute(w, user)
+}
+
+func ServPost(w http.ResponseWriter, r *http.Request) {
+	t := template.Must(template.ParseFiles("template/post.html"))
+
+	var tags = GetTag()
+
+	if r.Method == http.MethodPost {
+
+		var post Post
+		if tableIsEmpty() {
+			post.Id = 1
+		} else {
+			post.Id = selectLastId() + 1
+		}
+		post.IdUser = 0
+		post.IdComment = 0
+		post.Title = r.FormValue("title")
+		post.Content = r.FormValue("textarea")
+		post.Date = getDatePost()
+		post.Likes = 0
+		post.Dislikes = 0
+		tag := r.FormValue("newTag")
+		var idTag int
+		if tag != "" {
+			tag, idTag = addTag(tag)
+			post.Tag = tag
+		} else {
+			tag = r.FormValue("tag")
+			idTag = GetIdTag(tag)
+			post.Tag = tag
+		}
+		print(idTag)
+		insertPost(post, idTag)
+	}
+	t.Execute(w, tags)
 }

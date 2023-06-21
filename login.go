@@ -9,14 +9,15 @@ import (
 var test User
 
 func Login(userLogin LoginData) error {
-
-	rows := getData("SELECT * From user where username = '" + userLogin.Username + "'")
+	rows := getData("SELECT * From User where username = '" + userLogin.Username + "'")
+	defer rows.Close()
 	for rows.Next() {
 
 		err := rows.Scan(&user.Id, &user.Username, &user.Password, &user.Email, &user.Lvl, &user.Barks, &user.Likes, &user.Dislikes)
-		return err
+		if CheckPasswordHash(userLogin.Password, user.Password) {
+			return err
+		}
 	}
-	defer rows.Close()
 	return errors.New("No existing account")
 
 }

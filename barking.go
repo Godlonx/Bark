@@ -5,10 +5,9 @@ import (
 	"fmt"
 	"log"
 	"math"
+	"strings"
 	"time"
 )
-
-
 
 func getDataBase() *sql.DB {
 	db, errSQLOpen := sql.Open("sqlite3", "./public/barkBDD.db")
@@ -21,12 +20,14 @@ func getDataBase() *sql.DB {
 
 func tableIsEmpty() bool {
 	db := getDataBase()
+	defer db.Close()
 
 	var rowCount int
 	err := db.QueryRow("SELECT COUNT(*) FROM Post").Scan(&rowCount)
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer db.Close()
 
 	if rowCount == 0 {
 		return true
@@ -37,11 +38,15 @@ func tableIsEmpty() bool {
 
 func selectLastId() int {
 	db := getDataBase()
+	defer db.Close()
 
 	row, errQuery := db.Query("SELECT MAX(id) FROM Post")
 	if errQuery != nil {
 		log.Fatalln(errQuery)
+		return 0
 	}
+	defer db.Close()
+	defer row.Close()
 
 	var idLastPost int = 0
 
@@ -49,16 +54,16 @@ func selectLastId() int {
 		err := row.Scan(&idLastPost)
 		if err != nil {
 			log.Fatal(err)
+			return 0
 		}
 	}
-	row.Close()
 
 	return idLastPost
 }
 
 func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) CurrentPosts {
 	db := getDataBase()
-
+	defer db.Close()
 	var request string = fmt.Sprintf("SELECT * FROM Post WHERE id BETWEEN %d AND %d LIMIT 25", firstId, lastId)
 
 	defer db.Close()
@@ -66,54 +71,57 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 	row, errQuery := db.Query(request)
 	if errQuery != nil {
 		log.Fatalln(errQuery)
+		return CurrentPosts{}
 	}
+	defer row.Close()
 
 	for row.Next() {
 		var post Post
-		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Content, &post.Title, &post.Like, &post.Dislike, &post.Date, &post.Tag)
+		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Content, &post.Title, &post.Likes, &post.Dislikes, &post.Date)
 		if err != nil {
 			log.Fatal(err)
+			return CurrentPosts{}
 		}
 		currentPosts.Post = append(currentPosts.Post, post)
 	}
-	row.Close()
-
-	return currentPosts
-}
-
-func getPost() {
-	db := getDataBase()
-
-	defer db.Close()
-
-	fmt.Println(idPost)
-
-	row, errQuery := db.Query("SELECT * FROM Post WHERE id = '" + idPost + "';")
-	if errQuery != nil {
-		log.Fatalln(errQuery)
-	}
-
-	for row.Next() {
-		err := row.Scan(&postClick.Id, &postClick.IdUser, &postClick.IdComment, &postClick.Content, &postClick.Title, &postClick.Like, &postClick.Dislike, &postClick.Date, &postClick.Tag)
+	println(len(currentPosts.Post))
+	for i := 0; i < len(currentPosts.Post); i++ {
+		row, err := db.Query("SELECT tag.name FROM Post JOIN tagRef on Post.id = tagRef.idPost JOIN tag on tagRef.idTag = tag.id WHERE Post.id = ?;", currentPosts.Post[i].Id)
 		if err != nil {
 			log.Fatal(err)
 		}
+		for row.Next() {
+			err := row.Scan(&currentPosts.Post[i].Tag)
+			println(currentPosts.Post[i].Id, currentPosts.Post[i].Tag)
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
 	}
-	row.Close()
+	return currentPosts
 }
 
-func insertPost(post Post) {
+func insertPost(post Post, idTag int) {
 
 	if post.Title != "" && post.Content != "" {
 		db := getDataBase()
+		defer db.Close()
 
-		statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, content, title, like, dislike, date, tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+		query, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, title, content, date, like, dislike) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
 		if errPrepare != nil {
 			log.Fatalln(errPrepare)
+			return
 		}
-		_, errExec := statement.Exec(post.Id, post.IdUser, post.IdComment, post.Content, post.Title, post.Like, post.Dislike, post.Date, post.Tag)
+		_, errExec := query.Exec(post.Id, post.IdUser, post.IdComment, post.Title, post.Content, post.Date, post.Likes, post.Dislikes)
 		if errExec != nil {
 			log.Fatalln(errExec)
+			return
+		}
+
+		_, err := db.Exec("INSERT INTO tagRef(idTag, idPost) VALUES(?, ?)", idTag, post.Id)
+		if err != nil {
+			log.Fatal(err)
+			return
 		}
 	}
 }
@@ -230,4 +238,57 @@ func getDatePost() string {
 	var date string = fmt.Sprintf("%d %s %d, at %d:%d", day, month, year, hour, minutes)
 
 	return date
+}
+
+func GetTag() []string {
+	var Tags []string
+	db := getDataBase()
+
+	row, errQuery := db.Query("SELECT * FROM Tag")
+	if errQuery != nil {
+		log.Fatalln(errQuery)
+	}
+	defer db.Close()
+	defer row.Close()
+
+	for row.Next() {
+		var tagName string
+		var id int
+		err := row.Scan(&id, &tagName)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(tagName)
+		Tags = append(Tags, tagName)
+	}
+	return Tags
+}
+
+func addTag(newtag string) (string, int) {
+	newtag = strings.ToLower(newtag)
+	tags := GetTag()
+	lastId := 0
+	for id, tag := range tags {
+		if newtag == strings.ToLower(tag) {
+			return tag, id
+		}
+		lastId = id
+	}
+	db := getDataBase()
+	defer db.Close()
+	_, err := db.Exec("INSERT INTO tag(name) VALUES(?);", newtag)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return newtag, lastId + 1
+}
+
+func GetIdTag(searchedTag string) int {
+	tags := GetTag()
+	for id, tag := range tags {
+		if strings.ToLower(searchedTag) == strings.ToLower(tag) {
+			return id
+		}
+	}
+	return 0
 }

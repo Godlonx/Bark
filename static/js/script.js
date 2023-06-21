@@ -21,9 +21,8 @@ function pulse() {
     }
   }
 
-
-function toSetting(){
-    window.location = "http://localhost:8080/settings";
+function redirection(ref) {
+    window.location = "http://localhost:8080" + ref
 }
 
 function barkColor(){

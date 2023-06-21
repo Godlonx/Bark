@@ -64,6 +64,21 @@ button:hover {
     background-color: #313338;
 }
 
+#tag {
+    resize: none;
+    outline: none;
+    border: none;
+    width: 780px;
+    border: 2px solid #80828c;
+    border-radius: 8px;
+    padding: 5px 10px;
+    margin-bottom: 20px;
+    color: white;
+    font-size: 20px;
+    font-weight: 500;
+    background-color: #313338;
+}
+
 #title-topic::placeholder {
     color: #80828c;
 }

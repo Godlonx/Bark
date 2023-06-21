@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="../static/css/post.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="../static/js/script.js"></script>
+    <title>Document</title>
+</head>
+    <button class="cancel-button" onclick="redirection('/home')"><i class="fa fa-angle-left"></i></button>
+
+    <div class="popup-text-input">
+        <form action="" method="POST">
+            <input class="title-topic" type="text" name="title" placeholder="Title" required>
+            <textarea class="textarea" name="textarea" rows="5" cols="33" placeholder="What do you want to talk about ?" required></textarea>
+            <select class="tag" name="tag">
+                <option disabled selected>Select Tag</option>
+                {{ range $element := . }}
+                    <option>{{$element}}</option>
+                {{ end }}
+            </select>
+            <input type="text" placeholder="new Tag" name="newTag" class="input tag">
+            <button class="button bark" onclick="redirection('/home')">Barking</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -197,13 +197,6 @@ input[type="checkbox"]:checked::before {
     filter: blur(5px);
 }
 
-.toRegister{
-    padding-top: 1vw;
-    padding-left: 5vw;
-    padding-right: 5vw;
-    border-top: outset var(--bg-color);
-}
-
-.toRegister:hover{
-    color: var(--main-color);
+.close {
+    cursor: pointer;
 }
