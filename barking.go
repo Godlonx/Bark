@@ -70,36 +70,54 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 		log.Fatalln(errQuery)
 		return CurrentPosts{}
 	}
-	defer db.Close()
 	defer row.Close()
 
 	for row.Next() {
 		var post Post
-		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Content, &post.Title, &post.Likes, &post.Dislikes, &post.Date, &post.Tag)
+		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Content, &post.Title, &post.Likes, &post.Dislikes, &post.Date)
 		if err != nil {
 			log.Fatal(err)
 			return CurrentPosts{}
 		}
 		currentPosts.Post = append(currentPosts.Post, post)
 	}
-
+	println(len(currentPosts.Post))
+	for i := 0; i < len(currentPosts.Post); i++ {
+		row, err := db.Query("SELECT tag.name FROM Post JOIN tagRef on Post.id = tagRef.idPost JOIN tag on tagRef.idTag = tag.id WHERE Post.id = ?;", currentPosts.Post[i].Id)
+		if err != nil {
+			log.Fatal(err)
+		}
+		for row.Next() {
+			err := row.Scan(&currentPosts.Post[i].Tag)
+			println(currentPosts.Post[i].Id, currentPosts.Post[i].Tag)
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+	}
 	return currentPosts
 }
 
-func insertPost(post Post) {
+func insertPost(post Post, idTag int) {
 
 	if post.Title != "" && post.Content != "" {
 		db := getDataBase()
 		defer db.Close()
 
-		statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, title, content, date, like, dislike, tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+		query, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, title, content, date, like, dislike) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
 		if errPrepare != nil {
 			log.Fatalln(errPrepare)
 			return
 		}
-		_, errExec := statement.Exec(post.Id, post.IdUser, post.IdComment, post.Title, post.Content, post.Date, post.Likes, post.Dislikes, post.Tag)
+		_, errExec := query.Exec(post.Id, post.IdUser, post.IdComment, post.Title, post.Content, post.Date, post.Likes, post.Dislikes)
 		if errExec != nil {
 			log.Fatalln(errExec)
+			return
+		}
+
+		_, err := db.Exec("INSERT INTO tagRef(idTag, idPost) VALUES(?, ?)", idTag, post.Id)
+		if err != nil {
+			log.Fatal(err)
 			return
 		}
 	}
@@ -186,13 +204,15 @@ func GetTag() []string {
 	return Tags
 }
 
-func addTag(newtag string) string {
+func addTag(newtag string) (string, int) {
 	newtag = strings.ToLower(newtag)
 	tags := GetTag()
-	for _, tag := range tags {
+	lastId := 0
+	for id, tag := range tags {
 		if newtag == strings.ToLower(tag) {
-			return tag
+			return tag, id
 		}
+		lastId = id
 	}
 	db := getDataBase()
 	defer db.Close()
@@ -200,5 +220,15 @@ func addTag(newtag string) string {
 	if err != nil {
 		log.Fatal(err)
 	}
-	return newtag
+	return newtag, lastId + 1
+}
+
+func GetIdTag(searchedTag string) int {
+	tags := GetTag()
+	for id, tag := range tags {
+		if strings.ToLower(searchedTag) == strings.ToLower(tag) {
+			return id
+		}
+	}
+	return 0
 }

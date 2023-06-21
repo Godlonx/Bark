@@ -19,5 +19,5 @@ func Register(data RegisterData) error {
 	}
 	insert := "INSERT into user (username,password,email,lvl,barks,likes,dislikes) VALUES ('" + username + "','" + hashPass + "','" + email + "','0', '0', '0', '0')"
 	sendData(insert)
-	return nil
+	return errors.New("Can't connect")
 }

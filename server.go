@@ -36,7 +36,6 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 	var browseDirection string
 
 	if r.Method == http.MethodPost {
-
 		browseDirection = r.FormValue("browse-posts")
 		browsePosts(browseDirection)
 		http.Redirect(w, r, "/home", http.StatusSeeOther)
@@ -88,8 +87,8 @@ func ServRegister(w http.ResponseWriter, r *http.Request) {
 		println(err)
 		if isValid {
 			Register(data)
+			http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 		}
-		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 	}
 	t.Execute(w, nil)
 }
@@ -160,13 +159,17 @@ func ServPost(w http.ResponseWriter, r *http.Request) {
 		post.Likes = 0
 		post.Dislikes = 0
 		tag := r.FormValue("newTag")
+		var idTag int
 		if tag != "" {
-			tag = addTag(tag)
+			tag, idTag = addTag(tag)
 			post.Tag = tag
 		} else {
-			post.Tag = r.FormValue("tag")
+			tag = r.FormValue("tag")
+			idTag = GetIdTag(tag)
+			post.Tag = tag
 		}
-		insertPost(post)
+		print(idTag)
+		insertPost(post, idTag)
 	}
 	t.Execute(w, tags)
 }
