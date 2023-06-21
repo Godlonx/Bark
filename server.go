@@ -73,11 +73,20 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 func ServTopic(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/topic.html"))
 	postId := r.URL.Query().Get("id")
+	if r.Method == http.MethodPost {
+		isLike := r.FormValue("isLike")
+		if isLike == "1" {
+			addLike(postId, 1)
+		} else if isLike == "-1" {
+			isLike = r.FormValue("dislike")
+			addLike(postId, -1)
+		}
+	}
 	err, topic := Topic(postId)
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	println(topic.isLike)
 	t.Execute(w, topic) //post
 }
 

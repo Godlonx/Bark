@@ -68,6 +68,30 @@ func Topic(idPost string) (error, TopicStruct) {
 		topic.User2 = user2
 	}
 
+	row4, err := db.Query("SELECT isLike From Likes l JOIN Post p ON p.id = l.idPost WHERE p.id = ?", idPost)
+	defer row4.Close()
+	for row4.Next() {
+		var isLike int
+		err := row4.Scan(&isLike)
+		if err != nil {
+			return err, TopicStruct{}
+		}
+		if isLike == 1 {
+			topic.Post.Likes++
+		} else if isLike == -1 {
+			topic.Post.Dislikes++
+		}
+	}
+
+	row5, err := db.Query("SELECT isLike From Likes l JOIN Post p ON p.id = l.idPost JOIN user u on u.id = l.idUser  WHERE p.id = ? AND u.id = ?", idPost, user.Id)
+	defer row5.Close()
+	for row5.Next() {
+		err := row5.Scan(&topic.isLike)
+		if err != nil {
+			return err, TopicStruct{}
+		}
+	}
+
 	topic.Comments = posts
 	topic.UserConnected = user
 	println(topic.User2.Username)

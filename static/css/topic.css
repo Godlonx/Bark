@@ -437,3 +437,7 @@ body {
 .progress-bar:hover::before{
     animation: progressBar 1s linear infinite;
 } */
+
+.post .like {
+    cursor: pointer;
+}

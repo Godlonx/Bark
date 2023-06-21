@@ -61,9 +61,12 @@
             <span class="title">{{.Post.Title}}</span>
             <div class="subInfo">
                 <span class="date">{{.Post.Date}}</span>
-                <span class="like">{{.Post.Likes}}</span>
-                <span class="dislike">{{.Post.Dislikes}}</span>
+                <span class="like" onclick="like(1)">{{.Post.Likes}}</span>
+                <span class="dislike" onclick="like(-1)">{{.Post.Dislikes}}</span>
                 <span class="tag">{{.Post.Tag}}</span>
+                <form action="" method="post" id="form">
+                    <input hidden name="isLike" value="0" id="isLike">
+                </form>
             </div>
             <span class="content">{{.Post.Content}}</span>
         </div>

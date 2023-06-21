@@ -122,6 +122,12 @@ func insertPost(post Post, idTag int) {
 			log.Fatal(err)
 			return
 		}
+
+		_, err = db.Exec("UPDATE User SET barks = barks+1 WHERE id = ?", user.Id)
+		user.Barks++
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 
@@ -322,3 +328,42 @@ func GetPostTag(tag string) CurrentPosts {
 	}
 	return posts
 }
+
+func addLike(idPost string, isLike int) {
+	db := getDataBase()
+	defer db.Close()
+
+	row, err := db.Query("SELECT isLike From Likes l JOIN Post p ON p.id = l.idPost JOIN user u on u.id = l.idUser  WHERE p.id = ? AND u.id = ?", idPost, user.Id)
+	defer row.Close()
+	for row.Next() {
+		var isLike int
+		err := row.Scan(&isLike)
+		if err != nil {
+			log.Fatal(err)
+		}
+		_, err = db.Exec("UPDATE Likes SET isLike = ? WHERE idPost=? AND idUser=?", isLike, idPost, user.Id)
+		if err != nil {
+			log.Fatal(err)
+		}
+		return
+	}
+	_, err = db.Exec("INSERT INTO Likes(idPost, idUser, isLike) VALUES(?, ?, ?)", idPost, user.Id, isLike)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+// func getLikePost(idPost string) int {
+// db := getDataBase()
+
+// row, err := db.Query("SELECT tag.name FROM Post JOIN tagRef on Post.id = tagRef.idPost JOIN tag on tagRef.idTag = tag.id WHERE Post.id = ?;", posts.Post[i].Id)
+// if err != nil {
+// 	log.Fatal(err)
+// }
+// for row.Next() {
+// 	err := row.Scan(&posts.Post[i].Tag)
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// }
+// }

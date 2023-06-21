@@ -67,6 +67,7 @@ type TopicStruct struct {
 	Comments      []Post
 	UserConnected User
 	User2         User
+	isLike        int
 }
 
 var user User
