@@ -59,6 +59,7 @@ type CurrentPosts struct {
 type HomeStruct struct {
 	Post          CurrentPosts
 	UserConnected User
+	Tags          []string
 }
 
 type TopicStruct struct {

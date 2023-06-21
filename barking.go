@@ -61,7 +61,7 @@ func selectLastId() int {
 	return idLastPost
 }
 
-func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts,order string) CurrentPosts {
+func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts, order string) CurrentPosts {
 	db := getDataBase()
 	defer db.Close()
 
@@ -85,7 +85,6 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts,ord
 		}
 		currentPosts.Post = append(currentPosts.Post, post)
 	}
-	println(len(currentPosts.Post))
 	for i := 0; i < len(currentPosts.Post); i++ {
 		row, err := db.Query("SELECT tag.name FROM Post JOIN tagRef on Post.id = tagRef.idPost JOIN tag on tagRef.idTag = tag.id WHERE Post.id = ?;", currentPosts.Post[i].Id)
 		if err != nil {
@@ -93,7 +92,6 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts,ord
 		}
 		for row.Next() {
 			err := row.Scan(&currentPosts.Post[i].Tag)
-			println(currentPosts.Post[i].Id, currentPosts.Post[i].Tag)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -291,4 +289,36 @@ func GetIdTag(searchedTag string) int {
 		}
 	}
 	return 0
+}
+
+func GetPostTag(tag string) CurrentPosts {
+	db := getDataBase()
+	var posts CurrentPosts
+	row, err := db.Query("SELECT p.* FROM Post p JOIN tagRef tr on tr.idPost = p.id JOIN tag t on t.id = tr.idTag WHERE t.name = ? ", tag)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer row.Close()
+	for row.Next() {
+		var post Post
+		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Content, &post.Title, &post.Likes, &post.Dislikes, &post.Date)
+		if err != nil {
+			log.Fatal(err)
+		}
+		posts.Post = append(posts.Post, post)
+	}
+
+	for i := 0; i < len(posts.Post); i++ {
+		row, err := db.Query("SELECT tag.name FROM Post JOIN tagRef on Post.id = tagRef.idPost JOIN tag on tagRef.idTag = tag.id WHERE Post.id = ?;", posts.Post[i].Id)
+		if err != nil {
+			log.Fatal(err)
+		}
+		for row.Next() {
+			err := row.Scan(&posts.Post[i].Tag)
+			if err != nil {
+				log.Fatal(err)
+			}
+		}
+	}
+	return posts
 }

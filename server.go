@@ -37,39 +37,35 @@ func Server() {
 }
 
 func ServHome(w http.ResponseWriter, r *http.Request) {
-	
+
 	if user.Username == "" {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 	}
 	t := template.Must(template.ParseFiles("template/home.html"))
 	var browseDirection string
-	
-	
-	
+
+	var currentPosts CurrentPosts
+	currentPosts = selectTwentyFivePost(firstPost, lastPost, currentPosts, order)
+
 	if r.Method == http.MethodPost {
-		
-		r.ParseForm()
+
 		orderSelect := r.FormValue("select-order")
 		if orderSelect == "Earliest" {
 			order = "DESC"
-		}else if orderSelect == "Latest"{
+		} else if orderSelect == "Latest" {
 			order = ""
 		}
-		
+		tagSelect := r.FormValue("select-items")
+		if tagSelect != "" {
+			currentPosts = GetPostTag(tagSelect)
+		}
+
 		browseDirection = r.FormValue("browse-posts")
 		browsePosts(browseDirection)
 
-		idPost = r.FormValue("idPost")
-		if idPost != "" {
-			http.Redirect(w, r, "/topic", http.StatusSeeOther)
-		}
-		http.Redirect(w, r, "/home", http.StatusSeeOther)
-		return
 	}
-	var currentPosts CurrentPosts
-	currentPosts = selectTwentyFivePost(firstPost, lastPost, currentPosts,order)
 
-	homeStruct := HomeStruct{currentPosts, user}
+	homeStruct := HomeStruct{currentPosts, user, GetTag()}
 
 	t.Execute(w, homeStruct)
 }

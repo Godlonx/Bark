@@ -99,11 +99,10 @@
         </div>
         <div class="selector-filter">
             <select name="select-items" id="sort-mod">
-              <option disabled selected>Filter</option>
-              <option value="Hardware">Hardware</option>
-              <option value="Gaming">Gaming</option>
-              <option value="Hardware">Music</option>
-              <option value="Gaming">Cinema</option>
+                <option disabled selected>Filter</option>
+                {{ range $element := .Tags }}
+                    <option>{{$element}}</option>
+                {{ end }}
             </select>
             <div class="fa fa-filter"></div>
         </div>
