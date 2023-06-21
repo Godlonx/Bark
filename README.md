@@ -5,9 +5,8 @@ Bark is a student project that consists of creating a forum site similar to twit
 
 # How to run ⬇
 1. Download this repository `git clone https://github.com/Godlonx/Bark.git`
-2. `cd bark/scripts/main` 
-3. `go run main.go`
-4. `http://localhost:8080/`
+2. `go run main/main.go`
+3. `http://localhost:8080/`
 
 
 
