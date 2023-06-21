@@ -45,7 +45,7 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 		} else {
 			post.Id = selectLastId() + 1
 		}
-		post.IdUser = 0
+		post.IdUser = user.Id
 		post.IdComment = 0
 		post.Content = r.FormValue("textarea")
 		post.Title = r.FormValue("title")
