@@ -215,6 +215,7 @@
         height: 4px;
         border-radius: 2px;
         background-color: var(--main-color);
+        outline: solid #313338 1px;
         transition: all 1s;
     }
 
@@ -228,7 +229,7 @@
         transform-origin: center;
         transform: rotate(45deg);
         width: 100%;
-
+        outline: none;
         position: absolute;
         top: 50%;
     }
@@ -237,7 +238,7 @@
         transform-origin: center;
         transform: rotate(-45deg);
         width: 100%;
-
+        outline: none;
         position: absolute;
         top: 50%;
     }

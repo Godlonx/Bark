@@ -29,6 +29,10 @@ func Server() {
 }
 
 func ServHome(w http.ResponseWriter, r *http.Request) {
+
+	if user.Username == "" {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
 	t := template.Must(template.ParseFiles("template/home.html"))
 
 	var post Post
