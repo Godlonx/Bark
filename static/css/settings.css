@@ -88,7 +88,8 @@ body {
     position: relative;
 }
 
-.leftPart .buttons .bark {
+.leftPart .buttons .button {
+    margin-bottom: 10px;
     font-weight: 600;
     font-size: 15px;
     height: 35px;
@@ -108,7 +109,7 @@ body {
 .leftPart .disconnect{
     width: 200px;
     height: 35px;
-    margin-top: 30px;
+    margin-top: 55px;
     position: relative;
 }
 

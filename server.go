@@ -37,25 +37,23 @@ func Server() {
 }
 
 func ServHome(w http.ResponseWriter, r *http.Request) {
-	
+
 	if user.Username == "" {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 	}
 	t := template.Must(template.ParseFiles("template/home.html"))
 	var browseDirection string
-	
-	
-	
+
 	if r.Method == http.MethodPost {
-		
+
 		r.ParseForm()
 		orderSelect := r.FormValue("select-order")
 		if orderSelect == "Earliest" {
 			order = "DESC"
-		}else if orderSelect == "Latest"{
+		} else if orderSelect == "Latest" {
 			order = ""
 		}
-		
+
 		browseDirection = r.FormValue("browse-posts")
 		browsePosts(browseDirection)
 
@@ -67,7 +65,7 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	var currentPosts CurrentPosts
-	currentPosts = selectTwentyFivePost(firstPost, lastPost, currentPosts,order)
+	currentPosts = selectTwentyFivePost(firstPost, lastPost, currentPosts, order)
 
 	homeStruct := HomeStruct{currentPosts, user}
 
@@ -154,7 +152,6 @@ func ServRegister(w http.ResponseWriter, r *http.Request) {
 		}
 		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 	}
-	println(errRegister)
 	t.Execute(w, errRegister)
 }
 
@@ -166,7 +163,6 @@ func ServSettings(w http.ResponseWriter, r *http.Request) {
 		if disconnect == "disconnect" {
 			DeleteCookie(w, r)
 		}
-		println(disconnect)
 		title := r.FormValue("title")
 		switch title {
 		case ("password"):
@@ -238,7 +234,6 @@ func ServPost(w http.ResponseWriter, r *http.Request) {
 			idTag = GetIdTag(tag)
 			post.Tag = tag
 		}
-		print(idTag)
 		insertPost(post, idTag)
 		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 	}
@@ -273,7 +268,6 @@ func ServComment(w http.ResponseWriter, r *http.Request) {
 			idTag = GetIdTag(tag)
 			post.Tag = tag
 		}
-		print(idTag)
 		insertComment(post, idTag, postId)
 		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 	}

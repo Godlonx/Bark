@@ -61,7 +61,7 @@ func Topic(idPost string) (error, TopicStruct) {
 	defer row3.Close()
 	for row3.Next() {
 		var user2 User
-		err := row3.Scan(&user2.Id, &user2.Username, &user2.Password, &user2.Email, &user2.Lvl, &user2.Barks, user2.Likes, user2.Dislikes)
+		err := row3.Scan(&user2.Id, &user2.Username, &user2.Password, &user2.Email, &user2.Lvl, &user2.Barks, &user2.Likes, &user2.Dislikes)
 		if err != nil {
 			return err, TopicStruct{}
 		}
@@ -70,7 +70,6 @@ func Topic(idPost string) (error, TopicStruct) {
 
 	topic.Comments = posts
 	topic.UserConnected = user
-	println(topic.User2.Username)
 	return nil, topic
 }
 
