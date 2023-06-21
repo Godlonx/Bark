@@ -15,6 +15,9 @@ const NUMBER_CURRENT_POSTS = 25
 var firstPost = 1
 var lastPost = NUMBER_CURRENT_POSTS
 
+var idPost string
+var postClick Post
+
 func Server() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/", ServLogin)
@@ -31,6 +34,10 @@ func Server() {
 }
 
 func ServHome(w http.ResponseWriter, r *http.Request) {
+
+	if user.Username == "" {
+		http.Redirect(w, r, "/login", http.StatusSeeOther)
+	}
 	t := template.Must(template.ParseFiles("template/home.html"))
 
 	var browseDirection string
@@ -38,42 +45,78 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		browseDirection = r.FormValue("browse-posts")
 		browsePosts(browseDirection)
+
+		idPost = r.FormValue("idPost")
+		if idPost != "" {
+			http.Redirect(w, r, "/topic", http.StatusSeeOther)
+		}
+		println(idPost)
 		http.Redirect(w, r, "/home", http.StatusSeeOther)
 		return
 	}
 	var currentPosts CurrentPosts
 	currentPosts = selectTwentyFivePost(firstPost, lastPost, currentPosts)
-	t.Execute(w, currentPosts)
+
+	homeStruct := HomeStruct{currentPosts, user}
+
+	t.Execute(w, homeStruct)
 }
 
 func ServTopic(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/topic.html"))
-	t.Execute(w, nil)
+
+	t.Execute(w, postClick) //post
 }
 
 func ServLogin(w http.ResponseWriter, r *http.Request) {
-	//user := Sql()
 	t := template.Must(template.ParseFiles("template/login.html"))
-	if r.Method == http.MethodPost {
-		username := r.FormValue("username")
-		password := r.FormValue("password")
-		data := LoginData{}
-		data.Username = username
-		data.Password = password
-		err := Login(data)
-		if err != nil {
-			fmt.Println(err)
-			t.Execute(w, err)
-		} else {
-			http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
-		}
+	aliveCookie := false
+	dataCookie := getCookie(w, r)
+	if dataCookie.Username != "" {
+		aliveCookie = true
 	}
+
+	if !aliveCookie {
+		var data LoginData
+
+		err := Login(data)
+		_ = err
+
+		if r.Method == http.MethodPost {
+			username := r.FormValue("username")
+			password := r.FormValue("password")
+			r.ParseForm()
+			box := r.Form["remember"]
+
+			data.Username = username
+			data.Password = password
+			err := Login(data)
+			if err != nil {
+				fmt.Println(err)
+				t.Execute(w, err)
+			} else {
+				if len(box) == 1 {
+					SetCookie(w, r)
+				}
+
+				http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
+			}
+		}
+	} else {
+		user = dataCookie
+		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
+	}
+
+	//w.WriteHeader(http.StatusOK)
 	t.Execute(w, "")
 }
 
 func ServRegister(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/register.html"))
-	if r.Method == http.MethodPost {
+	var errRegister registerError = None
+	var err error
+	isValid := false
+	if r.Method == "POST" {
 		username := r.FormValue("username")
 		password := r.FormValue("password")
 		email := r.FormValue("email")
@@ -83,19 +126,30 @@ func ServRegister(w http.ResponseWriter, r *http.Request) {
 		data.Password = password
 		data.Username = username
 		data.Passwordverif = passwordverif
-		isValid, err := Check(data)
-		println(err)
+		isValid, errRegister = Check(data)
+
 		if isValid {
-			Register(data)
-			http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
+			err, errRegister = Register(data)
+			if err == nil {
+				http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
+			}
+
 		}
+		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 	}
-	t.Execute(w, nil)
+	println(errRegister)
+	t.Execute(w, errRegister)
 }
 
 func ServSettings(w http.ResponseWriter, r *http.Request) {
+
 	t := template.Must(template.ParseFiles("template/settings.html"))
 	if r.Method == http.MethodPost {
+		disconnect := r.FormValue("disconnect")
+		if disconnect == "disconnect" {
+			DeleteCookie(w, r)
+		}
+		println(disconnect)
 		title := r.FormValue("title")
 		switch title {
 		case ("password"):

@@ -4,7 +4,6 @@
     text-decoration: none;
     list-style: none;
     font-family: 'gg sans', sans-serif;
-    --bg-color:#1e1f22;
 }
 
 body {
@@ -18,17 +17,17 @@ body {
 
 ::-webkit-scrollbar {
     width: 12px;
-    background-color:#ffffff00;
+    background-color:#1e1f22;
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--main-color);
+    background-color: #52555d;
     border-radius: 30px;
     border: 0.1vw solid var(--bg-color);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background-color: var(--main-color);
+    background-color: #42444a;
 }
 
 *::-ms-scrollbar {
@@ -37,7 +36,7 @@ body {
 }
 
 *::-ms-scrollbar-thumb {
-    background-color: var(--main-color);
+    background-color: #52555d;
     border: 0.1vw solid var(--bg-color);
 }
 

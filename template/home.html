@@ -7,6 +7,9 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
 
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAMhJREFUSEvtlbEOAVEQRc/9DolERelP/IPSH6DSUWj9hs5XaFBoSSR6jUYy8jZZ2X3Be2utxr76zj0zNy8zouKniv15AMysB0yBTknoHhhLWjqfLOAENEqap+UbSV0fYF8yT2wkJc1nJ6gBuYTriIIfro7oTyM6As3g7HGCg6SWv4vcup4B7TiPl6otMJS0ygGeyc3MX4A3YA5MJF1jGnl70TzAGuhL2sUYp5oYwAUYAQtJhVd6CODO3kDSuUjXWe3vjv6nHYbq7l9IXxmu+o93AAAAAElFTkSuQmCC"/>
+    <box-icon name='message' type='solid' color='#ffffff' ></box-icon>
+
     <!----- CSS ----->
     <link href="../static/css/home.css" rel="stylesheet" type="text/css">
     <link href="../static/css/side-left.css" rel="stylesheet" type="text/css">
@@ -16,29 +19,34 @@
     <link href="../static/css/popup.css" rel="stylesheet" type="text/css">
 </head>
 
+
 <body>
-    <div class="side-left">
+    <div class="side-open" id="side-open" onclick="openNav()">
+        <div class="line1"></div>
+        <div class="line2"></div>
+    </div>
+    <div class="side-left" id="side-left">
         <div class="logo-bark">
             <img src="../static/favicons/icon.ico" id="bark-logo" alt="" onclick="barkColor()" value="calm">
         </div>
         <div class="my-profile">
             <img src="../static/images/avatar2-tmp.png" class="avatar" alt="my-avatar">
-            <h2>Harcadakad</h2>
+            <h2>{{.UserConnected.Username}}</h2>
         </div>
         <div class="consumer-profile">
             <div>
-                <p>LEVEL 1</p>
+                <p>LEVEL {{.UserConnected.Lvl}}</p>
                 <div class="progress-bar"></div>
             </div>
             <div class="stat">
                 <div class="Bark-stat">
-                    <p id="Denomination1">Barks</p><p>791</p> <!--NUMBER-->
+                    <p id="Denomination1">Barks</p><p>{{.UserConnected.Barks}}</p> <!--NUMBER-->
                 </div>
                 <div class="Like-stat">
-                    <p id="Denomination2">Likes</p><p>1463</p><!--NUMBER-->
+                    <p id="Denomination2">Likes</p><p>{{.UserConnected.Likes}}</p><!--NUMBER-->
                 </div>
                 <div class="Dislike-stat">
-                    <p id="Denomination3">Dislikes</p><p>294</p><!--NUMBER-->
+                    <p id="Denomination3">Dislikes</p><p>{{.UserConnected.Dislikes}}</p><!--NUMBER-->
                 </div>
             </div>
         </div>
@@ -52,16 +60,17 @@
         </buton>
     </div>
     <div class="center">
-            {{ range $element := .Post }}
+            {{ range $element := .Post.Post }}
                 <button class="topic-link">
                     <h1>{{ $element.Title }}</h1>
                     <div class="sub-info">
-                        <h3 class="mssgNumber">0<!--NUMBER OF MESSAGES--></h3>
+                        <h3 class="mssgNumber"><i class='bx bxs-message' style='color:#ffffff'></i>0</h3>
                         <h3 class="date">{{ $element.Date }}</h3>
                         <div class="tag">{{ $element.Tag }}</div>
                     </div>
                 </button>
-            {{ end }}
+            </form>
+        {{ end }}
         <div class="nav-button">
             <form action="" method="POST">
                 <button class="nav-element" id="first-posts" type="submit"><input type="hidden" value="first-posts" name="browse-posts"></button>
@@ -86,7 +95,6 @@
               <option disabled selected>Sort</option>
               <option value="Latest">Latest</option>
               <option value="Earliest">Earliest</option>
-              
             </select>
             <div class="fa fa-sort-amount-asc"></div>
             
@@ -104,6 +112,7 @@
     </div>
 </body>
 <script src='../static/js/script.js'></script>
+<script src='../static/js/sidenav.js'></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 <script src="../static/js/login.js"></script>
 </html>

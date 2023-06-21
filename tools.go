@@ -9,15 +9,15 @@ import (
 )
 
 func Check(registerData RegisterData) (bool, registerError) {
+	
+	if !isEmailValid(registerData.Email) {
+		return false, BadEmail
+	}
 	if !verifyPassword(registerData.Password) {
 		return false, BadPassword
 	}
 	if registerData.Password != registerData.Passwordverif {
 		return false, UnequalPassword
-	}
-	if !isEmailValid(registerData.Email) {
-		println("bad")
-		return false, BadEmail
 	}
 	return true, None
 }

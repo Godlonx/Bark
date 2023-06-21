@@ -13,6 +13,8 @@ body {
 
     background-position: center center;
     background-attachment: fixed;
+    --main-color:#9800fe;
+    
 }
 
 .container {
@@ -22,7 +24,11 @@ body {
     transform: translate(-50%, -50%);
     border-radius: 10px;
     background-color: #313338;
-    padding: 3vw;
+    padding-left: 3vw;
+    padding-right: 3vw;
+
+    padding-top: 1.2vw;
+    padding-bottom: 1.2vw;
     
 }
 
@@ -124,3 +130,41 @@ input {
     margin-top: 1vw;
     border-top: outset var(--bg-color);
 }
+
+
+.error-popup{
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    transform-origin: center;
+    border-radius: 10px;
+    width: 35vw; 
+    height: 3vw;
+    margin-top: -15vw;
+    background-color: rgb(206, 21, 21);
+    z-index: 3;
+}
+
+@keyframes pop-up {
+    from{
+        opacity: 0;
+        margin-top: -15vw;
+    }
+    to{
+        opacity: 1;
+        margin-top: -1vw;
+    }
+  }
+
+  @keyframes pop-out {
+    from{
+        opacity: 1;
+        margin-top: -1vw;
+    }
+    to{
+
+        opacity: 0;
+        margin-top: -15vw;
+    }
+  }

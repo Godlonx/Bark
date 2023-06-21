@@ -34,6 +34,8 @@ const (
 	BadPassword                   = "bad password"
 	UnequalPassword               = "unequal password"
 	BadEmail                      = "bad email"
+	AlredyUsedUsername			  = "name already used"
+	AlredyUsedEmail 			  = "email already used"
 	Other                         = "Other"
 	None                          = "none"
 )
@@ -52,6 +54,11 @@ type Post struct {
 
 type CurrentPosts struct {
 	Post []Post
+}
+
+type HomeStruct struct {
+	Post CurrentPosts
+	UserConnected User
 }
 
 var user User

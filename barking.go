@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"math"
 	"strings"
 	"time"
 )
@@ -64,6 +65,8 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 	db := getDataBase()
 	defer db.Close()
 	var request string = fmt.Sprintf("SELECT * FROM Post WHERE id BETWEEN %d AND %d LIMIT 25", firstId, lastId)
+
+	defer db.Close()
 
 	row, errQuery := db.Query(request)
 	if errQuery != nil {
@@ -140,8 +143,8 @@ func browsePosts(browseDirection string) {
 			lastPost = NUMBER_CURRENT_POSTS
 
 		} else {
-			firstPost -= NUMBER_CURRENT_POSTS
-			lastPost -= NUMBER_CURRENT_POSTS
+			lastPost = firstPost - 1
+			firstPost = lastPost - NUMBER_CURRENT_POSTS + 1
 		}
 		break
 
@@ -150,7 +153,10 @@ func browsePosts(browseDirection string) {
 		whatIdLastPostAbove := lastPost + NUMBER_CURRENT_POSTS
 
 		if whatIdLastPostAbove >= selectLastId() {
-			firstPost = selectLastId() - NUMBER_CURRENT_POSTS + 1
+
+			howManyCurrentPostsAlreadyRead := math.Round(float64(selectLastId()/NUMBER_CURRENT_POSTS)) * NUMBER_CURRENT_POSTS
+
+			firstPost = int(howManyCurrentPostsAlreadyRead) + 1
 			lastPost = selectLastId()
 
 		} else {
@@ -160,7 +166,9 @@ func browsePosts(browseDirection string) {
 		break
 
 	case "last-posts":
-		firstPost = selectLastId() - NUMBER_CURRENT_POSTS + 1
+		howManyCurrentPostsAlreadyRead := math.Round(float64(selectLastId()/NUMBER_CURRENT_POSTS)) * NUMBER_CURRENT_POSTS
+
+		firstPost = int(howManyCurrentPostsAlreadyRead) + 1
 		lastPost = selectLastId()
 		break
 	}
@@ -172,10 +180,62 @@ func getDatePost() string {
 	hour := timeNow.Hour()
 	minutes := timeNow.Minute()
 	day := timeNow.Day()
-	month := timeNow.Month()
+	monthTmp := timeNow.Month()
 	year := timeNow.Year()
 
-	var date string = fmt.Sprintf("%d:%d %d/%d/%d", hour, minutes, day, month, year)
+	var month string
+
+	switch monthTmp {
+	case 1:
+		month = "Jan."
+		break
+
+	case 2:
+		month = "Feb."
+		break
+
+	case 3:
+		month = "Mar."
+		break
+
+	case 4:
+		month = "Apr."
+		break
+
+	case 5:
+		month = "May"
+		break
+
+	case 6:
+		month = "Jun."
+		break
+
+	case 7:
+		month = "Jul."
+		break
+
+	case 8:
+		month = "Aug."
+		break
+
+	case 9:
+		month = "Sep."
+		break
+
+	case 10:
+		month = "Oct."
+		break
+
+	case 11:
+		month = "Nov."
+		break
+
+	case 12:
+		month = "Dec."
+		break
+	}
+
+	var date string = fmt.Sprintf("%d %s %d, at %d:%d", day, month, year, hour, minutes)
 
 	return date
 }
