@@ -64,7 +64,6 @@ func selectLastId() int {
 func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts,order string) CurrentPosts {
 	db := getDataBase()
 	defer db.Close()
-	println(order)
 
 	var request string = fmt.Sprintf("SELECT * FROM Post WHERE id BETWEEN %d AND %d ORDER BY date "+order+" LIMIT 25", firstId, lastId)
 

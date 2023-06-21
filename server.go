@@ -48,11 +48,8 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 		
 		r.ParseForm()
 		orderSelect := r.FormValue("select-order")
-		println("dans server:",orderSelect)
-		println(orderSelect == "Earliest")
 		if orderSelect == "Earliest" {
 			order = "DESC"
-			println("apres dans if :",order)
 		}else if orderSelect == "Latest"{
 			order = ""
 		}
