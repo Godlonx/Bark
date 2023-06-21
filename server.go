@@ -18,6 +18,7 @@ var lastPost = NUMBER_CURRENT_POSTS
 
 var idPost string
 var postClick Post
+var order string
 
 func Server() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
@@ -36,15 +37,25 @@ func Server() {
 }
 
 func ServHome(w http.ResponseWriter, r *http.Request) {
-
+	
 	if user.Username == "" {
 		http.Redirect(w, r, "/login", http.StatusSeeOther)
 	}
 	t := template.Must(template.ParseFiles("template/home.html"))
-
 	var browseDirection string
-
+	
+	
+	
 	if r.Method == http.MethodPost {
+		
+		r.ParseForm()
+		orderSelect := r.FormValue("select-order")
+		if orderSelect == "Earliest" {
+			order = "DESC"
+		}else if orderSelect == "Latest"{
+			order = ""
+		}
+		
 		browseDirection = r.FormValue("browse-posts")
 		browsePosts(browseDirection)
 
@@ -52,12 +63,11 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 		if idPost != "" {
 			http.Redirect(w, r, "/topic", http.StatusSeeOther)
 		}
-		println(idPost)
 		http.Redirect(w, r, "/home", http.StatusSeeOther)
 		return
 	}
 	var currentPosts CurrentPosts
-	currentPosts = selectTwentyFivePost(firstPost, lastPost, currentPosts)
+	currentPosts = selectTwentyFivePost(firstPost, lastPost, currentPosts,order)
 
 	homeStruct := HomeStruct{currentPosts, user}
 
@@ -114,7 +124,7 @@ func ServLogin(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 	}
 
-	//w.WriteHeader(http.StatusOK)
+	//
 	t.Execute(w, "")
 }
 
@@ -191,7 +201,6 @@ func ServSettings(w http.ResponseWriter, r *http.Request) {
 		case ("delete"):
 			{
 				DeleteAccount()
-				println("AAAAAAAAAAA")
 				http.Redirect(w, r, "http://localhost:8080/", http.StatusSeeOther)
 			}
 		}

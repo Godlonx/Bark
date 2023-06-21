@@ -61,10 +61,11 @@ func selectLastId() int {
 	return idLastPost
 }
 
-func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) CurrentPosts {
+func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts,order string) CurrentPosts {
 	db := getDataBase()
 	defer db.Close()
-	var request string = fmt.Sprintf("SELECT * FROM Post WHERE id BETWEEN %d AND %d LIMIT 25", firstId, lastId)
+
+	var request string = fmt.Sprintf("SELECT * FROM Post WHERE id BETWEEN %d AND %d ORDER BY date "+order+" LIMIT 25", firstId, lastId)
 
 	defer db.Close()
 
@@ -84,6 +85,7 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 		}
 		currentPosts.Post = append(currentPosts.Post, post)
 	}
+	println(len(currentPosts.Post))
 	for i := 0; i < len(currentPosts.Post); i++ {
 		row, err := db.Query("SELECT tag.name FROM Post JOIN tagRef on Post.id = tagRef.idPost JOIN tag on tagRef.idTag = tag.id WHERE Post.id = ?;", currentPosts.Post[i].Id)
 		if err != nil {
@@ -91,6 +93,7 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 		}
 		for row.Next() {
 			err := row.Scan(&currentPosts.Post[i].Tag)
+			println(currentPosts.Post[i].Id, currentPosts.Post[i].Tag)
 			if err != nil {
 				log.Fatal(err)
 			}

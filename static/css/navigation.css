@@ -59,6 +59,21 @@ body {
     gap: 1vw;
 }
 
+.navigation form{
+    width: 20vw;
+    color: white;
+    position: fixed;
+    left:75%;
+    top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 1vw;
+}
+
+.navigation form button{
+font-size: 1.2vw;
+}
+
 .selector-sort,.selector-filter{
     display: flex;
     flex-direction: row;

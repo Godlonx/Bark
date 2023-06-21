@@ -6,9 +6,8 @@
     <!----- FAVICON ----->
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
-
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAMhJREFUSEvtlbEOAVEQRc/9DolERelP/IPSH6DSUWj9hs5XaFBoSSR6jUYy8jZZ2X3Be2utxr76zj0zNy8zouKniv15AMysB0yBTknoHhhLWjqfLOAENEqap+UbSV0fYF8yT2wkJc1nJ6gBuYTriIIfro7oTyM6As3g7HGCg6SWv4vcup4B7TiPl6otMJS0ygGeyc3MX4A3YA5MJF1jGnl70TzAGuhL2sUYp5oYwAUYAQtJhVd6CODO3kDSuUjXWe3vjv6nHYbq7l9IXxmu+o93AAAAAElFTkSuQmCC"/>
-    <box-icon name='message' type='solid' color='#ffffff' ></box-icon>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="16x16"  href="../static/favicons/icon.ico">
 
     <!----- CSS ----->
     <link href="../static/css/home.css" rel="stylesheet" type="text/css">
@@ -51,13 +50,11 @@
             </div>
         </div>
         <button class="setting-button" onclick="redirection('/settings')">
-            <div id="icon" class="fa fa-cog"></div>
-            <p class="link-setting">Settings</p>
+            <a class="link-setting">Settings</a>
         </button>
         <button class="barking-button" onclick="redirection('/post')">
-            <div id="icon" class="fa fa-pencil"></div>
             <a class="link-setting" href="/post">Barking</a>
-        </buton>
+        </button>
     </div>
     <div class="center">
         {{ range $element := .Post.Post }}
@@ -87,11 +84,12 @@
         </div>
     </div>
     <div class="navigation">
+        <form action="" method="post">
         <div class="search-bar">
             <input class="search" type="text" placeholder="Search..." name="search"/>
         </div>
         <div class="selector-sort">
-            <select name="select-items" id="sort-mod">
+            <select name="select-order" id="sort-mod">
               <option disabled selected>Sort</option>
               <option value="Latest">Latest</option>
               <option value="Earliest">Earliest</option>
@@ -109,6 +107,9 @@
             </select>
             <div class="fa fa-filter"></div>
         </div>
+        <button type="submit">Submit</button>
+        </form>
+        
     </div>
 </body>
 <script src='../static/js/script.js'></script>

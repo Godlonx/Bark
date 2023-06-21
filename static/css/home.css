@@ -30,7 +30,7 @@ body {
     width: 52vw;
     background-color: #313338;
     color: white;
-    border-right: 7.5px solid #9800fe;
+    border-right: 7.5px solid var(--main-color);
     border-radius: 8px;
     padding: 1vw;
     margin-bottom: 12px;
