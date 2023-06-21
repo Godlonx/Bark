@@ -14,6 +14,9 @@ const NUMBER_CURRENT_POSTS = 25
 var firstPost = 1
 var lastPost = NUMBER_CURRENT_POSTS
 
+var idPost string
+var postClick Post
+
 func Server() {
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 	http.HandleFunc("/", ServHome)
@@ -45,17 +48,24 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 		} else {
 			post.Id = selectLastId() + 1
 		}
-		post.IdUser = 0
+		post.IdUser = user.Id
 		post.IdComment = 0
-		post.Title = r.FormValue("title")
 		post.Content = r.FormValue("textarea")
+		post.Title = r.FormValue("title")
+		post.Like = 0
+		post.Dislike = 0
 		post.Date = getDatePost()
-		post.Likes = 0
-		post.Dislikes = 0
+		post.Tag = ""
 		insertPost(post)
 
 		browseDirection = r.FormValue("browse-posts")
 		browsePosts(browseDirection)
+
+		idPost = r.FormValue("idPost")
+		if idPost != "" {
+			http.Redirect(w, r, "/topic", http.StatusSeeOther)
+		}
+		println(idPost)
 
 		http.Redirect(w, r, "/home", http.StatusSeeOther)
 		return
@@ -73,7 +83,10 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 
 func ServTopic(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/topic.html"))
-	t.Execute(w, nil)
+
+	getPost()
+
+	t.Execute(w, postClick) //post
 }
 
 func ServLogin(w http.ResponseWriter, r *http.Request) {

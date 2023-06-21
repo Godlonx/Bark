@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"math"
 	"time"
 )
 
@@ -60,6 +61,8 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 
 	var request string = fmt.Sprintf("SELECT * FROM Post WHERE id BETWEEN %d AND %d LIMIT 25", firstId, lastId)
 
+	defer db.Close()
+
 	row, errQuery := db.Query(request)
 	if errQuery != nil {
 		log.Fatalln(errQuery)
@@ -67,7 +70,7 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 
 	for row.Next() {
 		var post Post
-		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Title, &post.Content, &post.Date, &post.Likes, &post.Dislikes)
+		err := row.Scan(&post.Id, &post.IdUser, &post.IdComment, &post.Content, &post.Title, &post.Like, &post.Dislike, &post.Date, &post.Tag)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -78,16 +81,37 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 	return currentPosts
 }
 
+func getPost() {
+	db := getDataBase()
+
+	defer db.Close()
+
+	fmt.Println(idPost)
+
+	row, errQuery := db.Query("SELECT * FROM Post WHERE id = '" + idPost + "';")
+	if errQuery != nil {
+		log.Fatalln(errQuery)
+	}
+
+	for row.Next() {
+		err := row.Scan(&postClick.Id, &postClick.IdUser, &postClick.IdComment, &postClick.Content, &postClick.Title, &postClick.Like, &postClick.Dislike, &postClick.Date, &postClick.Tag)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+	row.Close()
+}
+
 func insertPost(post Post) {
 
 	if post.Title != "" && post.Content != "" {
 		db := getDataBase()
 
-		statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, title, content, date, likes, dislikes) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")
+		statement, errPrepare := db.Prepare("INSERT INTO Post (id, idUser, idComment, content, title, like, dislike, date, tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
 		if errPrepare != nil {
 			log.Fatalln(errPrepare)
 		}
-		_, errExec := statement.Exec(post.Id, post.IdUser, post.IdComment, post.Title, post.Content, post.Date, post.Likes, post.Dislikes)
+		_, errExec := statement.Exec(post.Id, post.IdUser, post.IdComment, post.Content, post.Title, post.Like, post.Dislike, post.Date, post.Tag)
 		if errExec != nil {
 			log.Fatalln(errExec)
 		}
@@ -111,8 +135,8 @@ func browsePosts(browseDirection string) {
 			lastPost = NUMBER_CURRENT_POSTS
 
 		} else {
-			firstPost -= NUMBER_CURRENT_POSTS
-			lastPost -= NUMBER_CURRENT_POSTS
+			lastPost = firstPost - 1
+			firstPost = lastPost - NUMBER_CURRENT_POSTS + 1
 		}
 		break
 
@@ -121,7 +145,10 @@ func browsePosts(browseDirection string) {
 		whatIdLastPostAbove := lastPost + NUMBER_CURRENT_POSTS
 
 		if whatIdLastPostAbove >= selectLastId() {
-			firstPost = selectLastId() - NUMBER_CURRENT_POSTS + 1
+
+			howManyCurrentPostsAlreadyRead := math.Round(float64(selectLastId()/NUMBER_CURRENT_POSTS)) * NUMBER_CURRENT_POSTS
+
+			firstPost = int(howManyCurrentPostsAlreadyRead) + 1
 			lastPost = selectLastId()
 
 		} else {
@@ -131,7 +158,9 @@ func browsePosts(browseDirection string) {
 		break
 
 	case "last-posts":
-		firstPost = selectLastId() - NUMBER_CURRENT_POSTS + 1
+		howManyCurrentPostsAlreadyRead := math.Round(float64(selectLastId()/NUMBER_CURRENT_POSTS)) * NUMBER_CURRENT_POSTS
+
+		firstPost = int(howManyCurrentPostsAlreadyRead) + 1
 		lastPost = selectLastId()
 		break
 	}
@@ -143,30 +172,62 @@ func getDatePost() string {
 	hour := timeNow.Hour()
 	minutes := timeNow.Minute()
 	day := timeNow.Day()
-	month := timeNow.Month()
+	monthTmp := timeNow.Month()
 	year := timeNow.Year()
 
-	var date string = fmt.Sprintf("%d:%d %d/%d/%d", hour, minutes, day, month, year)
+	var month string
+
+	switch monthTmp {
+	case 1:
+		month = "Jan."
+		break
+
+	case 2:
+		month = "Feb."
+		break
+
+	case 3:
+		month = "Mar."
+		break
+
+	case 4:
+		month = "Apr."
+		break
+
+	case 5:
+		month = "May"
+		break
+
+	case 6:
+		month = "Jun."
+		break
+
+	case 7:
+		month = "Jul."
+		break
+
+	case 8:
+		month = "Aug."
+		break
+
+	case 9:
+		month = "Sep."
+		break
+
+	case 10:
+		month = "Oct."
+		break
+
+	case 11:
+		month = "Nov."
+		break
+
+	case 12:
+		month = "Dec."
+		break
+	}
+
+	var date string = fmt.Sprintf("%d %s %d, at %d:%d", day, month, year, hour, minutes)
 
 	return date
 }
-
-/*
-func updatePost(update string) {
-	db := getDataBase()
-
-	_, errExec := db.Exec("UPDATE Post SET title = '" + update + "'")
-	if errExec != nil {
-		log.Fatalln(errExec)
-	}
-}
-
-func delatePost(delate string) {
-	db := getDataBase()
-
-	_, errExec := db.Exec("DELETE FROM Post WHERE title = ''")
-	if errExec != nil {
-		log.Fatalln(errExec)
-	}
-}
-*/

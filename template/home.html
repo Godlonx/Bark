@@ -7,12 +7,14 @@
     <link rel="icon" type="image/png" sizes="16x16"  href="../static/favicons/icon.ico">
 </head>
 <body>
-
     <title>Home / Bark</title>
 
     <!----- FAVICON ----->
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
+
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAMhJREFUSEvtlbEOAVEQRc/9DolERelP/IPSH6DSUWj9hs5XaFBoSSR6jUYy8jZZ2X3Be2utxr76zj0zNy8zouKniv15AMysB0yBTknoHhhLWjqfLOAENEqap+UbSV0fYF8yT2wkJc1nJ6gBuYTriIIfro7oTyM6As3g7HGCg6SWv4vcup4B7TiPl6otMJS0ygGeyc3MX4A3YA5MJF1jGnl70TzAGuhL2sUYp5oYwAUYAQtJhVd6CODO3kDSuUjXWe3vjv6nHYbq7l9IXxmu+o93AAAAAElFTkSuQmCC"/>
+    <box-icon name='message' type='solid' color='#ffffff' ></box-icon>
 
     <!----- CSS ----->
     <link href="../static/css/home.css" rel="stylesheet" type="text/css">
@@ -21,6 +23,7 @@
     <link href="../static/css/overview.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="../static/css/popup.css" rel="stylesheet" type="text/css">
+</head>
 
 <body>
     <div class="side-open" id="side-open" onclick="openNav()">
@@ -78,12 +81,13 @@
                 <button class="topic-link">
                     <h1>{{ $element.Title }}</h1>
                     <div class="sub-info">
-                        <h3 class="mssgNumber">0<!--NUMBER OF MESSAGES--></h3>
+                        <h3 class="mssgNumber"><i class='bx bxs-message' style='color:#ffffff'></i>0</h3>
                         <h3 class="date">{{ $element.Date }}</h3>
                         <div class="tag">TAG</div>
                     </div>
                 </button>
-            {{ end }}
+            </form>
+        {{ end }}
         <div class="nav-button">
             <form action="" method="POST">
                 <button class="nav-element" id="first-posts" type="submit"><input type="hidden" value="first-posts" name="browse-posts"></button>
@@ -108,7 +112,6 @@
               <option disabled selected>Sort</option>
               <option value="Latest">Latest</option>
               <option value="Earliest">Earliest</option>
-              
             </select>
             <div class="fa fa-sort-amount-asc"></div>
             
