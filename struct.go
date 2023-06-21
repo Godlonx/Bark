@@ -30,14 +30,14 @@ type RegisterData struct {
 type registerError string
 
 const (
-	BadUsername     registerError = "bad username"
-	BadPassword                   = "bad password"
-	UnequalPassword               = "unequal password"
-	BadEmail                      = "bad email"
-	AlredyUsedUsername			  = "name already used"
-	AlredyUsedEmail 			  = "email already used"
-	Other                         = "Other"
-	None                          = "none"
+	BadUsername        registerError = "bad username"
+	BadPassword                      = "bad password"
+	UnequalPassword                  = "unequal password"
+	BadEmail                         = "bad email"
+	AlredyUsedUsername               = "name already used"
+	AlredyUsedEmail                  = "email already used"
+	Other                            = "Other"
+	None                             = "none"
 )
 
 type Post struct {
@@ -57,8 +57,15 @@ type CurrentPosts struct {
 }
 
 type HomeStruct struct {
-	Post CurrentPosts
+	Post          CurrentPosts
 	UserConnected User
+}
+
+type TopicStruct struct {
+	Post          Post
+	Comments      []Post
+	UserConnected User
+	User2         User
 }
 
 var user User

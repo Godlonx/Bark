@@ -6,184 +6,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>{{.Title}}</title>
+    <title>Comments</title>
 
     <!----- FAVICON ----->
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
 
     <!----- CSS ----->
-    <link href="../static/css/side-left.css" rel="stylesheet" type="text/css">
-    <link href="../static/css/side-right.css" rel="stylesheet" type="text/css">
     <link href="../static/css/topic.css" rel="stylesheet" type="text/css">
     <link href="../static/font/fonts.css" rel="stylesheet" type="text/css">
     <link href="../static/css/overview.css" rel="stylesheet" type="text/css">
+
+    <!----- JS ----->
+    <script src="../static/js/topic.js"></script>
+
 </head>
 <body>
-    <div class="side-left">
-        <div class="my-profile">
-            <img src="../static/images/avatar-tmp.png" class="avatar" alt="avatar">
-            <h2>Harcadakad<!--PSEDO--></h2>
-        </div>
-        <div class="consumer-profile">
-            <table>
-                <tr><td>LEVEL<!--NUMBER--> 2</td><td>239<!--XPs--> XP</td></tr>
-            </table>
-            <div class="progress-bar"></div>
-            <table>
-                <tr><td>Barks</td><td>791<!--NUMBER--></td></tr>
-                <tr><td>Likes</td><td>1463<!--NUMBER--></td></tr>
-                <tr><td>Dislikes</td><td>294<!--NUMBER--></td></tr>
-            </table>
-        </div>
-        <div class="button" style="background-color: #313338;">
-            <a class="other-button" href="/settings">
-                <img class="settings-icon" src="../static/icons/settings-icon.png" alt="settings-icon">
-                Settings
-            </a>
-        </div>
-        <div class="button" style="background-color: #9800fe;">
-            <a href="/barking">
-                <img class="barking-icon" src="../static/icons/barking.png" alt="barking-icon">
-                Barking
-            </a>
-        </div>
+    <div class="post">
+        <span class="title">{{.Post.Title}}</span>
+        <span class="content">{{.Post.Content}}</span>
+        <span class="date">{{.Post.Date}}</span>
+        <span class="like">{{.Post.Likes}}</span>
+        <span class="dislike">{{.Post.Dislikes}}</span>
+        <span class="tag">{{.Post.Tag}}</span>
     </div>
-    <div>
-        <div class="topic">
-            <div class="head-topic">
-                <h1>{{.Title}}</h1>
-                <div class="sub-info">
-                    <img src="../static/icons/message-icon.png" alt="message-icon.png">
-                    <h3>8<!--NUMBER OF MESSAGES--></h3>
-                    <img src="../static/icons/time-icon.png" alt="message-icon.png" style="margin-left: 16px;">
-                    <h3>{{.Date}}</h3>
-                    <div class="tag">Gaming</div>
-                </div>
-            </div>
-            <div class="topic-text">
-                {{.Content}}
-            </div>
-            <div class="interactive-bar">
-                <button id="like-button">
-                    <img src="../static/icons/like-icon.png" alt="like-icon">
-                    <span>{{.Like}}</span>
-                </button>
-                <button id="dislike-button">
-                    <img src="../static/icons/dislike-icon.png" alt="dislike-icon">
-                    <span>{{.Dislike}}</span>
-                </button>
-                <button>
-                    <img src="../static/icons/reply-icon.png" alt="reply-icon">
-                    <span>Reply</span>
-                </button>
-                <button>
-                    <img src="../static/icons/three-small-dots-icon.png" alt="three-small-dots-icon">
-                </button>
-            </div>
-        </div>
-        <div>
-            <div class="comments">
-                <img src="../static/images/avatar-tmp.png" alt="avatar-tmp">
-                <div>
-                    <span id="pseudonym">Harcadakad</span>
-                    <span id="date">19/04/2023 20:45:03</span>
-                    <p>I understand your undervolt given your power supply but personally if I buy a good GPU I don't want to limit even 1/2% perf balek of the watts it consumes.</p>
-                </div>
-            </div>
-            <div class="interactive-bar">
-                <button id="like-button">
-                    <img src="../static/icons/like-icon.png" alt="like-icon">
-                    <span>1</span>
-                </button>
-                <button id="dislike-button">
-                    <img src="../static/icons/dislike-icon.png" alt="dislike-icon">
-                    <span>0</span>
-                </button>
-                <button>
-                    <img src="../static/icons/reply-icon.png" alt="reply-icon">
-                    <span>Reply</span>
-                </button>
-                <button>
-                    <img src="../static/icons/three-small-dots-icon.png" alt="three-small-dots-icon">
-                </button>
-            </div>
-        </div>
-        <div>
-            <div class="comments">
-                <img src="../static/images/avatar2-tmp.png" alt="avatar-tmp">
-                <div>
-                    <span id="pseudonym">LumiNa$$y</span>
-                    <span id="date">19/04/2023 20:48:46</span>
-                    <p>In that case, take the opportunity to overclock and gain 10% perf.</p>
-                </div>
-            </div>
-            <div class="interactive-bar">
-                <button id="like-button">
-                    <img src="../static/icons/like-icon.png" alt="like-icon">
-                    <span>0</span>
-                </button>
-                <button id="dislike-button">
-                    <img src="../static/icons/dislike-icon.png" alt="dislike-icon">
-                    <span>0</span>
-                </button>
-                <button>
-                    <img src="../static/icons/reply-icon.png" alt="reply-icon">
-                    <span>Reply</span>
-                </button>
-                <button>
-                    <img src="../static/icons/three-small-dots-icon.png" alt="three-small-dots-icon">
-                </button>
-            </div>
-        </div>
-        <div class="nav-button">
-            <button class="nav-element"><img src="../static/icons/extremity-icon.png" alt="extremity-icon"></button>
-            <button class="nav-element"><img src="../static/icons/proximity-icon.png" alt="proximity-icon"></button>
-            <button class="nav-element"><img src="../static/icons/proximity-icon.png" alt="proximity-icon"></button>
-            <button class="nav-element"><img src="../static/icons/extremity-icon.png" alt="extremity-icon"></button>
-        </div>
+    {{ range $element := .Comments }}
+    <div class="comment" id="{{$element.Id}}">
+        <span class="title">{{$element.Title}}</span>
+        <span class="content">{{$element.Content}}</span>
+        <span class="date">{{$element.Date}}</span>
+        <span class="like">{{$element.Likes}}</span>
+        <span class="dislike">{{$element.Dislikes}}</span>
+        <span class="tag">{{$element.Tag}}</span>
     </div>
-    <div class="side-right">
-        <div class="my-profile">
-            <img src="../static/images/avatar2-tmp.png" class="avatar" alt="avatar">
-            <h2>LumiNa$$y<!--PSEDO--></h2>
-        </div>
-        <div class="consumer-profile">
-            <table>
-                <tr><td>LEVEL<!--NUMBER--> 7</td><td>946<!--XPs--> XP</td></tr>
-            </table>
-            <div class="progress-bar"></div>
-            <table>
-                <tr><td>Barks</td><td>6327<!--NUMBER--></td></tr>
-                <tr><td>Likes</td><td>63821<!--NUMBER--></td></tr>
-                <tr><td>Dislikes</td><td>1382<!--NUMBER--></td></tr>
-            </table>
-        </div>
+    {{ end }}
+    <div class="users">
+        <span>User1:{{.UserConnected.Username}}</span>
+        <span>User2:{{.User2.Username}}</span>
     </div>
+    <button class="comment" onclick="commentRedirection('{{.Post.Id}}')"></button>
 </body>
 </html>
-
-<script>
-    let likeButtons = document.querySelectorAll(".interactive-bar button[id^='like-button']")
-    let dislikeButtons = document.querySelectorAll(".interactive-bar button[id^='dislike-button']")
-
-    likeButtons.forEach(function(button){button.addEventListener("click", function() {
-            if(button.classList.contains("like-button-clicked")){
-                button.classList.remove("like-button-clicked")
-
-            } else {
-                button.classList.add("like-button-clicked")
-            }
-        })
-    })
-
-    dislikeButtons.forEach(function(button){button.addEventListener("click", function() {
-            if(button.classList.contains("dislike-button-clicked")){
-                button.classList.remove("dislike-button-clicked")
-
-            } else {
-                button.classList.add("dislike-button-clicked")
-            }
-        })
-    })
-</script>

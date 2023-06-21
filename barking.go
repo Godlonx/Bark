@@ -84,7 +84,6 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 		}
 		currentPosts.Post = append(currentPosts.Post, post)
 	}
-	println(len(currentPosts.Post))
 	for i := 0; i < len(currentPosts.Post); i++ {
 		row, err := db.Query("SELECT tag.name FROM Post JOIN tagRef on Post.id = tagRef.idPost JOIN tag on tagRef.idTag = tag.id WHERE Post.id = ?;", currentPosts.Post[i].Id)
 		if err != nil {
@@ -92,7 +91,6 @@ func selectTwentyFivePost(firstId int, lastId int, currentPosts CurrentPosts) Cu
 		}
 		for row.Next() {
 			err := row.Scan(&currentPosts.Post[i].Tag)
-			println(currentPosts.Post[i].Id, currentPosts.Post[i].Tag)
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -112,7 +110,7 @@ func insertPost(post Post, idTag int) {
 			log.Fatalln(errPrepare)
 			return
 		}
-		_, errExec := query.Exec(post.Id, post.IdUser, post.IdComment, post.Title, post.Content, post.Date, post.Likes, post.Dislikes)
+		_, errExec := query.Exec(post.Id, user.Id, post.IdComment, post.Title, post.Content, post.Date, post.Likes, post.Dislikes)
 		if errExec != nil {
 			log.Fatalln(errExec)
 			return
@@ -258,7 +256,6 @@ func GetTag() []string {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(tagName)
 		Tags = append(Tags, tagName)
 	}
 	return Tags

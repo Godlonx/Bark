@@ -3,6 +3,7 @@ package bark
 import (
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -27,6 +28,7 @@ func Server() {
 	http.HandleFunc("/register", ServRegister)
 	http.HandleFunc("/settings", ServSettings)
 	http.HandleFunc("/post", ServPost)
+	http.HandleFunc("/comment", ServComment)
 
 	fmt.Println("http://localhost" + port + "/")
 	fmt.Println("Server started on port", port)
@@ -64,8 +66,13 @@ func ServHome(w http.ResponseWriter, r *http.Request) {
 
 func ServTopic(w http.ResponseWriter, r *http.Request) {
 	t := template.Must(template.ParseFiles("template/topic.html"))
+	postId := r.URL.Query().Get("id")
+	err, topic := Topic(postId)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	t.Execute(w, postClick) //post
+	t.Execute(w, topic) //post
 }
 
 func ServLogin(w http.ResponseWriter, r *http.Request) {
@@ -224,6 +231,43 @@ func ServPost(w http.ResponseWriter, r *http.Request) {
 		}
 		print(idTag)
 		insertPost(post, idTag)
+		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
 	}
+	t.Execute(w, tags)
+}
+
+func ServComment(w http.ResponseWriter, r *http.Request) {
+	t := template.Must(template.ParseFiles("template/post.html"))
+	var tags = GetTag()
+	postId := r.URL.Query().Get("id")
+	if r.Method == http.MethodPost {
+		var post Post
+		if tableIsEmpty() {
+			post.Id = 1
+		} else {
+			post.Id = selectLastId() + 1
+		}
+		post.IdUser = 0
+		post.IdComment = 0
+		post.Title = r.FormValue("title")
+		post.Content = r.FormValue("textarea")
+		post.Date = getDatePost()
+		post.Likes = 0
+		post.Dislikes = 0
+		tag := r.FormValue("newTag")
+		var idTag int
+		if tag != "" {
+			tag, idTag = addTag(tag)
+			post.Tag = tag
+		} else {
+			tag = r.FormValue("tag")
+			idTag = GetIdTag(tag)
+			post.Tag = tag
+		}
+		print(idTag)
+		insertComment(post, idTag, postId)
+		http.Redirect(w, r, "http://localhost:8080/home", http.StatusSeeOther)
+	}
+
 	t.Execute(w, tags)
 }

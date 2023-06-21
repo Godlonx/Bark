@@ -91,3 +91,8 @@ window.onload = function registerError(){
     }
 }
 }
+
+function postRedirect(id) {
+    window.location = "http://localhost:8080/topic?id="+id
+
+}

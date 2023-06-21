@@ -60,16 +60,16 @@
         </buton>
     </div>
     <div class="center">
-            {{ range $element := .Post.Post }}
-                <button class="topic-link">
-                    <h1>{{ $element.Title }}</h1>
-                    <div class="sub-info">
-                        <h3 class="mssgNumber"><i class='bx bxs-message' style='color:#ffffff'></i>0</h3>
-                        <h3 class="date">{{ $element.Date }}</h3>
-                        <div class="tag">{{ $element.Tag }}</div>
-                    </div>
-                </button>
-            </form>
+        {{ range $element := .Post.Post }}
+        <button class="topic-link" onclick="postRedirect('{{$element.Id}}')">
+            <h1>{{ $element.Title }}</h1>
+            <div class="sub-info">
+                <div hidden value="{{$element.Id}}" name="idPost"></div>
+                <h3 class="mssgNumber"><i class='bx bxs-message' style='color:#ffffff'></i>0</h3>
+                <h3 class="date">{{ $element.Date }}</h3>
+                <div class="tag">{{ $element.Tag }}</div>
+            </div>
+        </button>
         {{ end }}
         <div class="nav-button">
             <form action="" method="POST">
